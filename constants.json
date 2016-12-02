@@ -1,0 +1,12 @@
+{
+  "local": {
+    "environmentConfig": {
+      "api": "http://localhost/laravel/sigma/api"
+    }
+  },
+  "production": {
+    "environmentConfig": {
+      "api": "http://localhost/laravel/sigma/api"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+
+!!--Helping to understand gulp plugins
+
+gulp-task-listing --> Help to listing task
+    dependencies--> util, print, if
+gulp-jshint --> Check sintax
+     configure --> rules in .jshintrc in root folder
+     dependencies -> jshint
+                  -> jshint-stylish
+gulp-load-plugins --> Allows plugin to be used in js
+yargs --> allows to use vars from command line
+plato --> Javascript source analysis and visualizer.
+    dependencies -> glob
+                 -> Plato needs at least one js file in the app folder
+clean-styles --> Deletes CSS files
+    dependencies -> del
+clean-styles --> Minify CSS files
+    dependencies -> gulp-plumber
+styles --> Compiles LESS
+    dependencies -> gulp-less
+                 -> gulp-autoprefixer
+images --> Minifies Images
+    dependencies -> gulp-imagemin
+templatecache --> Minify HTML
+    dependencies -> gulp-minify-html
+                    gulp-bytediff
+                    gulp-angular-templatecache
+wiredep --> Wire bower dependencies
+    dependencies -> wiredep
+                 -> gulp-inject
+    Note: Doesn't work until the index.hml has the bower inject tags.
+build-specs -> Buils specs test
+    dependencies -> chai
+                    mocha
+                    sinon
+                    sinon-chai
+    Note: Doesn't work until the specs.hml has the bower inject tags.
+serve-specs: Runs all test a run the serve
+    dependencies -> install the server (Look at the end of this helper.)
+test -> Rus all test.
+    dependencies -> karma
+                    karma-chai
+                    karma-chai-sinon
+                    karma-coverage
+                    karma-growl-reporter
+                    karma-mocha
+                    karma-sinon
+                    karma-phantomjs-launcher
+                    karma-firefox-launcher
+
+optimize -> Optimize all files, move to a build folder
+    dependencies -> gulp-useref
+                    gulp-filter
+                    gulp-plumber
+                    gulp-minify-css
+                    gulp-ng-annotate
+                    gulp-uglify
+                    gulp-rev
+                    gulp-rev-replace
+                    gulp-header
+                    gulp-order
+
+build -> Build everything
+    dependencies ->node-notifier
+                   lodash
+                   path
+
+Server
+  dependencies ->gulp-nodemon
+               ->browser-sync
+               ->body-parser
+               ->express
+               ->morgan
+               ->serve-favicon
+  Note: Require /src/server folder with the all files need by node

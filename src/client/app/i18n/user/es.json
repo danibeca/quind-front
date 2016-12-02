@@ -1,0 +1,13 @@
+{
+  "PAGE_TITLE": "Ingresa a tu cuenta",
+  "EMAIL_REQUIRED": "El email es requerido",
+  "PASS_REQUIRED": "El password es requerido",
+  "EMAIL_TITLE": "Email",
+  "PASS_TITLE": "Password",
+  "REMEMBERME": "Recuerdame",
+  "FORGOTPASS": "Olvido su password",
+  "SUBMIT_CREDENTIALS": "Ingresar",
+  "LOGIN_FAILED": "Credenciales erradas",
+  "LOGIN_SUCCESS": "Ingreso realizado",
+  "LOGIN_INTERNAL_ERROR": "Ha ocurrido un error inesperado, intente mas tarde"
+}

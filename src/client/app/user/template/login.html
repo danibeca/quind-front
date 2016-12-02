@@ -1,0 +1,46 @@
+<div class="middle-page">
+
+	<div class="ui grid">
+		<div class="column">
+			<h2 class="ui teal image header">
+				<img src="images/logo.png" class="image">
+				<div class="content">
+					{{ 'PAGE_TITLE' | translate }}
+				</div>
+			</h2>
+			<form class="ui large form" method="POST" ng-submit="vm.login()">
+				<div class="ui segment">
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="user icon"></i>
+							<input type="text" name="email" placeholder="{{ 'EMAIL_TITLE' | translate }}" ng-model="vm.credential.email" required />
+						</div>
+					</div>
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="lock icon"></i>
+							<input type="password" name="password" placeholder="{{ 'PASS_TITLE' | translate }}" ng-model="vm.credential.password" required />
+						</div>
+					</div>
+					<div class="field">
+						<div class="ui left checkbox ">
+							<input type="checkbox">
+							<label>{{ 'REMEMBERME' | translate }}</label>
+						</div>
+					</div>
+					<div class="inline field">
+						<button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_CREDENTIALS' | translate }}</button>
+
+						<a class="btn btn-link" ui-sref="passwordRecovery">{{ 'FORGOTPASS' | translate }}</a>
+
+					</div>
+				</div>
+
+				<div class="ui error message"></div>
+
+			</form>
+
+		</div>
+	</div>
+
+</div>

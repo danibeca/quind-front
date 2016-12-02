@@ -1,0 +1,13 @@
+{
+  "PAGE_TITLE": "Log-in to your account",
+  "EMAIL_REQUIRED": "Email is required!",
+  "PASS_REQUIRED": "Password is required",
+  "EMAIL_TITLE": "Email",
+  "PASS_TITLE": "Password",
+  "REMEMBERME": "Remember me",
+  "FORGOTPASS": "Forgot your password",
+  "SUBMIT_CREDENTIALS": "Login",
+  "LOGIN_FAILED": "Invalid credentials",
+  "LOGIN_SUCCESS": "Login success",
+  "LOGIN_INTERNAL_ERROR": "An error occurred. Please try again later"
+}
