@@ -13,7 +13,18 @@
         return {
             restrict: 'E',
             controller: 'DashboardPieChartCtrl',
-            templateUrl: 'app/dashboard/component/piechart/piechart.template.html'
+            controllerAs: 'pieCtrl',
+            templateUrl: 'app/dashboard/component/piechart/piechart.template.html',
+            scope: {
+                percent: '@'
+            },
+            link: function (scope, element, attrs, controller) {
+                scope.$watch('percent', function (newValue, oldValue) {
+                    if(newValue !== oldValue){
+                        controller.updatePieCharts();
+                    }
+                });
+            }
         };
     }
 })();

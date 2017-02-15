@@ -26,6 +26,16 @@
                         }
                     }
                 }
+            },
+            {
+                state: 'logout',
+                config: {
+                    url: '/logout',
+                    templateUrl: '',
+                    controller: 'LogOutController',
+                    controllerAs: 'vm',
+                    title: 'logout'
+                }
             }
         ];
     }

@@ -6,12 +6,14 @@
         .factory('user', user);
 
     /* @ngInject */
-    function user(storage) {
+    function user(storage, $window) {
         var currentUser;
 
         var service = {
             setUser: setUser,
-            getUser: getUser
+            getUser: getUser,
+            isLoggedIn: isLoggedIn,
+            logout: logout,
         };
 
         return service;
@@ -26,6 +28,20 @@
                 currentUser = storage.getJsonObject('user');
             }
             return currentUser;
+        }
+
+        function isLoggedIn() {
+            var result = false;
+            if (getUser()) {
+                result = true;
+            }
+            return result;
+        }
+
+        function logout() {
+            delete $window.sessionStorage.token;
+            storage.remove('user');
+
         }
     }
 })();

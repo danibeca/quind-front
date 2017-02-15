@@ -11,27 +11,17 @@
 
     /* @ngInject */
     function DashboardPieChartCtrl($scope, $timeout, baConfig, baUtil) {
+
+        var vm = this;
+        vm.updatePieCharts = updatePieCharts;
+
         var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
         $scope.charts = [{
             color: pieColor,
-            description: 'New Visits',
-            stats: '57,820',
+            description: 'Estado del codigo',
+            stats: '820',
             icon: 'person',
-        }, {
-            color: pieColor,
-            description: 'Purchases',
-            stats: '$ 89,745',
-            icon: 'money',
-        }, {
-            color: pieColor,
-            description: 'Active Users',
-            stats: '178,391',
-            icon: 'face',
-        }, {
-            color: pieColor,
-            description: 'Returned',
-            stats: '32,592',
-            icon: 'refresh',
+            percent: $scope.percent,
         }
         ];
 
@@ -47,13 +37,25 @@
                     onStep: function (from, to, percent) {
                         $(this.el).find('.percent').text(Math.round(percent));
                     },
-                    barColor: chart.attr('rel'),
-                    trackColor: 'rgba(0,0,0,0)',
-                    size: 84,
-                    scaleLength: 0,
-                    animation: 2000,
+                    barColor: function (percent) {
+                        /*percent /= 100;
+                         return "rgb(" + Math.round(255 * (1-percent)) + ", " + Math.round(255 * percent) + ", 0)";*/
+                        var color = '#ed2e08'; //red
+                        if (percent >= 80) {
+                            color = '#5ebe01'; //green
+                        } else if (percent <= 79 && percent >= 51) {
+                            color = '#FFFF4D';//yellow
+                        }
+                        else if (percent <= 50 && percent >= 39) {
+                            color = '#fe7903';//orange
+                        }
+                        return color
+                    },
+
+                    size: 164,
+                    animation: 3000,
                     lineWidth: 9,
-                    lineCap: 'round',
+                    lineCap: 'square',
                 });
             });
 
@@ -63,14 +65,21 @@
         }
 
         function updatePieCharts() {
-            $('.pie-charts .chart').each(function (index, chart) {
-                $(chart).data('easyPieChart').update(getRandomArbitrary(55, 90));
-            });
+            var delay = 0;
+            if ($('.pie-charts .chart').first().data('easyPieChart') === undefined) {
+                delay = 1000;
+            }
+            $timeout(function () {
+                $('.pie-charts .chart').each(function (index, chart) {
+                    $(chart).data('easyPieChart').update($scope.percent);
+
+                });
+            }, delay);
         }
 
         $timeout(function () {
             loadPieCharts();
-            updatePieCharts();
+            //updatePieCharts();
         }, 1000);
     }
 })();

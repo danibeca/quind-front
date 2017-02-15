@@ -41,7 +41,7 @@
             },
             colors: {
                 default: basic.default,
-                defaultText: basic.defaultText,
+                defaultText: colorScheme.success,
                 border: basic.border,
                 borderDark: basic.borderDark,
 

@@ -48,6 +48,9 @@ gulp.task('less-watcher', function () {
     gulp.watch([gConstants.lessWatch], ['styles']);
 });
 
+gulp.task('sonar', getTask('sonar')(gulp, plugins, args));
+
+
 function getTask(task) {
     return require('./gulp_files/gulp_tasks/' + task);
 }

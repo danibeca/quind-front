@@ -25,8 +25,7 @@
             }
 
             function fail(error) {
-                logger.error($filter('translate')('LOGIN_INTERNAL_ERROR'));
-                logger.error(error);
+                logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }
     }

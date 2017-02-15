@@ -6,10 +6,12 @@
 
     /* @ngInject */
     function translateConfig($translateProvider) {
+        var defaultLanguage = 'es';
+
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: 'app/i18n/{part}/{lang}.json'
         });
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage(defaultLanguage);
         $translateProvider.useSanitizeValueStrategy('sanitize');
         $translateProvider.useCookieStorage();
     }

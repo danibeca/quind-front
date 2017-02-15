@@ -30,6 +30,7 @@
                         translations: function (translateHelper) {
                             return translateHelper.addParts('dashboard');
                         }
+
                     }
                 }
             }

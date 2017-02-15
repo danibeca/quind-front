@@ -1,6 +1,6 @@
 {
-  "name": "Zero",
-  "description": "Zero is an app for learning purposes and it's based on John Papa Hot Towel App",
+  "name": "Agilin",
+  "description": "Agilin is an app for learning purposes and it's based on John Papa Hot Towel App",
   "author": "Daniel Betancur <danibeca@okazo.co> (http://okazo.co/)",
   "version": "0.0.1",
   "readme": "README.md",
@@ -20,6 +20,7 @@
     "del": "^2.2.1",
     "glob": "^7.0.5",
     "gulp": "^3.9.1",
+    "sonarqube-scanner": "1.0.0",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-bytediff": "^1.0.0",

@@ -1,12 +1,12 @@
 {
   "local": {
     "environmentConfig": {
-      "api": "http://localhost/laravel/sigma/api"
+      "api": "http://192.168.0.12/laravel/agilin/api"
     }
   },
   "production": {
     "environmentConfig": {
-      "api": "http://localhost/laravel/sigma/api"
+      "api": "http://localhost/laravel/agilin/api"
     }
   }
 }

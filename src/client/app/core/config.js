@@ -11,8 +11,8 @@
     }
 
     var config = {
-        appErrorPrefix: '[Zero Error] ',
-        appTitle: 'Zero'
+        appErrorPrefix: '[Agilin Error] ',
+        appTitle: 'Agilin'
     };
 
     core.value('config', config);

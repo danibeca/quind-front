@@ -7,27 +7,24 @@
     <div class="al-main">
         <div class="al-content">
             <content-top></content-top>
-            <dashboard-pie-chart></dashboard-pie-chart>
+            <div class="col-lg-4 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="Project General Indicator"
+                 ba-panel-class="medium-panel">
+                <a href=""><dashboard-pie-chart  percent="{{vm.percents}}"></dashboard-pie-chart></a>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="Indicator History"
+                 ba-panel-class="medium-panel">
+                <dashboard-line-chart  linedata="{{vm.linedata}}"></dashboard-line-chart >
+            </div>
+
         </div>
 
     </div>
 
-    <footer class="al-footer clearfix">
-        <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
-        <div class="al-footer-main clearfix">
-            <div class="al-copy">Blur Admin 2016</div>
-            <ul class="al-share clearfix">
-                <li><i class="socicon socicon-facebook"></i></li>
-                <li><i class="socicon socicon-twitter"></i></li>
-                <li><i class="socicon socicon-google"></i></li>
-                <li><i class="socicon socicon-github"></i></li>
-            </ul>
-        </div>
-    </footer>
 
     <back-top></back-top>
 </main>
 
-<div id="preloader" ng-show="!$pageFinishedLoading">
-    <div></div>
-</div>

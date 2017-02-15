@@ -3,11 +3,11 @@
 
     angular
         .module('app.core')
-        .factory('authInterceptor', authInterceptor)
+        .factory('requestInterceptor', requestInterceptor)
         .config(config);
 
     /* @ngInject */
-    function authInterceptor($q, $window, $injector) {
+    function requestInterceptor($q, $window, $injector, storage) {
         var service = {
             request: request,
             responseError: responseError
@@ -19,6 +19,10 @@
             config.headers = config.headers || {};
             if ($window.sessionStorage.token) {
                 config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+            }
+
+            if (storage.get('lang')) {
+                config.headers.Language = storage.get('lang');
             }
             return config;
         }
@@ -42,6 +46,6 @@
 
     /* @ngInject */
     function config($httpProvider) {
-        $httpProvider.interceptors.push('authInterceptor');
+        $httpProvider.interceptors.push('requestInterceptor');
     }
 })();

@@ -8,27 +8,45 @@
     box-sizing: border-box;
 
     .panel {
-      height: $small-panel-height;
+      height: $xsmall-panel-height;
     }
   }
   @media screen and (min-width: 1325px) {
     .pie-chart-item-container {
-      width: 25%;
+      width: 100%;
     }
-  }
-  @media screen and (min-width: 700px) and (max-width: 1325px)  {
-    .pie-chart-item-container {
-      width: 50%;
+
+    .description {
+      display: inline-block;
+      font-size: 30px;
+      line-height: 30px;
+      opacity: 0.9;
+      padding: 10px 0 0 150px;
     }
+
   }
-  @media screen and (max-width: 700px)  {
+  @media screen and (min-width: 700px) and (max-width: 1325px) {
     .pie-chart-item-container {
       width: 100%;
     }
   }
+  @media screen and (max-width: 700px) {
+    .pie-chart-item-container {
+      width: 100%;
+    }
+
+    .description {
+      display: inline-block;
+      font-size: 30px;
+      opacity: 0.9;
+      padding: 20px 0 0 180px;
+    }
+
+  }
 
   .pie-chart-item {
     position: relative;
+    text-align: center;
     .chart-icon {
       position: absolute;
       right: 0px;
@@ -36,10 +54,9 @@
       z-index: -1;
     }
   }
-  @media screen and
-    (min-width: 1325px) and (max-width: 1650px),
-    (min-width: 700px) and (max-width: 830px),
-    (max-width: 400px) {
+  @media screen and(min-width: 1325px) and (max-width: 1650px),
+  (min-width: 700px) and (max-width: 830px),
+  (max-width: 400px) {
     .chart-icon {
       display: none;
     }
@@ -58,27 +75,32 @@
     top: 0;
     left: 0;
   }
-  .percent {
+  /*.percent {
     display: inline-block;
     line-height: 84px;
     z-index: 2;
     font-size: 16px;
+  }*/
+
+  .percent {
+    display: inline-block;
+    font-size: 65px;
+    line-height: 250%;
+    padding-left: 30px;
+    z-index: 2;
   }
+
+  .description-stats {
+    padding-top: 8px;
+    font-size: 24px;
+  }
+
   .percent:after {
     content: '%';
     margin-left: 0.1em;
     font-size: .8em;
   }
-  .description {
-    display: inline-block;
-    padding: 20px 0 0 20px;
-    font-size: 18px;
-    opacity: 0.9;
-    .description-stats {
-      padding-top: 8px;
-      font-size: 24px;
-    }
-  }
+
   .angular {
     margin-top: 100px;
   }
