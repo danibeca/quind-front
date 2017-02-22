@@ -1,14 +1,11 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
+/* jshint -W101, -W117 */
 (function () {
     'use strict';
 
     angular.module('app.dashboard')
         .controller('DashboardLineChartCtrl', DashboardLineChartCtrl);
 
-    /** @ngInject */
+    /* @ngInject */
     function DashboardLineChartCtrl($scope, $timeout, baConfig, $element, layoutPaths) {
 
         var vm = this;
@@ -32,6 +29,8 @@
                     position: 'left',
                     gridAlpha: 0.5,
                     gridColor: layoutColors.border,
+                    minimum: 0,
+                    maximum: 100,
                 }
             ],
             graphs: [
@@ -42,9 +41,15 @@
                     bulletSize: 8,
                     lineColor: layoutColors.success,
                     lineThickness: 2,
-                    negativeLineColor: layoutColors.warning,
+                    negativeLineColor: layoutColors.danger,
+                    negativeFillColors:layoutColors.danger,
+                    negativeLineAlpha: 13,
+                    negativeFillAlphas: 12,
+
+                    negativeBase: 60,
                     type: 'smoothedLine',
-                    valueField: 'value'
+                    valueField: 'value',
+
                 }
             ],
             chartScrollbar: {
@@ -63,14 +68,16 @@
                 selectedGraphLineAlpha: 1
             },
             chartCursor: {
-                categoryBalloonDateFormat: 'MM DD YYYY',
+                categoryBalloonDateFormat: 'DD/MM/YYYY',
                 cursorAlpha: 0,
+                color: '#FFFFFF',
+                cursorColor: layoutColors.info,
                 valueLineEnabled: true,
                 valueLineBalloonEnabled: true,
                 valueLineAlpha: 0.5,
                 fullWidth: true
             },
-            dataDateFormat: 'MM DD YYYY',
+            dataDateFormat: 'DD MM YYYY',
             categoryField: 'date',
             categoryAxis: {
                 minPeriod: 'DD',
@@ -86,13 +93,16 @@
             creditsPosition: 'bottom-right',
             pathToImages: layoutPaths.images.amChart
         });
+
         lineChart.addListener('rendered', zoomChart);
         if (lineChart.zoomChart) {
             lineChart.zoomChart();
         }
 
         function zoomChart() {
-            lineChart.zoomToIndexes(Math.round(lineChart.dataProvider.length * 0.4), Math.round(lineChart.dataProvider.length * 0.55));
+            lineChart.zoomToIndexes(
+                Math.round(lineChart.dataProvider.length * 0.4),
+                Math.round(lineChart.dataProvider.length * 0.55));
         }
 
         function updateLineChart() {
@@ -101,14 +111,25 @@
                 delay = 1000;
             }
             $timeout(function () {
-                lineChart.dataProvider = JSON.parse($scope.linedata);
-                lineChart.validateData();
-                vm.firstRun = false;
+                if(IsJsonString($scope.linedata)){
+                    lineChart.dataProvider = JSON.parse($scope.linedata);
+                    lineChart.validateData();
+                    vm.firstRun = false;
+                }
             }, delay);
         }
 
         function isFirstRun() {
             return vm.firstRun;
+        }
+
+        function IsJsonString(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
         }
     }
 
