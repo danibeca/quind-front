@@ -20,7 +20,7 @@
             },
             link: function (scope, element, attrs, controller) {
                 scope.$watch('percent', function (newValue, oldValue) {
-                    if(newValue !== oldValue){
+                    if (newValue !== oldValue) {
                         controller.updatePieCharts();
                     }
                 });

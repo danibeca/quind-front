@@ -77,7 +77,7 @@ describe('LoginController', function () {
 
         //Assert
         $timeout(function () {
-            expect($log.error.logs).to.match(/LOGIN_INTERNAL_ERROR/);
+            expect($log.error.logs).to.match(/LOGIN_FAILED/);
             done();
         }, 1000);
         $timeout.flush();

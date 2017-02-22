@@ -9,5 +9,11 @@
   "SUBMIT_CREDENTIALS": "Ingresar",
   "LOGIN_FAILED": "Credenciales erradas",
   "LOGIN_SUCCESS": "Ingreso realizado",
-  "LOGIN_INTERNAL_ERROR": "Ha ocurrido un error inesperado, intente mas tarde"
+  "LOGIN_INTERNAL_ERROR": "Ha ocurrido un error inesperado, intente mas tarde",
+  "RESET_TITLE": "Reinicia tu password",
+  "SUBMIT_RESET_EMAIL": "Enviar correo",
+  "WRONG_EMAIL": "El email no existe, por favor intenta de nuevo",
+  "EMAIL_SENT": "Para continuar revise su correo y siga las instrucciones dadas",
+  "NEW_PASSWORD_SUCCESS": "Tu password ha sido cambiado"
+
 }

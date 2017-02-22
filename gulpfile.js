@@ -3,6 +3,7 @@ var args = require('yargs').argv;
 var plugins = require('gulp-load-plugins')({lazy: true});
 var gConstants = require('./gulp_files/gulp.user.config').constants();
 var browserSync = require('browser-sync');
+require('events').EventEmitter.defaultMaxListeners = Infinity;
 //var gFun = require('./gulp_files/gulp.user.functions');
 //var gServe = require('./gulp_files/gulp.user.serve');
 

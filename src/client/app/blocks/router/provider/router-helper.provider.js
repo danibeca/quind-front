@@ -14,7 +14,7 @@
             resolveAlways: {}
         };
 
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true).hashPrefix('!');
 
         this.configure = function(cfg) {
             angular.extend(config, cfg);

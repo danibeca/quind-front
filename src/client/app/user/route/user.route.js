@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -21,7 +21,7 @@
                     controllerAs: 'vm',
                     title: 'login',
                     resolve: {
-                        translations:  function(translateHelper) {
+                        translations: function (translateHelper) {
                             return translateHelper.addParts('user');
                         }
                     }
@@ -31,12 +31,45 @@
                 state: 'logout',
                 config: {
                     url: '/logout',
-                    templateUrl: '',
-                    controller: 'LogOutController',
-                    controllerAs: 'vm',
+                    onEnter: function (user) {
+                        user.logout();
+                    },
+                    controller: function ($state) {
+                        $state.go('login');
+                    },
                     title: 'logout'
                 }
-            }
+            },
+            {
+                state: 'passwordemail',
+                config: {
+                    url: '/password/email',
+                    templateUrl: 'app/user/template/password.email.html',
+                    controller: 'PasswordEmailController',
+                    controllerAs: 'vm',
+                    title: 'forgot',
+                    resolve: {
+                        translations: function (translateHelper) {
+                            return translateHelper.addParts('user');
+                        }
+                    }
+                }
+            },
+            {
+                state: 'passwordreset',
+                config: {
+                    url: '/password/reset/:token',
+                    templateUrl: 'app/user/template/password.reset.html',
+                    controller: 'PasswordResetController',
+                    controllerAs: 'vm',
+                    title: 'reset',
+                    resolve: {
+                        translations: function (translateHelper) {
+                            return translateHelper.addParts('user');
+                        }
+                    }
+                }
+            },
         ];
     }
 })();

@@ -7,10 +7,12 @@
     ])
         .run(runApp);
 
-    function runApp($rootScope, $state, $location, user) {
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            if (!user.isLoggedIn()) {
-                $location.url('/login');
+    function runApp($rootScope, $state, user) {
+        $rootScope.$on('$stateChangeStart', function (event, toState) {
+            var routesNoAuth = ['login', 'logout', 'passwordreset', 'passwordemail', '404'];
+            if (!user.isLoggedIn() && routesNoAuth.indexOf(toState.name) < 0) {
+                event.preventDefault();
+                $state.go('login');
             }
         });
     }

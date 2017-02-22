@@ -33,6 +33,16 @@
 
                     }
                 }
+            },
+            {
+                state: 'home',
+                config: {
+                    url: '/',
+                    controller: function ($state) {
+                        $state.go('dashboard');
+                    },
+                    title: 'home'
+                }
             }
         ];
     }

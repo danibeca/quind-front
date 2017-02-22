@@ -25,7 +25,10 @@ module.exports = function (gulp, plugins) {
             .pipe(injectPlugin(gulp.src(config.templateCache, {read: false}), {name: 'templates'}))
             .pipe(plugins.useref({searchPath: ['./']}))
             .pipe(cssFilter)
+            .pipe(plugins.replace('./themes/default/assets/fonts', '../fonts'))
             .pipe(plugins.minifyCss({ keepSpecialComments: 1, processImport: false }))
+
+
             .pipe(cssFilter.restore)
             .pipe(jsAppFilter)
             .pipe(plugins.ngAnnotate({add: true}))

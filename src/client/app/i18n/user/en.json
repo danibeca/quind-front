@@ -10,4 +10,9 @@
   "LOGIN_FAILED": "Invalid credentials",
   "LOGIN_SUCCESS": "Login success",
   "LOGIN_INTERNAL_ERROR": "An error occurred. Please try again later"
+  "RESET_TITLE": "GET NEW PASSWORD",
+  "SUBMIT_RESET_EMAIL": "Send Email",
+  "WRONG_EMAIL": "Wrong email, please try again",
+  "EMAIL_SENT": "Please check your email for further instructions",
+  "NEW_PASSWORD_SUCCESS": "Your password has been changed"
 }

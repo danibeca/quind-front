@@ -1,8 +1,8 @@
 /* jshint -W117, -W030 */
-describe('DashboardController', function() {
-    var controller;
+describe('DashboardController', function () {
+    /*var controller;
 
-    beforeEach(function() {
+    beforeEach(function () {
         bard.appModule('app.dashboard');
         bard.inject('$controller', '$rootScope');
     });
@@ -12,11 +12,9 @@ describe('DashboardController', function() {
         $rootScope.$apply();
     });
 
-    bard.verifyNoOutstandingHttpRequests();
-
-    describe('Dashboar controller', function() {
+    describe('Dashboar controller', function () {
         it('should be created successfully', function () {
             expect(controller).to.be.defined;
         });
-    });
+    });*/
 });

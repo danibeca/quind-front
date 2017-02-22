@@ -3,7 +3,11 @@ module.exports = function (gulp, plugins, args) {
         var gFun = require('../../gulp_files/gulp.user.functions');
         var gConstants = require('../../gulp_files/gulp.user.config').constants();
         var config = {
-            fonts: gConstants.bower.directory + 'font-awesome/fonts/**/*.*',
+            fonts: [gConstants.bower.directory + 'font-awesome/fonts/**/*.*',
+                    gConstants.client + 'fonts/**/*.*',
+                    gConstants.bower.directory + 'semantic-ui/dist/themes/default/assets/fonts/*.*',
+                    gConstants.bower.directory + 'ionicons/fonts/**/*.*',
+            ],
             build: gConstants.build
         };
 

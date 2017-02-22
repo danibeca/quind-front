@@ -17,7 +17,7 @@
 
         var defaultLanguage = 'es';
         if ($cookies.get('NG_TRANSLATE_LANG_KEY')) {
-            //defaultLanguage = $cookies.get('NG_TRANSLATE_LANG_KEY').replace(/^"|"$/g, '');
+            defaultLanguage = $cookies.get('NG_TRANSLATE_LANG_KEY').replace(/^"|"$/g, '');
         }
         storage.set('lang', defaultLanguage);
 

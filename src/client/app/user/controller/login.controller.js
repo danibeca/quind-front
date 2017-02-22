@@ -24,7 +24,7 @@
                 }
             }
 
-            function fail(error) {
+            function fail() {
                 logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }

@@ -25,10 +25,6 @@
         }
         ];
 
-        function getRandomArbitrary(min, max) {
-            return Math.random() * (max - min) + min;
-        }
-
         function loadPieCharts() {
             $('.chart').each(function () {
                 var chart = $(this);
@@ -49,7 +45,7 @@
                         else if (percent <= 50 && percent >= 39) {
                             color = '#fe7903';//orange
                         }
-                        return color
+                        return color;
                     },
 
                     size: 164,
@@ -79,7 +75,6 @@
 
         $timeout(function () {
             loadPieCharts();
-            //updatePieCharts();
         }, 1000);
     }
 })();

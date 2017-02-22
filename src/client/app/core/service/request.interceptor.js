@@ -37,8 +37,10 @@
             }
             msg = msg + ': ' + rejection.config.url;
             //toastr.error(msg);
-            if (rejection.status === 401) {
-                $injector.get('$state').transitionTo('login');
+            if (rejection.data.error.status_code === 401 || rejection.data.error.status_code === 400) {
+                if(rejection.data.error.message.includes('Token')){
+                    $injector.get('$state').transitionTo('login');
+                }
             }
             return $q.reject(rejection);
         }
