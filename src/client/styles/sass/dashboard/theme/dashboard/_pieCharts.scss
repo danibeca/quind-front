@@ -8,7 +8,7 @@
     box-sizing: border-box;
 
     .panel {
-      height: $xsmall-panel-height;
+      height: 300px;
     }
   }
   @media screen and (min-width: 1325px) {
@@ -24,12 +24,27 @@
       padding: 10px 0 0 150px;
     }
 
+    .chart{
+      left: 50px;
+      top: 20px;
+    }
+
   }
   @media screen and (min-width: 700px) and (max-width: 1325px) {
     .pie-chart-item-container {
       width: 100%;
     }
+
   }
+
+  @media screen and (min-width: 700px) and (max-width: 1650px) {
+    .chart canvas {
+      position: absolute;
+      top: 10%;
+      left: 18%;
+    }
+  }
+
   @media screen and (max-width: 700px) {
     .pie-chart-item-container {
       width: 100%;
@@ -42,11 +57,18 @@
       padding: 20px 0 0 180px;
     }
 
+    .chart canvas {
+      position: absolute;
+      top: 10%;
+      left: 0;
+    }
+
   }
 
   .pie-chart-item {
-    position: relative;
-    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
     .chart-icon {
       position: absolute;
       right: 0px;
@@ -63,17 +85,14 @@
   }
 
   .chart {
-    position: relative;
-    display: inline-block;
-    width: 84px;
-    height: 84px;
+
+    width: 100%;
+    height: 100%;
     text-align: center;
-    float: left;
+    margin: 0 auto;
   }
   .chart canvas {
     position: absolute;
-    top: 0;
-    left: 0;
   }
   /*.percent {
     display: inline-block;
@@ -84,10 +103,12 @@
 
   .percent {
     display: inline-block;
+    position: absolute;
     font-size: 65px;
     line-height: 250%;
-    padding-left: 30px;
     z-index: 2;
+    left: 32%;
+    top: 20%;
   }
 
   .description-stats {

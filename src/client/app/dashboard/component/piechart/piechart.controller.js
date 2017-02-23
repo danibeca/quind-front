@@ -48,7 +48,7 @@
                         return color;
                     },
 
-                    size: 164,
+                    size: 220,
                     animation: 3000,
                     lineWidth: 9,
                     lineCap: 'square',

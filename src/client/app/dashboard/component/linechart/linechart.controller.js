@@ -39,10 +39,10 @@
                     balloonText: '[[value]]',
                     bullet: 'round',
                     bulletSize: 8,
-                    lineColor: layoutColors.success,
+                    lineColor: layoutColors.info,
                     lineThickness: 2,
-                    negativeLineColor: layoutColors.danger,
-                    negativeFillColors:layoutColors.danger,
+                    negativeLineColor: layoutColors.info,
+                    negativeFillColors: layoutColors.info,
                     negativeLineAlpha: 13,
                     negativeFillAlphas: 12,
 
@@ -111,7 +111,7 @@
                 delay = 1000;
             }
             $timeout(function () {
-                if(IsJsonString($scope.linedata)){
+                if (isJsonString($scope.linedata)) {
                     lineChart.dataProvider = JSON.parse($scope.linedata);
                     lineChart.validateData();
                     vm.firstRun = false;
@@ -123,7 +123,7 @@
             return vm.firstRun;
         }
 
-        function IsJsonString(str) {
+        function isJsonString(str) {
             try {
                 JSON.parse(str);
             } catch (e) {

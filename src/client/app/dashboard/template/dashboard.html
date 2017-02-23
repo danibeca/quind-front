@@ -9,13 +9,13 @@
             <content-top></content-top>
             <div class="col-lg-4 col-md-12 col-sm-12"
                  ba-panel
-                 ba-panel-title="Project General Indicator"
+                 ba-panel-title="{{ 'ACCOUNT_GENERAL_INDICATOR' | translate }}"
                  ba-panel-class="medium-panel">
                 <a href=""><dashboard-pie-chart  percent="{{vm.percents}}"></dashboard-pie-chart></a>
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel
-                 ba-panel-title="Indicator History"
+                 ba-panel-title="{{ 'INDICATOR_HISTORY' | translate }}"
                  ba-panel-class="medium-panel">
                 <dashboard-line-chart  linedata="{{vm.linedata}}"></dashboard-line-chart >
             </div>
