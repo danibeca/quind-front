@@ -1,6 +1,6 @@
 {
-  "name": "Agilin",
-  "description": "Agilin is an app for learning purposes and it's based on John Papa Hot Towel App",
+  "name": "Agilin Front",
+  "description": "Agilin is an application to manage indicators",
   "author": "Daniel Betancur <danibeca@okazo.co> (http://okazo.co/)",
   "version": "0.0.1",
   "readme": "README.md",
