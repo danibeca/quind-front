@@ -22,7 +22,7 @@ function serve(isDev, specRunner, gulp, plugins, args) {
         nodeServer: gConstants.nodeServer,
         browserReloadDelay: 1000,
         less: gConstants.less,
-        lessWatch: gConstants.lessWatch,
+        styleWatch: gConstants.styleWatch,
         js: gConstants.js,
         html: gConstants.html,
         client: gConstants.client,
@@ -101,7 +101,7 @@ function startBrowserSync(isDev, specRunner, config, browserSync, port, gulp, ar
     // If build: watches the files, builds, and restarts browser-sync.
     // If dev: watches less, compiles it to css, browser-sync handles reload
     if (isDev) {
-        gulp.watch([config.lessWatch], ['styles'])
+        gulp.watch([config.styleWatch], ['styles'], ['browserSyncReload'])
             .on('change', changeEvent);
     } else {
         gulp.watch([config.less, config.js, config.html], ['browserSyncReload'])
@@ -141,8 +141,8 @@ function startBrowserSync(isDev, specRunner, config, browserSync, port, gulp, ar
      * @param  {Object} event - event that fired
      */
     function changeEvent(event) {
-        //var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
-        //gFun.log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type, plugins);
+        var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
+        gFun.log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type, plugins);
     }
 
 

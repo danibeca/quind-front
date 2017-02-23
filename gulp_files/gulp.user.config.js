@@ -33,7 +33,7 @@ function constants() {
             client + 'styles/sass/dashboard/theme/conf/**/*.scss'
         ],
         sass: client + 'styles/sass/styles2.scss',
-        lessWatch: client + 'styles/less/**/*.less',
+        styleWatch: [client + 'styles/less/**/*.less',client + 'styles/sass/dashboard/**/*.scss'],
         index: client + 'index.html',
         css: temp + '**/*.css',
         js: [
