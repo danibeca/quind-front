@@ -13,15 +13,21 @@
         return {
             restrict: 'E',
             controller: 'DashboardLineChartCtrl',
-            controllerAs: 'lineCtrl',
+            controllerAs: 'vm',
             templateUrl: 'app/dashboard/component/linechart/linechart.template.html',
             scope: {
-                linedata: '@'
+                linedata: '@',
+                lineid: '@'
             },
             link: function (scope, element, attrs, controller) {
-                scope.$watch('linedata', function (newValue, oldValue) {
-                    if (newValue !== oldValue || controller.isFirstRun()) {
-                        controller.updateLineChart();
+                scope.$watch('linedata', function () {
+                    if (controller.isJsonString(scope.linedata)) {
+                        var dataProvider = JSON.parse(scope.linedata);
+                        if (controller.chart === undefined) {
+                            controller.createLineChart(scope.lineid, dataProvider);
+                        } else {
+                            controller.updateLineChart(dataProvider);
+                        }
                     }
                 });
             }
