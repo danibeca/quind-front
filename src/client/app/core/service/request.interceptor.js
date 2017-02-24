@@ -7,7 +7,7 @@
         .config(config);
 
     /* @ngInject */
-    function requestInterceptor($q, $window, $injector, storage) {
+    function requestInterceptor($q, $window, $injector, storage, environmentConfig, toastr) {
         var service = {
             request: request,
             responseError: responseError
@@ -28,19 +28,22 @@
         }
 
         function responseError(rejection) {
-            console.log(rejection);
-            var msg = null;
-            if (rejection.data.error) {
-                msg = rejection.data.error.message;
-            } else {
-                msg = JSON.parse(rejection.data).message;
-            }
-            msg = msg + ': ' + rejection.config.url;
-            //toastr.error(msg);
-            if (rejection.data.error.statusCode === 401 || rejection.data.error.statusCode === 400) {
-                if (rejection.data.error.message.includes('Token')) {
-                    $injector.get('$state').transitionTo('login');
+            if (environmentConfig.env === 'dev') {
+                console.log(rejection);
+                var msg = ': ' + rejection.config.url;
+                if (rejection.data.error) {
+                    msg = rejection.data.error.message + msg;
+                } else {
+                    msg = JSON.parse(rejection.data).message + msg;
                 }
+
+                toastr.error(msg);
+            }
+            if ((rejection.data.error.statusCode === 401
+                || rejection.data.error.statusCode === 400)
+                && (rejection.data.error.message.includes('Token'))) {
+
+                $injector.get('$state').transitionTo('login');
             }
             return $q.reject(rejection);
         }

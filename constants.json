@@ -1,12 +1,14 @@
 {
   "local": {
     "environmentConfig": {
-      "api": "http://192.168.0.12/laravel/agilin/api"
+      "api": "http://localhost/laravel/agilin/api",
+      "env": "dev"
     }
   },
   "production": {
     "environmentConfig": {
-      "api": "http://localhost/laravel/agilin/api"
+      "api": "http://localhost/laravel/agilin/api",
+      "env": "pdn"
     }
   }
 }

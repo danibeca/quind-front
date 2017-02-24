@@ -34,8 +34,6 @@
                         $(this.el).find('.percent').text(Math.round(percent));
                     },
                     barColor: function (percent) {
-                        /*percent /= 100;
-                         return "rgb(" + Math.round(255 * (1-percent)) + ", " + Math.round(255 * percent) + ", 0)";*/
                         var color = '#ed2e08'; //red
                         if (percent >= 80) {
                             color = '#5ebe01'; //green
