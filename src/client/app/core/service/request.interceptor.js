@@ -39,11 +39,10 @@
 
                 toastr.error(msg);
             }
-            if ((rejection.data.error.statusCode === 401
-                || rejection.data.error.statusCode === 400)
-                && (rejection.data.error.message.includes('Token'))) {
-
-                $injector.get('$state').transitionTo('login');
+            if (rejection.data.error.statusCode === 401 || rejection.data.error.statusCode === 400) {
+                if (rejection.data.error.message.includes('Token')) {
+                    $injector.get('$state').transitionTo('login');
+                }
             }
             return $q.reject(rejection);
         }

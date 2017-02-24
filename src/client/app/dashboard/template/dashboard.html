@@ -12,7 +12,7 @@
                  ba-panel-title="{{ 'ACCOUNT_GENERAL_INDICATOR' | translate }}"
                  ba-panel-class="medium-panel">
                 <a href="">
-                    <dashboard-pie-chart percent="{{vm.percents}}"></dashboard-pie-chart>
+                    <dashboard-pie-chart percent="{{vm.percents}}" chartid="chart1"></dashboard-pie-chart>
                 </a>
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12"
@@ -22,9 +22,8 @@
                 <dashboard-line-chart linedata="{{vm.linedata}}" lineid="series1"></dashboard-line-chart>
             </div>
         </div>
-
     </div>
-
+    
     <back-top></back-top>
 </main>
 
