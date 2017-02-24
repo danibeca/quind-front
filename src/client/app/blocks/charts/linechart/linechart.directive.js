@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.dashboard')
+    angular.module('blocks.charts')
         .directive('dashboardLineChart', dashboardLineChart);
 
     /* @ngInject */
@@ -14,7 +14,7 @@
             restrict: 'E',
             controller: 'DashboardLineChartCtrl',
             controllerAs: 'vm',
-            templateUrl: 'app/dashboard/component/linechart/linechart.template.html',
+            templateUrl: 'app/blocks/charts/linechart/linechart.template.html',
             scope: {
                 linedata: '@',
                 lineid: '@'

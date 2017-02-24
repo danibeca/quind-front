@@ -120,9 +120,10 @@
 <!-- build:js js/app.js -->
 <!-- inject:js -->
 <script src="/src/client/app/app.module.js"></script>
-<script src="/src/client/app/dashboard/dashboard.module.js"></script>
 <script src="/src/client/app/core/core.module.js"></script>
+<script src="/src/client/app/dashboard/dashboard.module.js"></script>
 <script src="/src/client/app/user/user.module.js"></script>
+<script src="/src/client/app/blocks/charts/charts.module.js"></script>
 <script src="/src/client/app/blocks/constants/constants.module.js"></script>
 <script src="/src/client/app/blocks/exception/exception.module.js"></script>
 <script src="/src/client/app/blocks/logger/logger.module.js"></script>
@@ -135,23 +136,26 @@
 <script src="/src/client/app/core/config.js"></script>
 <script src="/src/client/app/core/constants.js"></script>
 <script src="/src/client/app/blocks/rest/rest.config.js"></script>
-<script src="/src/client/app/blocks/theme/theme.config.js"></script>
 <script src="/src/client/app/blocks/theme/theme.configProvider.js"></script>
 <script src="/src/client/app/blocks/theme/theme.constants.js"></script>
 <script src="/src/client/app/blocks/theme/theme.run.js"></script>
 <script src="/src/client/app/blocks/theme/theme.service.js"></script>
 <script src="/src/client/app/blocks/translate/translate.config.js"></script>
 <script src="/src/client/app/blocks/translate/translate.run.js"></script>
-<script src="/src/client/app/dashboard/controller/dashboard.controller.js"></script>
-<script src="/src/client/app/dashboard/route/dashboard.route.js"></script>
 <script src="/src/client/app/core/route/core.route.js"></script>
 <script src="/src/client/app/core/service/request.interceptor.js"></script>
+<script src="/src/client/app/dashboard/controller/dashboard.controller.js"></script>
+<script src="/src/client/app/dashboard/route/dashboard.route.js"></script>
 <script src="/src/client/app/user/controller/login.controller.js"></script>
 <script src="/src/client/app/user/controller/password.email.controller.js"></script>
 <script src="/src/client/app/user/controller/password.reset.controller.js"></script>
 <script src="/src/client/app/user/route/user.route.js"></script>
 <script src="/src/client/app/user/service/authentication.service.js"></script>
 <script src="/src/client/app/user/service/user.service.js"></script>
+<script src="/src/client/app/blocks/charts/linechart/linechart.controller.js"></script>
+<script src="/src/client/app/blocks/charts/linechart/linechart.directive.js"></script>
+<script src="/src/client/app/blocks/charts/piechart/piechart.controller.js"></script>
+<script src="/src/client/app/blocks/charts/piechart/piechart.directive.js"></script>
 <script src="/src/client/app/blocks/exception/provider/exception-handler.provider.js"></script>
 <script src="/src/client/app/blocks/exception/service/exception.service.js"></script>
 <script src="/src/client/app/blocks/logger/service/logger.service.js"></script>
@@ -171,10 +175,6 @@
 <script src="/src/client/app/blocks/theme/services/preloader.js"></script>
 <script src="/src/client/app/blocks/theme/services/stopableInterval.js"></script>
 <script src="/src/client/app/blocks/translate/provider/translate.provider.js"></script>
-<script src="/src/client/app/dashboard/component/linechart/linechart.controller.js"></script>
-<script src="/src/client/app/dashboard/component/linechart/linechart.directive.js"></script>
-<script src="/src/client/app/dashboard/component/piechart/piechart.controller.js"></script>
-<script src="/src/client/app/dashboard/component/piechart/piechart.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/backTop/backTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/baPanel/baPanel.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/baPanel/baPanel.service.js"></script>
@@ -191,8 +191,8 @@
 <script src="/src/client/app/blocks/theme/components/contentTop/contentTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/msgCenter/msgCenter.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/msgCenter/MsgCenterCtrl.js"></script>
-<script src="/src/client/app/blocks/theme/components/pageTop/pageTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/widgets/widgets.directive.js"></script>
+<script src="/src/client/app/blocks/theme/components/pageTop/pageTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/filters/image/appImage.js"></script>
 <script src="/src/client/app/blocks/theme/filters/image/kameleonImg.js"></script>
 <script src="/src/client/app/blocks/theme/filters/image/profilePicture.js"></script>

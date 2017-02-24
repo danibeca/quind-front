@@ -13,6 +13,7 @@
             'blocks.rest',
             'blocks.constants',
             'blocks.theme',
+            'blocks.charts',
             'ui.router', 'ngplus'
         ]);
 })();
