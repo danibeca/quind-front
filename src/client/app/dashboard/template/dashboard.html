@@ -10,6 +10,7 @@
             <div class="col-lg-4 col-md-12 col-sm-12"
                  ba-panel
                  ba-panel-title="{{ 'ACCOUNT_GENERAL_INDICATOR' | translate }}"
+                 ba-panel-title-ext="{{vm.user.accountName}}"
                  ba-panel-class="medium-panel">
                 <a href="">
                     <dashboard-pie-chart percent="{{vm.percents}}" chartid="chart1"></dashboard-pie-chart>
@@ -18,6 +19,7 @@
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel
                  ba-panel-title="{{ 'INDICATOR_HISTORY' | translate }}"
+                 ba-panel-title-ext="{{vm.user.accountName}}"
                  ba-panel-class="medium-panel">
                 <dashboard-line-chart linedata="{{vm.linedata}}" lineid="series1"></dashboard-line-chart>
             </div>

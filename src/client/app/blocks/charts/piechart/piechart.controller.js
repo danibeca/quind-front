@@ -15,11 +15,10 @@
         var vm = this;
         vm.color = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
         vm.id = $scope.chartid;
-        vm.percent = 0;
         vm.createPieChart = createPieChart;
         vm.updatePieChart = updatePieChart;
 
-        function createPieChart(id) {
+        function createPieChart(id, value) {
             var chart = $('#' + id);
             chart.easyPieChart({
                 easing: 'easeOutBounce',

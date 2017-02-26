@@ -1,0 +1,34 @@
+<div class="body-bg"></div>
+<main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+
+    <ba-sidebar></ba-sidebar>
+    <page-top></page-top>
+
+    <div class="al-main">
+        <div class="al-content">
+            <content-top></content-top>
+            <div ng-repeat="system in vm.systems">
+                <div class="col-lg-4 col-md-12 col-sm-12"
+                     ba-panel
+                     ba-panel-title="{{ 'ACCOUNT_GENERAL_INDICATOR' | translate }}"
+                     ba-panel-title-ext="{{system.name}}"
+                     ba-panel-class="medium-panel">
+                    <a href="">
+                        <dashboard-pie-chart percent="{{system.percent}}" chartid="chartsis{{system.id}}"></dashboard-pie-chart>
+                    </a>
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12"
+                     ba-panel
+                     ba-panel-title="{{ 'INDICATOR_HISTORY' | translate }}"
+                     ba-panel-title-ext="{{system.name}}"
+                     ba-panel-class="medium-panel">
+                    <dashboard-line-chart linedata="{{system.linedata}}" lineid="seriessis{{system.id}}"></dashboard-line-chart>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <back-top></back-top>
+</main>
+

@@ -3,7 +3,9 @@
 
     angular.module('app', [
         'app.user',
-        'app.dashboard'
+        'app.dashboard',
+        'app.systems',
+        'app.applications'
     ])
         .run(runApp);
 

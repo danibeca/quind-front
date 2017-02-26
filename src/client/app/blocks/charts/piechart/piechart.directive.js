@@ -21,12 +21,23 @@
             },
             link: function (scope, element, attrs, controller) {
                 scope.$watch('percent', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
+                    if (newValue !== oldValue || controller.pie === undefined) {
+                        var ready = false;
                         controller.percent = scope.percent;
-                        if (controller.pie === undefined) {
-                            controller.createPieChart(scope.chartid);
+                        if (controller.pie === undefined && newValue !== '') {
+                            var delay = 0;
+                            if(controller.percent !== undefined){
+                                delay = 100;
+                            }
+                            setTimeout(function(){
+                                controller.createPieChart(scope.chartid);
+                                var ready = true;
+
+                            }, delay);
                         }
-                        controller.updatePieChart(scope.percent);
+                        if(ready){
+                            controller.updatePieChart(scope.percent);
+                        }
                     }
                 });
             }
