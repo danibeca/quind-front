@@ -40,11 +40,32 @@
                 toastr.error(msg);
             }
             if (rejection.data.error.statusCode === 401 || rejection.data.error.statusCode === 400) {
-                if (rejection.data.error.message.includes('Token')) {
-                    $injector.get('$state').transitionTo('login');
+                var msg = rejection.data.error.message;
+                if (msg.includes('Token')) {
+                    if (msg.includes('not be verified')) {
+                        var deferred = $q.defer();
+                        retryHttpRequest(rejection.config, deferred);
+                        return deferred.promise;
+                    } else {
+                        $injector.get('$state').transitionTo('login');
+                    }
+
                 }
             }
             return $q.reject(rejection);
+        }
+
+        function retryHttpRequest(config, deferred) {
+            function successCallback(response) {
+                deferred.resolve(response);
+            }
+
+            function errorCallback(response) {
+                deferred.reject(response);
+            }
+
+            var $http = $injector.get('$http');
+            $http(config).then(successCallback, errorCallback);
         }
     }
 
