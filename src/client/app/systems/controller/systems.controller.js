@@ -6,7 +6,7 @@
         .controller('SystemsController', SystemsController);
 
     /* @ngInject */
-    function SystemsController(Restangular, user, $scope, $timeout) {
+    function SystemsController(Restangular, user, $scope, $timeout, spinnerService) {
         /*jshint unused:false*/
         var vm = this;
 
@@ -26,6 +26,7 @@
                         .getList('series').then(function (series) {
                         system.linedata = series.plain();
                         vm.systems.push(system);
+                        spinnerService.hide('systemsSpinner');
                     });
 
                 });

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,14 +6,14 @@
         .factory('exception', exception);
 
     /* @ngInject */
-    function exception($q, logger) {
+    function exception($q, logger, environmentConfig) {
         var service = {
             catcher: catcher
         };
         return service;
 
         function catcher(message) {
-            return function(e) {
+            return function (e) {
                 var thrownDescription;
                 var newMessage;
                 if (e.data && e.data.description) {
@@ -21,7 +21,9 @@
                     newMessage = message + thrownDescription;
                 }
                 e.data.description = newMessage;
-                logger.error(newMessage);
+                if (environmentConfig.env === 'dev') {
+                    logger.error(newMessage);
+                }
                 return $q.reject(e);
             };
         }

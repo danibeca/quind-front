@@ -20,10 +20,10 @@
                 if (attrs.baPanelTitle) {
                     var titleTpl = '<div class="panel-heading clearfix"><h3 class="panel-title">';
                     titleTpl += attrs.baPanelTitle;
-                    if(attrs.baPanelTitleExt !== undefined){
-                        titleTpl += '  <span class="panel-heading-title-ext">'+attrs.baPanelTitleExt + '</span>';
+                    if (attrs.baPanelTitleExt !== undefined) {
+                        titleTpl += '  <span class="panel-heading-title-ext">' + attrs.baPanelTitleExt + '</span>';
                     }
-                    titleTpl +='</h3></div>';
+                    titleTpl += '</h3></div>';
                     res = titleTpl + res; // title should be before
                 }
 

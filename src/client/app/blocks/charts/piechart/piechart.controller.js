@@ -18,7 +18,7 @@
         vm.createPieChart = createPieChart;
         vm.updatePieChart = updatePieChart;
 
-        function createPieChart(id, value) {
+        function createPieChart(id) {
             var chart = $('#' + id);
             chart.easyPieChart({
                 easing: 'easeOutBounce',
@@ -49,5 +49,6 @@
         function updatePieChart(percent) {
             vm.pie.data('easyPieChart').update(percent);
         }
+
     }
 })();

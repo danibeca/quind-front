@@ -7,7 +7,7 @@
   },
   "production": {
     "environmentConfig": {
-      "api": "http://localhost/laravel/agilin/api",
+      "api": "http://quind2.okazo.co/api",
       "env": "pdn"
     }
   }

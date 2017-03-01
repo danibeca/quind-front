@@ -83,6 +83,13 @@
   -ms-animation:     @name @duration @delay @ease;
 }
 
+.animation-delay(@duration: 300ms){
+  -webkit-animation-delay: @duration;
+  -moz-animation-delay: @duration;
+  -o-animation-delay: @duration;
+  animation-delay: @duration;
+}
+
 .transition (@transition) {
   -webkit-transition: @transition;  
   -moz-transition:    @transition;

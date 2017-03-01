@@ -9,7 +9,7 @@
         .directive('dashboardPieChart', dashboardPieChart);
 
     /* @ngInject */
-    function dashboardPieChart() {
+    function dashboardPieChart(spinnerService) {
         return {
             restrict: 'E',
             controller: 'DashboardPieChartCtrl',
@@ -22,23 +22,23 @@
             link: function (scope, element, attrs, controller) {
                 scope.$watch('percent', function (newValue, oldValue) {
                     if (newValue !== oldValue || controller.pie === undefined) {
-                        var ready = false;
                         controller.percent = scope.percent;
                         if (controller.pie === undefined && newValue !== '') {
+                            spinnerService.hide('html5spinner' + controller.id);
                             var delay = 0;
-                            if(controller.percent !== undefined){
-                                delay = 100;
+                            if (controller.percent !== undefined) {
+                                delay = 50;
                             }
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 controller.createPieChart(scope.chartid);
-                                var ready = true;
 
                             }, delay);
                         }
-                        if(ready){
-                            controller.updatePieChart(scope.percent);
-                        }
+                    } else if (controller.pie !== undefined) {
+                        controller.updatePieChart(scope.percent);
                     }
+
+
                 });
             }
         };

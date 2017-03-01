@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('blocks.charts', []);
+        .module('blocks.charts', ['angularSpinners']);
 
 })();
 

@@ -1,8 +1,16 @@
 <div class="row pie-charts">
+    <spinner name="html5spinner{{ vm.id }}" show="true">
+        <div class="pie-overlay"></div>
+        <div class="pie-spinner">
+            <div class="pie-bounce1"></div>
+            <div class="pie-bounce2"></div>
+        </div>
+        <div class="pie-please-wait">Cargando...</div>
+    </spinner>
     <div class="pie-chart-item-container" >
         <div ba-panel>
             <div class="pie-chart-item">
-                <div class="chart" rel="{{ vm.color }}" data-percent="{{ vm.percent || 0 }}" id="{{ vm.id }}"><span class="percent"></span></div>
+                <div class="chart" rel="{{ vm.color }}" data-percent="{{ vm.percent}}" id="{{ vm.id }}"><span class="percent" ng-show="vm.percent > 0"></span></div>
             </div>
         </div>
     </div>

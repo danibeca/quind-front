@@ -28,19 +28,14 @@
         }
 
         function responseError(rejection) {
+            var msg = getErrorMessage(rejection);
+
             if (environmentConfig.env === 'dev') {
                 console.log(rejection);
-                var msg = ': ' + rejection.config.url;
-                if (rejection.data.error) {
-                    msg = rejection.data.error.message + msg;
-                } else {
-                    msg = JSON.parse(rejection.data).message + msg;
-                }
-
-                toastr.error(msg);
+                toastr.error(rejection.config.url + ': ' + msg);
             }
+
             if (rejection.data.error.statusCode === 401 || rejection.data.error.statusCode === 400) {
-                var msg = rejection.data.error.message;
                 if (msg.includes('Token')) {
                     if (msg.includes('not be verified')) {
                         var deferred = $q.defer();
@@ -49,7 +44,6 @@
                     } else {
                         $injector.get('$state').transitionTo('login');
                     }
-
                 }
             }
             return $q.reject(rejection);
@@ -66,6 +60,16 @@
 
             var $http = $injector.get('$http');
             $http(config).then(successCallback, errorCallback);
+        }
+
+        function getErrorMessage(rejection) {
+            var result = null;
+            if (rejection.data.error) {
+                result = rejection.data.error.message;
+            } else {
+                result = JSON.parse(rejection.data).message;
+            }
+            return result;
         }
     }
 
