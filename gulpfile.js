@@ -23,6 +23,7 @@ gulp.task('clean-html', getTask('clean-html')(gulp, plugins, args));
 gulp.task('clean-js', getTask('clean-js')(gulp, plugins, args));
 
 gulp.task('styles', ['clean-styles'], getTask('styles')(gulp, plugins, args));
+gulp.task('google-fonts', [], getTask('google-fonts')(gulp, plugins, args));
 gulp.task('fonts', ['clean-fonts'], getTask('fonts')(gulp, plugins, args));
 gulp.task('images', ['clean-images'], getTask('images')(gulp, plugins, args));
 gulp.task('template-cache', ['clean-html', 'clean-js'], getTask('template-cache')(gulp, plugins, args));
@@ -31,7 +32,7 @@ gulp.task('dev-constants', getTask('environment-constants')(gulp, plugins, 'dev'
 gulp.task('pdn-constants', getTask('environment-constants')(gulp, plugins, 'pdn'));
 
 gulp.task('wiredep', getTask('wiredep')(gulp, plugins, args));
-gulp.task('inject', ['wiredep', 'styles', 'template-cache'], getTask('inject')(gulp, plugins, args));
+gulp.task('inject', ['wiredep', 'styles', 'google-fonts', 'template-cache'], getTask('inject')(gulp, plugins, args));
 
 gulp.task('build-specs', getTask('build-specs')(gulp, plugins, args));
 gulp.task('serve-specs', ['build-specs'], getTask('serve-specs')(gulp, plugins, args));

@@ -6,7 +6,7 @@
         .controller('DashboardController', DashboardController);
 
     /* @ngInject */
-    function DashboardController(Restangular, user) {
+    function DashboardController(Restangular, user, spinnerService) {
         /*jshint unused:false*/
         var vm = this;
         vm.account = [];
@@ -14,9 +14,18 @@
 
         Restangular.one('accounts', vm.user.accountId)
             .one('indicators', 1)
-            .get().then(function (indicator) {
+            .get().then(success)
+            .catch(fail);
+
+        function success(indicator) {
             vm.percents = indicator.data.value;
-        });
+        }
+
+        function fail() {
+            spinnerService.hide('html5spinnerchart1');
+            vm.error = true;
+        }
+
 
         Restangular.one('accounts', vm.user.accountId)
             .one('indicators', 1)

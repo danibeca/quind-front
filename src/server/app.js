@@ -21,12 +21,12 @@ console.log('About to crank up node');
 console.log('PORT=' + port);
 console.log('NODE_ENV=' + environment);
 
-switch (environment){
+switch (environment) {
     case 'build':
         console.log('** BUILD **');
         app.use(express.static('./build/'));
         // Any invalid calls for templateUrls are under app/* and should return 404
-        app.use('/app/*', function(req, res) {
+        app.use('/app/*', function (req, res) {
             four0four.send404(req, res);
         });
         // Any deep link calls should return index.html
@@ -38,7 +38,7 @@ switch (environment){
         app.use(express.static('./'));
         app.use(express.static('./tmp'));
         // Any invalid calls for templateUrls are under app/* and should return 404
-        app.use('/app/*', function(req, res) {
+        app.use('/app/*', function (req, res) {
             four0four.send404(req, res);
         });
         // Any deep link calls should return index.html
@@ -46,9 +46,9 @@ switch (environment){
         break;
 }
 
-app.listen(port, function() {
+app.listen(port, function () {
     console.log('Express server listening on port ' + port);
     console.log('env = ' + app.get('env') +
-        '\n__dirname = ' + __dirname  +
+        '\n__dirname = ' + __dirname +
         '\nprocess.cwd = ' + process.cwd());
 });

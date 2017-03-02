@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <base href="/">
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900&subset=latin,greek,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
-    <!-- build:css styles/lib.css -->
+    <!-- build:css styles/all.css -->
+
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.css" />
     <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css" />
@@ -34,16 +34,15 @@
     <link rel="stylesheet" href="/bower_components/ionrangeslider/css/ion.rangeSlider.css" />
     <link rel="stylesheet" href="/bower_components/ionrangeslider/css/ion.rangeSlider.skinFlat.css" />
     <!-- endbower -->
-    <!-- endbuild -->
 
-    <!-- build:css styles/app.css -->
     <!-- inject:css -->
-
+    <link rel="stylesheet" href="/.tmp/eot.css">
     <link rel="stylesheet" href="/.tmp/styles.css">
-
     <link rel="stylesheet" href="/.tmp/styles2.css">
-
+    <link rel="stylesheet" href="/.tmp/woff.css">
+    <link rel="stylesheet" href="/.tmp/woff2.css">
     <!-- endinject -->
+
     <!-- endbuild -->
 </head>
 <body>
@@ -51,7 +50,7 @@
 <div id="preloader" ng-show="!$pageFinishedLoading">
     <div></div>
 </div>
-<!-- build:js js/lib.js -->
+<!-- build:js js/all.js -->
 <!-- bower:js -->
 <script src="/bower_components/Chart.js/Chart.js"></script>
 <script src="/bower_components/amcharts/dist/amcharts/amcharts.js"></script>
@@ -116,9 +115,9 @@
 <script src="/bower_components/angular-spinners/dist/angular-spinners.min.js"></script>
 <script src="/bower_components/ionrangeslider/js/ion.rangeSlider.js"></script>
 <!-- endbower -->
-<!-- endbuild -->
 
-<!-- build:js js/app.js -->
+
+
 <!-- inject:js -->
 <script src="/src/client/app/app.module.js"></script>
 <script src="/src/client/app/applications/applications.module.js"></script>
@@ -130,8 +129,8 @@
 <script src="/src/client/app/blocks/constants/constants.module.js"></script>
 <script src="/src/client/app/blocks/exception/exception.module.js"></script>
 <script src="/src/client/app/blocks/logger/logger.module.js"></script>
-<script src="/src/client/app/blocks/rest/rest.module.js"></script>
 <script src="/src/client/app/blocks/router/router.module.js"></script>
+<script src="/src/client/app/blocks/rest/rest.module.js"></script>
 <script src="/src/client/app/blocks/storage/storage.module.js"></script>
 <script src="/src/client/app/blocks/theme/theme.module.js"></script>
 <script src="/src/client/app/blocks/translate/translate.module.js"></script>
@@ -153,20 +152,19 @@
 <script src="/src/client/app/dashboard/route/dashboard.route.js"></script>
 <script src="/src/client/app/systems/controller/systems.controller.js"></script>
 <script src="/src/client/app/systems/route/systems.route.js"></script>
-<script src="/src/client/app/user/route/user.route.js"></script>
-<script src="/src/client/app/user/service/authentication.service.js"></script>
-<script src="/src/client/app/user/service/user.service.js"></script>
 <script src="/src/client/app/user/controller/login.controller.js"></script>
 <script src="/src/client/app/user/controller/password.email.controller.js"></script>
 <script src="/src/client/app/user/controller/password.reset.controller.js"></script>
+<script src="/src/client/app/user/route/user.route.js"></script>
+<script src="/src/client/app/user/service/authentication.service.js"></script>
+<script src="/src/client/app/user/service/user.service.js"></script>
 <script src="/src/client/app/blocks/charts/linechart/linechart.controller.js"></script>
 <script src="/src/client/app/blocks/charts/linechart/linechart.directive.js"></script>
 <script src="/src/client/app/blocks/charts/piechart/piechart.controller.js"></script>
 <script src="/src/client/app/blocks/charts/piechart/piechart.directive.js"></script>
-<script src="/src/client/app/blocks/exception/provider/exception-handler.provider.js"></script>
 <script src="/src/client/app/blocks/exception/service/exception.service.js"></script>
+<script src="/src/client/app/blocks/exception/provider/exception-handler.provider.js"></script>
 <script src="/src/client/app/blocks/logger/service/logger.service.js"></script>
-<script src="/src/client/app/blocks/router/provider/router-helper.provider.js"></script>
 <script src="/src/client/app/blocks/storage/service/storage.service.js"></script>
 <script src="/src/client/app/blocks/theme/directives/animatedChange.js"></script>
 <script src="/src/client/app/blocks/theme/directives/autoExpand.js"></script>
@@ -181,6 +179,7 @@
 <script src="/src/client/app/blocks/theme/services/fileReader.js"></script>
 <script src="/src/client/app/blocks/theme/services/preloader.js"></script>
 <script src="/src/client/app/blocks/theme/services/stopableInterval.js"></script>
+<script src="/src/client/app/blocks/router/provider/router-helper.provider.js"></script>
 <script src="/src/client/app/blocks/translate/provider/translate.provider.js"></script>
 <script src="/src/client/app/blocks/theme/components/backTop/backTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/baPanel/baPanel.directive.js"></script>

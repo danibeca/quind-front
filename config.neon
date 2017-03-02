@@ -1,0 +1,24 @@
+fonts:
+    - #Here starts font declaration
+        family:	Roboto
+        variants:
+            - 400
+            - 100
+            - 100i
+            - 300
+            - 300i
+            - 400i
+            - 500
+            - 500i
+            - 700
+            - 700i
+            - 900i
+            - 500
+        subsets:
+            - latin
+            - greek
+            - greek-ext
+            - vietnamese
+            - cyrillic-ext
+            - latin-ext
+            - cyrillic

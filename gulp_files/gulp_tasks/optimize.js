@@ -10,8 +10,7 @@ module.exports = function (gulp, plugins) {
             build: gConstants.build
         };
 
-        var jsAppFilter = plugins.filter('**/' + 'app.js', {restore: true});
-        var jslibFilter = plugins.filter('**/' + 'lib.js', {restore: true});
+        var jsAppFilter = plugins.filter('**/' + 'all.js', {restore: true});
         var cssFilter = plugins.filter('**/*.css', {restore: true});
         var indexHtmlFilter = plugins.filter(['**/*', '!**/index.html'], { restore: true });
 
@@ -27,17 +26,14 @@ module.exports = function (gulp, plugins) {
             .pipe(cssFilter)
             .pipe(plugins.replace('./themes/default/assets/fonts', '../fonts'))
             .pipe(plugins.minifyCss({ keepSpecialComments: 1, processImport: false }))
-
-
             .pipe(cssFilter.restore)
+
             .pipe(jsAppFilter)
             .pipe(plugins.ngAnnotate({add: true}))
             .pipe(plugins.uglify({ mangle: false }))
             .pipe(getHeader())
             .pipe(jsAppFilter.restore)
-            .pipe(jslibFilter)
-            .pipe(plugins.uglify())
-            .pipe(jslibFilter.restore)
+
             .pipe(indexHtmlFilter)
             .pipe(plugins.rev())                // Rename the concatenated files (but not index.html)
             .pipe(indexHtmlFilter.restore)
