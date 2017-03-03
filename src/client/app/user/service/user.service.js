@@ -6,7 +6,7 @@
         .factory('user', user);
 
     /* @ngInject */
-    function user(storage, $window) {
+    function user(storage) {
         var currentUser;
 
         var service = {
@@ -39,9 +39,9 @@
         }
 
         function logout() {
-            delete $window.sessionStorage.token;
+            storage.remove('token');
             storage.remove('user');
-
+            currentUser = undefined;
         }
     }
 })();
