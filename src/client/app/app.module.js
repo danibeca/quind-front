@@ -4,8 +4,7 @@
     angular.module('app', [
         'app.dashboard',
         'app.systems',
-        'app.applications',
-        'ng-fastclick'
+        'app.applications'
     ])
         .run(runApp);
 

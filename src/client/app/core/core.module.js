@@ -14,7 +14,9 @@
             'blocks.constants',
             'blocks.theme',
             'blocks.charts',
-            'ui.router', 'ngplus',
+            'ui.router',
+            'ngplus',
+            'ng-fastclick',
             'app.user'
         ]);
 })();
