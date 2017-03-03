@@ -40,7 +40,7 @@ gulp.task('serve-specs', ['build-specs'], getTask('serve-specs')(gulp, plugins, 
 gulp.task('test', ['vet', 'plato', 'template-cache'], getTask('test')(gulp, plugins, args));
 gulp.task('optimize', ['inject', 'test'], getTask('optimize')(gulp, plugins));
 
-gulp.task('build', ['optimize', 'images', 'fonts', 'translates'], getTask('build')(gulp, plugins));
+gulp.task('build', ['optimize', 'fonts', 'translates'], getTask('build')(gulp, plugins));
 
 gulp.task('serve-build', ['pdn-constants', 'build'], getTask('serve-build')(gulp, plugins, args));
 gulp.task('serve-dev', ['dev-constants', 'inject'], getTask('serve-dev')(gulp, plugins, args));

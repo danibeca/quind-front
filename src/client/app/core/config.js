@@ -11,8 +11,8 @@
     }
 
     var config = {
-        appErrorPrefix: '[Agilin Error] ',
-        appTitle: 'Agilin'
+        appErrorPrefix: '[Quind Error] ',
+        appTitle: 'Quind'
     };
 
     core.value('config', config);
@@ -20,12 +20,16 @@
     core.config(configure);
 
     /* @ngInject */
-    function configure($logProvider, routerHelperProvider, exceptionHandlerProvider) {
+    function configure($logProvider, $qProvider, routerHelperProvider, exceptionHandlerProvider, environmentConfig) {
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);
         }
-        exceptionHandlerProvider.configure(config.appErrorPrefix);
+        $qProvider.errorOnUnhandledRejections(false);
+        if (environmentConfig.env === 'dev') {
+            exceptionHandlerProvider.configure(config.appErrorPrefix);
+        }
         routerHelperProvider.configure({docTitle: config.appTitle + ': '});
+
     }
 
 })();

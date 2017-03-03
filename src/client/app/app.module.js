@@ -4,7 +4,8 @@
     angular.module('app', [
         'app.dashboard',
         'app.systems',
-        'app.applications'
+        'app.applications',
+        'ng-fastclick'
     ])
         .run(runApp);
 
@@ -21,9 +22,9 @@
                 redirect('dashboard');
             }
 
-            function redirect(state) {
+            function redirect(currentState) {
                 event.preventDefault();
-                $state.go(state);
+                $state.go(currentState);
             }
 
         });

@@ -54,7 +54,7 @@
 
         function securityRedirect() {
             user.logout();
-            $injector.get('$state').transitionTo('login');
+            $injector.get('$state').go('login');
         }
 
 
