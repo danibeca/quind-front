@@ -14,7 +14,6 @@
 
         function activate() {
             return appservice.getApplications().then(function (apps) {
-                    logger.error('Holi' + apps);
                     apps.forEach(function (application) {
                         var indiccatorId = 1;
                         appservice.getIndicator(application.id, indiccatorId).then(function (indicator) {
