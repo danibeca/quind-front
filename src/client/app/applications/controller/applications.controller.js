@@ -6,23 +6,26 @@
         .controller('ApplicationsController', ApplicationsController);
 
     /* @ngInject */
-    function ApplicationsController(Restangular, spinnerService) {
+    function ApplicationsController(appservice, spinnerService, logger) {
         /*jshint unused:false*/
         var vm = this;
+        vm.applications = [];
+        activate();
 
-        Restangular.all('applications').getList().then(function (applications) {
-            var apps = applications.plain();
-            vm.applications = [];
-
-            apps.forEach(function (application) {
-                Restangular.one('applications', application.id)
-                    .one('indicators', 1)
-                    .get().then(function (indicator) {
-                    application.percent = indicator.data.value;
-                    vm.applications.push(application);
-                    spinnerService.hide('systemsSpinner');
-                });
-            });
-        });
+        function activate() {
+            return appservice.getApplications().then(function (apps) {
+                    logger.error('Holi' + apps);
+                    apps.forEach(function (application) {
+                        var indiccatorId = 1;
+                        appservice.getIndicator(application.id, indiccatorId).then(function (indicator) {
+                            application.percent = indicator.value;
+                            vm.applications.push(application);
+                            spinnerService.hide('systemsSpinner');
+                        });
+                    });
+                }
+            );
+        }
     }
-})();
+})
+();

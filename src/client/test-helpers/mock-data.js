@@ -7,7 +7,8 @@ var mockData = (function () {
         getMockDashboard: getMockDashboard,
         getMockLogin: getMockLogin,
         getMockLoginRequest: getMockLoginRequest,
-        getJSONInternalError: getJSONInternalError
+        getJSONInternalError: getJSONInternalError,
+        getMockRejection: getMockRejection
     };
 
     function getMockStates() {
@@ -88,6 +89,36 @@ var mockData = (function () {
             .replace(/\\f/g, "\\f");
 
         return s.replace(/[\u0000-\u0019]+/g, "");
+    }
+
+    function getMockRejection() {
+        return {
+            "error401": {
+                "data": {
+                    "error": {"message": "Token has expired", "statusCode": 401}
+                },
+                "config": {"url": "http://testing/"}
+            },
+            "error400": {
+                "data": {
+                    "error": {"message": "Token has expired", "statusCode": 400}
+                },
+                "config": {"url": "http://testing/"}
+            },
+            "error401NotVerified": {
+                "data": {
+                    "error": {"message": "Token has not be verified", "statusCode": 401}
+                },
+                "config": {
+                    method: 'POST',
+                    url: '/testing/recall',
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    data: {test: 'test'}
+                }
+            }
+        };
     }
 
 })();

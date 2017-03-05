@@ -4,7 +4,7 @@ module.exports = {
 
 function constants() {
     var client = './src/client/';
-    var clientApp =  client + 'app/';
+    var clientApp = client + 'app/';
     var server = './src/server/';
     var specRunnerFile = 'specs.html';
     var nodeModules = 'node_modules';
@@ -33,7 +33,7 @@ function constants() {
             client + 'styles/sass/dashboard/theme/conf/**/*.scss'
         ],
         sass: client + 'styles/sass/styles2.scss',
-        styleWatch: [client + 'styles/less/**/*.less',client + 'styles/sass/dashboard/**/*.scss'],
+        styleWatch: [client + 'styles/less/**/*.less', client + 'styles/sass/dashboard/**/*.scss'],
         index: client + 'index.html',
         css: temp + '**/*.css',
         js: [
@@ -52,8 +52,10 @@ function constants() {
             nodeModules + '/sinon-chai/lib/sinon-chai.js'
         ],
         specRunnerFile: specRunnerFile,
-        specHelpers: [client + 'test-helpers/*.js'],
+        specHelpers: [client + 'test-helpers/**/*.js'],
         serverIntegrationSpecs: [client + '/tests/server-integration/**/*.spec.js'],
+        promiseLibrary: './node_modules/es6-promise/dist/es6-promise.js',
+        polyFill: './node_modules/phantomjs-polyfill-string-includes/index.js',
         templateCache: {
             file: 'templates.js',
             options: {

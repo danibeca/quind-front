@@ -75,8 +75,6 @@
             var result = null;
             if (rejection.data.error) {
                 result = rejection.data.error.message;
-            } else {
-                result = JSON.parse(rejection.data).message;
             }
             return result;
         }

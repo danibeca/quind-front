@@ -13,7 +13,9 @@ function karma() {
             gConstants.clientApp + '**/*.module.js',
             gConstants.clientApp + '**/*.js',
             gConstants.temp + gConstants.templateCache.file,
-            gConstants.serverIntegrationSpecs
+            gConstants.serverIntegrationSpecs,
+            gConstants.promiseLibrary,
+            gConstants.polyFill
         ),
         exclude: [],
         coverage: {

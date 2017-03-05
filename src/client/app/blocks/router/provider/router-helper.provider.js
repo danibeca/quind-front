@@ -86,7 +86,6 @@
             function getStates() { return $state.get(); }
 
             function updateDocTitle() {
-                //$rootScope.title = 'TaxiOP';
                 $rootScope.$on('$stateChangeSuccess',
                     function(event, toState) {
                         stateCounts.changes++;
