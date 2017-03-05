@@ -108,6 +108,19 @@
   top: calc(50%);
   left: calc(48%);
   z-index: 10;
+
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    left: calc(25%);
+  }
+  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (orientation: portrait)
+  {
+    left: calc(30%);
+  }
+
+  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (orientation: landscape)
+  {
+    left: calc(40%);
+  }
 }
 
 .container-overlay {
@@ -124,10 +137,11 @@
 .container-please-wait {
   text-align: center;
   position: absolute;
-  top: calc(59%);
-  left: calc(51%);
+  top: calc(45%);
+  left: calc(30%);
   color: #fff;
   z-index: 10;
+
 }
 
 .container-bounce1, .container-bounce2 {
@@ -156,3 +170,4 @@
   text-transform: uppercase;
   left: 20%;
 }
+
