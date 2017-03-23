@@ -18,7 +18,7 @@
             <div ng-repeat="system in vm.systems">
                 <div class="col-lg-4 col-md-12 col-sm-12"
                      ba-panel
-                     ba-panel-title="{{ 'ACCOUNT_GENERAL_INDICATOR' | translate }}"
+                     ba-panel-title="{{  system.indicatorName }}"
                      ba-panel-title-ext="{{system.name}}"
                      ba-panel-class="medium-panel">
                     <a href="">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-lg-8 col-md-12 col-sm-12"
                      ba-panel
-                     ba-panel-title="{{ 'INDICATOR_HISTORY' | translate }}"
+                     ba-panel-title="{{  system.indicatorName }} RUN CHART"
                      ba-panel-title-ext="{{system.name}}"
                      ba-panel-class="medium-panel">
                     <dashboard-line-chart linedata="{{system.linedata}}" lineid="seriessis{{system.id}}"></dashboard-line-chart>

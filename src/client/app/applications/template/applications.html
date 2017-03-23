@@ -18,11 +18,12 @@
             <div ng-repeat="application in vm.applications">
                 <div class="col-lg-4 col-md-12 col-sm-12"
                      ba-panel
-                     ba-panel-title="{{ 'ACCOUNT_GENERAL_INDICATOR' | translate }}"
+                     ba-panel-title="{{application.indicatorName}}"
                      ba-panel-title-ext="{{application.name}}"
                      ba-panel-class="medium-panel">
                     <a href="">
-                        <dashboard-pie-chart percent="{{application.percent}}" chartid="chartapp{{application.id}}"></dashboard-pie-chart>
+                        <dashboard-pie-chart percent="{{application.percent}}"
+                                             chartid="chartapp{{application.id}}"></dashboard-pie-chart>
                     </a>
                 </div>
             </div>

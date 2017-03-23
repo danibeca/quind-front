@@ -19,6 +19,7 @@
 
         function success(indicator) {
             vm.percents = indicator.data.value;
+            vm.indicatorName = indicator.data.name;
         }
 
         function fail() {

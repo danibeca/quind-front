@@ -15,9 +15,10 @@
         function activate() {
             return appservice.getApplications().then(function (apps) {
                     apps.forEach(function (application) {
-                        var indiccatorId = 1;
+                        var indiccatorId = 44;
                         appservice.getIndicator(application.id, indiccatorId).then(function (indicator) {
                             application.percent = indicator.value;
+                            application.indicatorName = indicator.name.toUpperCase();
                             vm.applications.push(application);
                             spinnerService.hide('systemsSpinner');
                         });
@@ -26,5 +27,4 @@
             );
         }
     }
-})
-();
+}());

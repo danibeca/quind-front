@@ -10,8 +10,7 @@
         /*jshint unused:false*/
         var vm = this;
 
-        Restangular.one('accounts', user.getUser().accountId)
-            .getList('systems').then(function (systems) {
+        Restangular.all('systems').getList().then(function (systems) {
             var sys = systems.plain();
             vm.systems = [];
 
@@ -20,6 +19,7 @@
                     .one('indicators', 1)
                     .get().then(function (indicator) {
                     system.percent = indicator.data.value;
+                    system.indicatorName = indicator.data.name.toUpperCase();
 
                     Restangular.one('systems', system.id)
                         .one('indicators', 1)
