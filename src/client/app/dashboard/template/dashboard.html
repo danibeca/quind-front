@@ -9,11 +9,11 @@
             <content-top></content-top>
             <div class="col-lg-4 col-md-12 col-sm-12"
                  ba-panel
-                 ba-panel-title="{{  vm.indicatorName }}"
+                 ba-panel-title="{{ 'ACCOUNT_INDICATORS' | translate }}"
                  ba-panel-title-ext="{{vm.user.accountName}}"
                  ba-panel-class="medium-panel">
                 <a href="">
-                    <dashboard-pie-chart percent="{{vm.percents}}" chartid="chart1"></dashboard-pie-chart>
+                    <gauge-chart data="{{vm.data}}" chartid="{{vm.chartId}}" loading="...Cargando" error="{{vm.error}}"></gauge-chart>
                 </a>
                 <span class="error-dashboard" ng-show="vm.error">informacion no disponible<br>Por favor revise su servidor de inspeccion de codigo</span>
             </div>

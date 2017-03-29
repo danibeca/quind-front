@@ -13,7 +13,7 @@
             'blocks.rest',
             'blocks.constants',
             'blocks.theme',
-            'blocks.charts',
+            'blocks.amcharts3',
             'ui.router',
             'ngplus',
             'ng-fastclick',

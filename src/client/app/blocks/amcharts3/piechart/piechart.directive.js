@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('blocks.charts')
+    angular.module('blocks.amcharts3')
         .directive('dashboardPieChart', dashboardPieChart);
 
     /* @ngInject */
@@ -14,7 +14,7 @@
             restrict: 'E',
             controller: 'DashboardPieChartCtrl',
             controllerAs: 'vm',
-            templateUrl: 'app/blocks/charts/piechart/piechart.template.html',
+            templateUrl: 'app/blocks/amcharts3/piechart/piechart.template.html',
             scope: {
                 percent: '@',
                 chartid: '@'

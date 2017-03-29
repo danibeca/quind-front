@@ -4,29 +4,52 @@ describe('ApplicationsController', function () {
     var mockAppServ = mockAppService;
     beforeEach(function () {
         module('app.applications', bard.fakeToastr);
-        bard.inject('$controller', '$log', '$rootScope', '$q', '$state', '$timeout');
+        bard.inject('$controller', '$log', '$rootScope', '$q', '$state', '$timeout', '$window', 'spinnerService');
     });
 
-    beforeEach(function () {
-        sinon.stub(mockAppServ, 'getApplications').returns($q.when(mockAppServ.getApplicationsData()));
-        sinon.stub(mockAppServ, 'getIndicator').returns($q.when(mockAppServ.getIndicatorData()));
-
-        controller = $controller('ApplicationsController', {
-            'appservice': mockAppServ
-        });
-        $rootScope.$apply();
-    });
-
-    afterEach(function () {
-        mockAppServ.getApplications.restore();
-        mockAppServ.getIndicator.restore();
-    });
 
     it('should be created successfully', function () {
         expect(controller).to.be.defined;
     });
 
+    it('should fail went the service fails', function () {
+
+        var deferred = $q.defer();
+        sinon.stub(mockAppServ, 'getApplications').returns(deferred.promise);
+        sinon.stub(mockAppServ, 'getIndicator').returns($q.when(mockAppServ.getIndicatorData()));
+        sinon.stub(spinnerService, 'hide').returns(0);
+
+        var error = [];
+        error['msgCode'] = 'HOUSTON_WE_GOT_A_PROBLEM';
+        deferred.reject(error);
+        controller = $controller('ApplicationsController', {
+            'appservice': mockAppServ
+        });
+
+
+        $rootScope.$apply();
+
+        expect($log.error.logs).to.match(/HOUSTON_WE_GOT_A_PROBLEM/);
+        mockAppServ.getApplications.restore();
+        mockAppServ.getIndicator.restore();
+    });
+
     describe('on activate', function () {
+
+        beforeEach(function () {
+            sinon.stub(mockAppServ, 'getApplications').returns($q.when(mockAppServ.getApplicationsData()));
+            sinon.stub(mockAppServ, 'getIndicator').returns($q.when(mockAppServ.getIndicatorData()));
+
+            controller = $controller('ApplicationsController', {
+                'appservice': mockAppServ
+            });
+            $rootScope.$apply();
+        });
+
+        afterEach(function () {
+            mockAppServ.getApplications.restore();
+            mockAppServ.getIndicator.restore();
+        });
 
         it('should call app.getApplications once', function () {
             expect(mockAppServ.getApplications.calledOnce);

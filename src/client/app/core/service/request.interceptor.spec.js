@@ -5,7 +5,7 @@ describe('blocks.exception', function () {
 
     beforeEach(function () {
         bard.appModule('app.core', 'stateMock');
-        bard.inject('$rootScope', '$q', '$injector', 'requestInterceptor', 'user', '$state2', '$httpBackend');
+        bard.inject('$rootScope', '$q', '$injector', 'requestInterceptor', '$state2', '$httpBackend');
     });
 
     beforeEach(function () {
@@ -42,7 +42,12 @@ describe('blocks.exception', function () {
         it('should send the request again when error 401 occurs recall', inject(function () {
             $httpBackend.expectGET('/testing/recall').respond({hello: 'World'});
             requestInterceptorFactory.responseError(mockData.getMockRejection().error401NotVerified);
-
         }));
+
+        it('should return general error when rejection is undefined', inject(function () {
+            $result = requestInterceptorFactory.responseError(mockData.getMockRejection().errorHouston);
+            expect('HOUSTON_WE_GOT_A_PROBLEM').to.equal($result.$$state.value.msgCode);
+        }));
+
     });
 });

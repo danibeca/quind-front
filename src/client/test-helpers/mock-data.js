@@ -93,6 +93,9 @@ var mockData = (function () {
 
     function getMockRejection() {
         return {
+            "errorHouston": {
+                "config": {"url": "http://testing/"}
+            },
             "error401": {
                 "data": {
                     "error": {"message": "Token has expired", "statusCode": 401}

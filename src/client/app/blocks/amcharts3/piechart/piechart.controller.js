@@ -6,7 +6,7 @@
 (function () {
     'use strict';
 
-    angular.module('blocks.charts')
+    angular.module('blocks.amcharts3')
         .controller('DashboardPieChartCtrl', DashboardPieChartCtrl);
 
     /* @ngInject */

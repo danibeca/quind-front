@@ -29,23 +29,27 @@
 
         function responseError(rejection) {
             var msg = getErrorMessage(rejection);
-
-            if (environmentConfig.env === 'dev') {
-                console.log(rejection);
-                toastr.error(rejection.config.url + ': ' + msg);
-            }
-            if (rejection.data.error.statusCode === 400) {
-                if (msg.includes('Token')) {
-                    securityRedirect();
+            if (msg === null) {
+                rejection.msgCode = 'HOUSTON_WE_GOT_A_PROBLEM';
+            } else {
+                rejection.msgCode = rejection.data.error.msgCode;
+                if (environmentConfig.env === 'dev') {
+                    console.log(rejection);
+                    toastr.error(rejection.config.url + ': ' + msg);
                 }
-            }
-            if (rejection.data.error.statusCode === 401) {
-                if (msg.includes('not be verified')) {
-                    var deferred = $q.defer();
-                    retryHttpRequest(rejection.config, deferred);
-                    return deferred.promise;
-                } else {
-                    securityRedirect();
+                if (rejection.data.error.statusCode === 400) {
+                    if (msg.includes('Token')) {
+                        securityRedirect();
+                    }
+                }
+                if (rejection.data.error.statusCode === 401) {
+                    if (msg.includes('not be verified')) {
+                        var deferred = $q.defer();
+                        retryHttpRequest(rejection.config, deferred);
+                        return deferred.promise;
+                    } else {
+                        securityRedirect();
+                    }
                 }
             }
 
@@ -73,7 +77,7 @@
 
         function getErrorMessage(rejection) {
             var result = null;
-            if (rejection.data.error) {
+            if (rejection.data !== undefined && rejection.data.error !== undefined) {
                 result = rejection.data.error.message;
             }
             return result;

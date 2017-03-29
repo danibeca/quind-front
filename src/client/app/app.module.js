@@ -4,7 +4,8 @@
     angular.module('app', [
         'app.dashboard',
         'app.systems',
-        'app.applications'
+        'app.applications',
+        'app.account'
     ])
         .run(runApp);
 

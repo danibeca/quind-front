@@ -2,25 +2,25 @@
     'use strict';
 
     angular
-        .module('app.applications')
-        .factory('appservice', appservice);
+        .module('app.account')
+        .factory('accountService', accountService);
 
     /* @ngInject */
-    function appservice(Restangular, logger, $filter, $q) {
+    function accountService(Restangular, $q) {
         var service = {
-            getApplications: getApplications,
+            getIndicators: getIndicators,
             getIndicator: getIndicator
         };
-
         return service;
 
-        function getApplications() {
-            return Restangular.all('applications').getList()
+        function getIndicators(accountId) {
+            return Restangular.one('accounts', accountId)
+                .getList('indicators')
                 .then(success)
                 .catch(fail);
 
-            function success(applications) {
-                return applications.plain();
+            function success(indicators) {
+                return indicators.plain();
             }
 
             function fail(error) {
@@ -28,8 +28,8 @@
             }
         }
 
-        function getIndicator(applicationId, indicatorId) {
-            return Restangular.one('applications', applicationId)
+        function getIndicator(accountId, indicatorId) {
+            return Restangular.one('accounts', accountId)
                 .one('indicators', indicatorId).get()
                 .then(success)
                 .catch(fail);
@@ -43,4 +43,5 @@
             }
         }
     }
+
 })();

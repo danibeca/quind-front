@@ -6,7 +6,7 @@
         /* Since Angular has this but needs to load, this gives us the class early. */
         .ng-hide { display: none!important; }
     </style>
-    <title ng-bind="title">Agilin</title>
+    <title ng-bind="title">Quind</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
@@ -53,13 +53,11 @@
 <!-- build:js js/all.js -->
 <!-- bower:js -->
 <script src="/bower_components/Chart.js/Chart.js"></script>
-<script src="/bower_components/amcharts/dist/amcharts/amcharts.js"></script>
-<script src="/bower_components/amcharts/dist/amcharts/plugins/responsive/responsive.min.js"></script>
-<script src="/bower_components/amcharts/dist/amcharts/serial.js"></script>
-<script src="/bower_components/amcharts/dist/amcharts/funnel.js"></script>
-<script src="/bower_components/amcharts/dist/amcharts/pie.js"></script>
-<script src="/bower_components/amcharts/dist/amcharts/gantt.js"></script>
-<script src="/bower_components/amcharts-stock/dist/amcharts/amstock.js"></script>
+<script src="/bower_components/amcharts3/amcharts/amcharts.js"></script>
+<script src="/bower_components/amcharts3/amcharts/plugins/responsive/responsive.min.js"></script>
+<script src="/bower_components/amcharts3/amcharts/serial.js"></script>
+<script src="/bower_components/amcharts3/amcharts/gauge.js"></script>
+<script src="/bower_components/amstock3/amcharts/amstock.js"></script>
 <script src="/bower_components/ammap/dist/ammap/ammap.js"></script>
 <script src="/bower_components/ammap/dist/ammap/maps/js/worldLow.js"></script>
 <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -73,7 +71,6 @@
 <script src="/bower_components/angular-slimscroll/angular-slimscroll.js"></script>
 <script src="/bower_components/angular-smart-table/dist/smart-table.js"></script>
 <script src="/bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-<script src="/bower_components/angular-touch/angular-touch.js"></script>
 <script src="/bower_components/jquery-ui/jquery-ui.js"></script>
 <script src="/bower_components/angular-ui-sortable/sortable.js"></script>
 <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -114,39 +111,43 @@
 <script src="/bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 <script src="/bower_components/angular-spinners/dist/angular-spinners.min.js"></script>
 <script src="/bower_components/ionrangeslider/js/ion.rangeSlider.js"></script>
+<script src="/bower_components/ng-fastclick/dist/index.min.js"></script>
 <!-- endbower -->
 
 
 
 <!-- inject:js -->
 <script src="/src/client/app/app.module.js"></script>
+<script src="/src/client/app/account/account.module.js"></script>
 <script src="/src/client/app/applications/applications.module.js"></script>
 <script src="/src/client/app/core/core.module.js"></script>
 <script src="/src/client/app/dashboard/dashboard.module.js"></script>
 <script src="/src/client/app/systems/systems.module.js"></script>
 <script src="/src/client/app/user/user.module.js"></script>
-<script src="/src/client/app/blocks/charts/charts.module.js"></script>
+<script src="/src/client/app/blocks/amcharts3/amcharts3.module.js"></script>
 <script src="/src/client/app/blocks/constants/constants.module.js"></script>
 <script src="/src/client/app/blocks/exception/exception.module.js"></script>
 <script src="/src/client/app/blocks/logger/logger.module.js"></script>
-<script src="/src/client/app/blocks/router/router.module.js"></script>
 <script src="/src/client/app/blocks/rest/rest.module.js"></script>
+<script src="/src/client/app/blocks/router/router.module.js"></script>
 <script src="/src/client/app/blocks/storage/storage.module.js"></script>
 <script src="/src/client/app/blocks/theme/theme.module.js"></script>
 <script src="/src/client/app/blocks/translate/translate.module.js"></script>
 <script src="/src/client/app/blocks/theme/components/components.module.js"></script>
 <script src="/src/client/app/core/config.js"></script>
 <script src="/src/client/app/core/constants.js"></script>
+<script src="/src/client/app/account/service/account.service.js"></script>
 <script src="/src/client/app/applications/controller/applications.controller.js"></script>
 <script src="/src/client/app/applications/route/applications.route.js"></script>
+<script src="/src/client/app/applications/service/applications.service.js"></script>
 <script src="/src/client/app/blocks/rest/rest.config.js"></script>
 <script src="/src/client/app/blocks/theme/theme.configProvider.js"></script>
 <script src="/src/client/app/blocks/theme/theme.constants.js"></script>
 <script src="/src/client/app/blocks/theme/theme.run.js"></script>
 <script src="/src/client/app/blocks/theme/theme.service.js"></script>
+<script src="/src/client/app/core/route/core.route.js"></script>
 <script src="/src/client/app/blocks/translate/translate.config.js"></script>
 <script src="/src/client/app/blocks/translate/translate.run.js"></script>
-<script src="/src/client/app/core/route/core.route.js"></script>
 <script src="/src/client/app/core/service/request.interceptor.js"></script>
 <script src="/src/client/app/dashboard/controller/dashboard.controller.js"></script>
 <script src="/src/client/app/dashboard/route/dashboard.route.js"></script>
@@ -158,13 +159,17 @@
 <script src="/src/client/app/user/route/user.route.js"></script>
 <script src="/src/client/app/user/service/authentication.service.js"></script>
 <script src="/src/client/app/user/service/user.service.js"></script>
-<script src="/src/client/app/blocks/charts/linechart/linechart.controller.js"></script>
-<script src="/src/client/app/blocks/charts/linechart/linechart.directive.js"></script>
-<script src="/src/client/app/blocks/charts/piechart/piechart.controller.js"></script>
-<script src="/src/client/app/blocks/charts/piechart/piechart.directive.js"></script>
-<script src="/src/client/app/blocks/exception/service/exception.service.js"></script>
+<script src="/src/client/app/blocks/amcharts3/angulargauge/gauge.controller.js"></script>
+<script src="/src/client/app/blocks/amcharts3/angulargauge/gauge.directive.js"></script>
+<script src="/src/client/app/blocks/amcharts3/angulargauge/gauge.service.js"></script>
+<script src="/src/client/app/blocks/amcharts3/linechart/linechart.controller.js"></script>
+<script src="/src/client/app/blocks/amcharts3/linechart/linechart.directive.js"></script>
+<script src="/src/client/app/blocks/amcharts3/piechart/piechart.controller.js"></script>
+<script src="/src/client/app/blocks/amcharts3/piechart/piechart.directive.js"></script>
 <script src="/src/client/app/blocks/exception/provider/exception-handler.provider.js"></script>
+<script src="/src/client/app/blocks/exception/service/exception.service.js"></script>
 <script src="/src/client/app/blocks/logger/service/logger.service.js"></script>
+<script src="/src/client/app/blocks/router/provider/router-helper.provider.js"></script>
 <script src="/src/client/app/blocks/storage/service/storage.service.js"></script>
 <script src="/src/client/app/blocks/theme/directives/animatedChange.js"></script>
 <script src="/src/client/app/blocks/theme/directives/autoExpand.js"></script>
@@ -179,7 +184,6 @@
 <script src="/src/client/app/blocks/theme/services/fileReader.js"></script>
 <script src="/src/client/app/blocks/theme/services/preloader.js"></script>
 <script src="/src/client/app/blocks/theme/services/stopableInterval.js"></script>
-<script src="/src/client/app/blocks/router/provider/router-helper.provider.js"></script>
 <script src="/src/client/app/blocks/translate/provider/translate.provider.js"></script>
 <script src="/src/client/app/blocks/theme/components/backTop/backTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/baPanel/baPanel.directive.js"></script>
@@ -191,14 +195,14 @@
 <script src="/src/client/app/blocks/theme/components/baSidebar/baSidebar.service.js"></script>
 <script src="/src/client/app/blocks/theme/components/baSidebar/BaSidebarCtrl.js"></script>
 <script src="/src/client/app/blocks/theme/components/baSidebar/baSidebarHelpers.directive.js"></script>
-<script src="/src/client/app/blocks/theme/components/baWizard/baWizard.directive.js"></script>
-<script src="/src/client/app/blocks/theme/components/baWizard/baWizardCtrl.js"></script>
-<script src="/src/client/app/blocks/theme/components/baWizard/baWizardStep.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/contentTop/contentTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/msgCenter/msgCenter.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/msgCenter/MsgCenterCtrl.js"></script>
 <script src="/src/client/app/blocks/theme/components/pageTop/pageTop.directive.js"></script>
 <script src="/src/client/app/blocks/theme/components/widgets/widgets.directive.js"></script>
+<script src="/src/client/app/blocks/theme/components/baWizard/baWizard.directive.js"></script>
+<script src="/src/client/app/blocks/theme/components/baWizard/baWizardCtrl.js"></script>
+<script src="/src/client/app/blocks/theme/components/baWizard/baWizardStep.directive.js"></script>
 <script src="/src/client/app/blocks/theme/filters/image/appImage.js"></script>
 <script src="/src/client/app/blocks/theme/filters/image/kameleonImg.js"></script>
 <script src="/src/client/app/blocks/theme/filters/image/profilePicture.js"></script>

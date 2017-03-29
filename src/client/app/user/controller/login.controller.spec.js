@@ -65,6 +65,7 @@ describe('LoginController', function () {
 
     });
 
+
     it('fails calling the login service', function (done) {
         //Arrange
         deferred = $q.defer();

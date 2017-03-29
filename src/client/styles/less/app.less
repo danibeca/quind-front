@@ -1,5 +1,6 @@
 @import "mixins.less";
 @import "variables.less";
+@import "amcharts.less";
 
 .middle-page {
   position: absolute;
@@ -112,13 +113,11 @@
   @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     left: calc(25%);
   }
-  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (orientation: portrait)
-  {
+  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (orientation: portrait) {
     left: calc(30%);
   }
 
-  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (orientation: landscape)
-  {
+  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (orientation: landscape) {
     left: calc(40%);
   }
 }
@@ -168,6 +167,5 @@
   position: absolute;
   top: 50%;
   text-transform: uppercase;
-  left: 20%;
+  left: 8%;
 }
-
