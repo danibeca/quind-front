@@ -9,7 +9,7 @@
     ])
         .run(runApp);
 
-    function runApp($rootScope, $state, user, auth,$translatePartialLoader) {
+    function runApp($rootScope, $state, user, auth, $translatePartialLoader) {
         $translatePartialLoader.addPart('general');
         $rootScope.$on('$stateChangeStart', function (event, toState) {
             var loginState = 'login';

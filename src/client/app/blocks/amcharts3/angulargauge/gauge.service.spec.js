@@ -1,3 +1,7 @@
+/**
+ * @author Daniel Betancur <danibeca@okazo.co>
+ * created on 02.22.2017
+ */
 /* jshint -W117, -W030*/
 /* jscs:disable */
 describe('Gauge Service', function () {

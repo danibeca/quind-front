@@ -132,7 +132,9 @@
                 var params = result.ruleParams[ruleId];
                 var newRefPositionY = params.referencePositionY + params.distancePositionY;
                 var newText = shrinkText(text);
-                rule.overrides.allLabels.push(getLabel(newText, newRefPositionY,params.size,  params.isBold, params.color));
+                rule.overrides.allLabels.push(
+                    getLabel(newText, newRefPositionY, params.size, params.isBold, params.color)
+                );
                 result.ruleParams[ruleId].referencePositionY = newRefPositionY;
                 newRules.push(rule);
             });
