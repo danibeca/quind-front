@@ -1,5 +1,5 @@
 /**
- * @author danibeca
+ * @author Daniel Betancur <danibeca@okazo.co>
  * created on 02.22.2017
  */
 /* jshint -W117, -W030*/
@@ -36,7 +36,7 @@ describe('Gauge Directive', function () {
         expect(controller.id).to.equal(sc.chartid);
     });
 
-    it('shouldnt create the graph if data is empty', function () {
+    it('shouldnt create the chart if data is empty', function () {
         var sc = directiveElem.isolateScope();
         sc.chartid = '2032';
         sc.$digest();
@@ -47,7 +47,7 @@ describe('Gauge Directive', function () {
         expect(controller.chart).to.be.undefined;
     });
 
-    it('should create guage graph when scope.data changes', function (done) {
+    it('should create guage chart when scope.data changes', function () {
         var sc = directiveElem.isolateScope();
         sc.chartid = '2032';
         sc.$digest();
@@ -58,7 +58,6 @@ describe('Gauge Directive', function () {
         $timeout(function () {
             expect(controller.chart).to.not.be.undefined;
             expect(controller.chart.cname).to.equal('AmAngularGauge');
-            done();
         }, 10);
         $timeout.flush();
     });

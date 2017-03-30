@@ -1,5 +1,5 @@
 /**
- * @author danibeca
+ * @author Daniel Betancur <danibeca@okazo.co>
  * created on 02.22.2017
  */
 (function () {

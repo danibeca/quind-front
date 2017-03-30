@@ -1,5 +1,5 @@
 /**
- * @author danibeca
+ * @author Daniel Betancur <danibeca@okazo.co>
  * created on 02.22.2017
  */
 /* jshint -W117 */
@@ -131,15 +131,8 @@
                 var ruleId = rule.id;
                 var params = result.ruleParams[ruleId];
                 var newRefPositionY = params.referencePositionY + params.distancePositionY;
-                rule.overrides.allLabels.push({
-                    'text': shrinkText(text),
-                    'x': '49%',
-                    'y': newRefPositionY + '%',
-                    'size': params.size,
-                    'bold': params.isBold,
-                    'color': params.color,
-                    'align': 'right'
-                });
+                var newText = shrinkText(text);
+                rule.overrides.allLabels.push(getLabel(newText, newRefPositionY,params.size,  params.isBold, params.color));
                 result.ruleParams[ruleId].referencePositionY = newRefPositionY;
                 newRules.push(rule);
             });
