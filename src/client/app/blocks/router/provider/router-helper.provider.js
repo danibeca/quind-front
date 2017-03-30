@@ -1,5 +1,5 @@
 /* Help configure the state-base ui.router */
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -16,7 +16,7 @@
 
         $locationProvider.html5Mode(true).hashPrefix('!');
 
-        this.configure = function(cfg) {
+        this.configure = function (cfg) {
             angular.extend(config, cfg);
         };
 
@@ -44,7 +44,7 @@
             ///////////////
 
             function configureStates(states, otherwisePath) {
-                states.forEach(function(state) {
+                states.forEach(function (state) {
                     state.config.resolve =
                         angular.extend(state.config.resolve || {}, config.resolveAlways);
                     $stateProvider.state(state.state, state.config);
@@ -60,7 +60,7 @@
                 // On routing error, go to the dashboard.
                 // Provide an exit clause if it tries to do it twice.
                 $rootScope.$on('$stateChangeError',
-                    function(event, toState, toParams, fromState, fromParams, error) {
+                    function (event, toState, toParams, fromState, fromParams, error) {
                         if (handlingStateChangeError) {
                             return;
                         }
@@ -83,15 +83,16 @@
                 updateDocTitle();
             }
 
-            function getStates() { return $state.get(); }
+            function getStates() {
+                return $state.get();
+            }
 
             function updateDocTitle() {
                 $rootScope.$on('$stateChangeSuccess',
-                    function(event, toState) {
+                    function () {
                         stateCounts.changes++;
                         handlingStateChangeError = false;
-                        var title = config.docTitle;
-                        $rootScope.title = 'Quind'
+                        $rootScope.title = 'Quind';
                     }
                 );
             }
