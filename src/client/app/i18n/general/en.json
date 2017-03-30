@@ -1,0 +1,12 @@
+{
+  "BUTTON_LANG_ES": "Spanish",
+  "BUTTON_LANG_EN": "English",
+  "SIGN_OUT": "Sign Out",
+  "HOUSTON_WE_GOT_A_PROBLEM": "Houston we got a problem",
+  "HOME_TITLE": "Home",
+  "DASHBOARD_TITLE": "Dashboard",
+  "SYSTEMS_TITLE": "Systems",
+  "APPLICATION_TITLE": "Applications",
+  "INSPECTION_SERVER_ERROR": "Information no available. Please check your platform for continuous inspection of code quality",
+  "LOADING": "...Loading"
+}

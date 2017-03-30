@@ -1,0 +1,12 @@
+{
+  "BUTTON_LANG_ES": "Esp",
+  "BUTTON_LANG_EN": "Ing",
+  "SIGN_OUT": "Salir",
+  "HOUSTON_WE_GOT_A_PROBLEM": "Poseemos problemas",
+  "HOME_TITLE": "Inicio",
+  "DASHBOARD_TITLE": "Dashboard",
+  "SYSTEMS_TITLE": "Sistemas",
+  "APPLICATION_TITLE": "Aplicaciones",
+  "INSPECTION_SERVER_ERROR": "Informacion no disponible<br>Por favor revise su servidor de inspeccion de codigo",
+  "LOADING": "...Cargando"
+}

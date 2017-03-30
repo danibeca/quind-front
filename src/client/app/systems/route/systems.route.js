@@ -21,7 +21,7 @@
                     templateUrl: 'app/systems/template/systems.html',
                     controller: 'SystemsController',
                     controllerAs: 'vm',
-                    title: 'Sistemas',
+                    title: 'SYSTEMS_TITLE',
                     sidebarMeta: {
                         icon: 'ion-ios-world',
                         order: 1,

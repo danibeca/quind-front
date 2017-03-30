@@ -9,9 +9,10 @@
     function translateRun($rootScope, $translate, storage, $state, $cookies) {
         $rootScope.changeLanguage = function (langKey) {
             storage.set('lang', langKey);
+            $translate.use(langKey);
             $state.go($state.current, {}, {reload: true});
             $rootScope.$on('$stateChangeSuccess', function () {
-                $translate.use(langKey);
+                $translate.refresh();
             });
         };
 

@@ -1,11 +1,4 @@
 {
-  "HOME": "What an awesome module!",
-  "LOGIN": "Login",
-  "HELP": "Help",
-  "VARIABLE_REPLACEMENT": "Hi {{name}}",
-  "BUTTON_LANG_ES": "Spanish",
-  "BUTTON_LANG_EN": "English",
   "ACCOUNT_INDICATORS": "INDICATORS",
-  "INDICATOR_HISTORY": "INDICATOR RUN CHART",
-  "SIGN_OUT": "Sign Out"
+  "ACCOUNT_RUN CHART": "RUN CHART"
 }

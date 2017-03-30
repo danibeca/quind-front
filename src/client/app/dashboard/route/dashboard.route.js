@@ -21,7 +21,7 @@
                     templateUrl: 'app/dashboard/template/dashboard.html',
                     controller: 'DashboardController',
                     controllerAs: 'vm',
-                    title: 'Dashboard',
+                    title: 'DASHBOARD_TITLE',
                     sidebarMeta: {
                         icon: 'ion-android-home',
                         order: 0,
