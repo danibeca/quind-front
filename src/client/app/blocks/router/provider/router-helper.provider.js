@@ -90,8 +90,8 @@
                     function(event, toState) {
                         stateCounts.changes++;
                         handlingStateChangeError = false;
-                        var title = config.docTitle + ' ' + (toState.title || '');
-                        $rootScope.title = title; // data bind to <title>
+                        var title = config.docTitle;
+                        $rootScope.title = 'Quind'
                     }
                 );
             }
