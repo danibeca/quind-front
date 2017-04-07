@@ -27,8 +27,6 @@
                 event.preventDefault();
                 $state.go(currentState);
             }
-
         });
     }
-
 })();
