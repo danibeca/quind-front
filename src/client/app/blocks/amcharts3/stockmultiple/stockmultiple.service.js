@@ -163,7 +163,7 @@
         }
 
         function getTranslations(lang) {
-            var result = [];
+            var result;
             if (lang === 'es') {
                 result = {
                     'oneMonth': 'Un mes',
