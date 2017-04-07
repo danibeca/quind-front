@@ -7,7 +7,7 @@
 describe('Gauge Service', function () {
     var band;
     var data;
-    var dataTrans;
+    var transformedData;
     var responsive = [];
     var responsiveBase;
 
@@ -19,30 +19,30 @@ describe('Gauge Service', function () {
     describe(' Method transformData', function () {
         beforeEach(function () {
             data = accountServiceDataMock.getIndicators();
-            dataTrans = gaugeService.transformData(data);
+            transformedData = gaugeService.transformData(data);
         });
 
         it('should return an array', function () {
-            expect(dataTrans).to.be.instanceof(Array);
+            expect(transformedData).to.be.instanceof(Array);
         });
 
         it('should return a band array', function () {
-            expect(dataTrans.bands).to.be.instanceof(Array);
-            expect(dataTrans.bands.length).to.equal(6);
+            expect(transformedData.bands).to.be.instanceof(Array);
+            expect(transformedData.bands.length).to.equal(6);
         });
 
         it('should return a label array', function () {
-            expect(dataTrans.labels).to.be.instanceof(Array);
-            expect(dataTrans.labels.length).to.equal(3);
+            expect(transformedData.labels).to.be.instanceof(Array);
+            expect(transformedData.labels.length).to.equal(3);
         });
 
 
         it('should correlate value and color in bands', function () {
-            expect(dataTrans.bands[1].color).to.equals('#5EBE01');
+            expect(transformedData.bands[1].color).to.equals('#5EBE01');
         });
 
         it('should correlate value and color in labels', function () {
-            expect(dataTrans.labels[0].color).to.equals('#000');
+            expect(transformedData.labels[0].color).to.equals('#000');
         });
 
         it('should return the maximum of items allowed when the limit is exceeded', function () {
@@ -52,8 +52,8 @@ describe('Gauge Service', function () {
         });
 
         it('should return an responsive array with four rules', function () {
-            expect(dataTrans.responsiveRules).to.be.instanceof(Array);
-            expect(dataTrans.responsiveRules.length).to.equal(4);
+            expect(transformedData.responsiveRules).to.be.instanceof(Array);
+            expect(transformedData.responsiveRules.length).to.equal(4);
         });
     });
 

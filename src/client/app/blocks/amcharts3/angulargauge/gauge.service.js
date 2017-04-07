@@ -47,7 +47,7 @@
                     'rules': data.responsiveRules
                 },
                 'export': {
-                    'enabled': true
+                    'enabled': false
                 }
             });
 
