@@ -98,9 +98,7 @@
         "amcharts/plugins/responsive/responsive.min.js",
         "amcharts/serial.js",
         "amcharts/gauge.js",
-        "amcharts/themes/light.js",
-        "amcharts/plugins/export/export.min.js",
-        "amcharts/plugins/export/export.css"
+        "amcharts/themes/light.js"        
       ]
     },
     "amstock3": {
