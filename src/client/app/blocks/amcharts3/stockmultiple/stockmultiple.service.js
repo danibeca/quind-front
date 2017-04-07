@@ -198,7 +198,6 @@
                 'type': 'stock',
                 'theme': 'light',
                 'dataSets': data.dataSets,
-                'processDelay': 200,
 
                 'panels': data.panels,
                 'dataDateFormat': 'DD MM YYYY',

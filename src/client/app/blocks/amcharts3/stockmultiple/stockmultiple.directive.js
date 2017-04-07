@@ -80,11 +80,6 @@
                     }
                 });
 
-
-                element.bind('orientationchange', function () {
-                    controller.chart.validateData();
-                });
-
                 function isReady() {
                     var result = false;
                     if (controller.ids !== undefined && controller.ids !== '' &&

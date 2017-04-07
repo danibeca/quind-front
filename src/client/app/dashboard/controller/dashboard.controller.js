@@ -29,18 +29,23 @@
 
             function success(indicators) {
                 vm.data = indicators;
-
+                var missing = indicators.length;
                 indicators.forEach(function (indicator) {
                     accountService.getIndicatorSeries(vm.user.accountId, indicator.id)
                         .then(successSeries)
                         .catch(failSeries);
 
                     function successSeries(series) {
+                        missing--;
                         ids.push(indicator.id);
                         labels[indicator.id] = {
                             'title': indicator.name
                         };
                         dSeries[indicator.id] = series;
+
+                        if (missing === 0) {
+                            createRunChart();
+                        }
                     }
 
                     function failSeries(error) {
@@ -49,9 +54,12 @@
                     }
                 });
 
-                vm.ids = ids;
-                vm.labels = labels;
-                vm.series = dSeries;
+
+                function createRunChart() {
+                    vm.ids = ids;
+                    vm.labels = labels;
+                    vm.series = dSeries;
+                }
             }
 
             function fail(error) {
