@@ -73,5 +73,36 @@ describe('Account Service', function () {
         });
     });
 
+    describe('when calls getIndicatorSeries', function () {
+        it('should get the indicator series values', function () {
+            var spy = sinon.spy(Restangular, 'one');
+
+            $httpBackend.expectGET(environmentConfig.api + '/accounts/1/indicators/1/series')
+                .respond(accountServiceHtttpMock.getIndicatorSeries());
+
+            var result = accountService.getIndicatorSeries(1, 1);
+            $httpBackend.flush();
+
+            expect(result.$$state.value.length).to.equal(5);
+            expect(result.$$state.value[1].date).to.equal('18-03-2017');
+            spy.should.have.callCount(1);
+
+        });
+
+        it('should return error when HTTP call fails', function () {
+
+            var spy = sinon.spy(Restangular, 'one');
+
+            $httpBackend.expectGET(environmentConfig.api + '/accounts/1/indicators/1/series')
+                .respond(accountServiceHtttpMock.getError());
+
+            var result = accountService.getIndicatorSeries(1, 1);
+            $httpBackend.flush();
+
+            expect('An error has occurred').to.equal(result.$$state.value.data.error.message);
+            spy.should.have.callCount(1);
+        });
+    });
+
 });
 

@@ -7,7 +7,8 @@ var accountServiceDataMock = (function () {
     return {
         getIndicator: getIndicator,
         getIndicators: getIndicators,
-        getIndicatorsExceeded: getIndicatorsExceeded
+        getIndicatorsExceeded: getIndicatorsExceeded,
+        getIndicatorSeries: getIndicatorSeries
     };
 
     function getIndicator() {
@@ -73,6 +74,57 @@ var accountServiceDataMock = (function () {
         }
 
         ];
-
     }
-})();
+
+    function getIndicatorSeries() {
+        return [{
+            "date": "16-03-2017",
+            "value": 86.366
+        }, {
+            "date": "18-03-2017",
+            "value": 95.910
+        }, {
+            "date": "19-03-2017",
+            "value": 97.955
+        }, {
+            "date": "20-03-2017",
+            "value": 97.955
+        }, {
+            "date": "22-03-2017",
+            "value": 92.459
+        }];
+    }
+
+
+
+
+
+    function stringify2(obj) {
+        var result = '{';
+
+        var objKeys = Object.keys(obj);
+        for (var i = 0; i < objKeys.length; i++) {
+            var elem = obj[objKeys[i]];
+            var colon = '';
+            if (i < objKeys.length - 1) {
+                colon = ',';
+            }
+            if (typeof elem === 'object') {
+
+                if (Array.isArray(elem)) {
+                    result += '"' + objKeys[i] + '":' + '[' + stringify2(elem) + ']' + colon;
+                } else {
+                    result += '"' + objKeys[i] + '":' + stringify2(elem) + colon;
+                }
+
+            } else {
+                result += '"' + objKeys[i] + '":"' + elem + '"' + colon;
+            }
+        }
+
+        return result + '}';
+    }
+
+
+})
+();

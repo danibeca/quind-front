@@ -7,6 +7,7 @@ var accountServiceHtttpMock = (function () {
     return {
         getIndicator: getIndicator,
         getIndicators: getIndicators,
+        getIndicatorSeries: getIndicatorSeries,
         getError: getError,
     };
 
@@ -38,6 +39,27 @@ var accountServiceHtttpMock = (function () {
                 'name': 'Potencial de Eficiencia',
                 'code': 'acc_general_potential_efficiency',
                 'value': '86.366'
+            }]
+        };
+    }
+
+    function getIndicatorSeries() {
+        return {
+            data: [{
+                "date": "16-03-2017",
+                "value": 86.366
+            }, {
+                "date": "18-03-2017",
+                "value": 95.910
+            }, {
+                "date": "19-03-2017",
+                "value": 97.955
+            }, {
+                "date": "20-03-2017",
+                "value": 97.955
+            }, {
+                "date": "22-03-2017",
+                "value": 92.459
             }]
         };
     }

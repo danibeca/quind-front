@@ -12,10 +12,12 @@
                  ba-panel-title="{{ 'ACCOUNT_INDICATORS' | translate }}"
                  ba-panel-title-ext="{{vm.user.accountName}}"
                  ba-panel-class="medium-panel">
-                <a href="">
-                    <gauge-chart data="{{vm.data}}" chartid="{{vm.chartId}}" loading="...Cargando"
-                                 error="{{vm.error}}"></gauge-chart>
-                </a>
+
+                <gauge-chart data="{{vm.data}}"
+                             chartid="{{vm.chartId}}"
+                             loading="{{ 'LOADING' | translate }}"
+                             error="{{vm.error}}">
+                </gauge-chart>
                 <span class="error-dashboard" ng-show="vm.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}"</span>
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12"
@@ -23,8 +25,16 @@
                  ba-panel-title="{{ 'ACCOUNT_RUN CHART' | translate }}"
                  ba-panel-title-ext="{{vm.user.accountName}}"
                  ba-panel-class="medium-panel">
-                <stock-multiple-chart></stock-multiple-chart>
-
+                <stock-multiple-chart ids="{{ vm.ids}}"
+                                      series="{{ vm.series}}"
+                                      labels="{{ vm.labels}}"
+                                      vars="{{ vm.vars}}"
+                                      lang="{{ vm.lang}}"
+                                      error="{{vm.seriesError}}"
+                                      loading="{{ 'LOADING' | translate }}"
+                >
+                </stock-multiple-chart>
+                <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
             </div>
 
         </div>

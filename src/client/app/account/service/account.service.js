@@ -9,7 +9,8 @@
     function accountService(Restangular, $q) {
         var service = {
             getIndicators: getIndicators,
-            getIndicator: getIndicator
+            getIndicator: getIndicator,
+            getIndicatorSeries: getIndicatorSeries,
         };
         return service;
 
@@ -41,6 +42,23 @@
             function fail(error) {
                 return $q.reject(error);
             }
+        }
+
+        function getIndicatorSeries(accountId, indicatorId) {
+            return Restangular.one('accounts', accountId)
+                .one('indicators', indicatorId)
+                .getList('series')
+                .then(success)
+                .catch(fail);
+
+            function success(series) {
+                return series.plain();
+            }
+
+            function fail(error) {
+                return $q.reject(error);
+            }
+
         }
     }
 
