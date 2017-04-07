@@ -18,7 +18,6 @@
     "Ionicons": "ionicons#~2.0.1",
     "amcharts3": "^3.21.0",
     "amstock3": "^3.21.0",
-    "ammap": "~3.14.5",
     "fullcalendar": "~2.4.0",
     "highlight": "~8.8.0",
     "jquery": "^3.0.0",
@@ -98,16 +97,15 @@
         "amcharts/amcharts.js",
         "amcharts/plugins/responsive/responsive.min.js",
         "amcharts/serial.js",
-        "amcharts/gauge.js"
+        "amcharts/gauge.js",
+        "amcharts/themes/light.js",
+        "amcharts/plugins/export/export.min.js",
+        "amcharts/plugins/export/export.css"
       ]
     },
-    "amcharts-stock": {
-      "main": "dist/amcharts/amstock.js"
-    },
-    "ammap": {
+    "amstock3": {
       "main": [
-        "dist/ammap/ammap.js",
-        "dist/ammap/maps/js/worldLow.js"
+        "amcharts/amstock.js"
       ]
     },
     "slimScroll": {
