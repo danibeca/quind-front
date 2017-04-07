@@ -22,7 +22,7 @@
                 config.headers.Authorization = 'Bearer ' + token;
             }
             if (storage.get('lang')) {
-                config.headers.Language = storage.get('lang');
+                config.headers['Accept-Language'] = storage.get('lang') + '_US';
             }
             return config;
         }

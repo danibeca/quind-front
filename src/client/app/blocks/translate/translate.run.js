@@ -6,14 +6,17 @@
         .run(translateRun);
 
     /* @ngInject */
-    function translateRun($rootScope, $translate, storage, $state, $cookies) {
+    function translateRun($rootScope, $translate, storage, $state, $cookies, $translatePartialLoader) {
         $rootScope.changeLanguage = function (langKey) {
             storage.set('lang', langKey);
-            $translate.use(langKey);
-            $state.go($state.current, {}, {reload: true});
-            $rootScope.$on('$stateChangeSuccess', function () {
-                $translate.refresh();
+            $translate.use(langKey).then(function () {
+                $translatePartialLoader.addPart('general');
+                $state.go($state.current, {}, {reload: true});
+                $rootScope.$on('$stateChangeSuccess', function () {
+                    $translate.refresh();
+                });
             });
+
         };
 
         var defaultLanguage = 'es';
