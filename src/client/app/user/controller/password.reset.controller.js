@@ -22,7 +22,6 @@
                 $timeout(function () {
                     $state.go('login');
                 }, 1000);
-                $timeout.flush();
             }
 
             function fail(data) {
