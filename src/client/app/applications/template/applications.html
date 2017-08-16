@@ -18,13 +18,16 @@
             <div ng-repeat="application in vm.applications">
                 <div class="col-lg-4 col-md-12 col-sm-12"
                      ba-panel
-                     ba-panel-title="{{application.indicatorName}}"
+                     ba-panel-title="{{ 'APP_INDICATORS' | translate }}"
                      ba-panel-title-ext="{{application.name}}"
                      ba-panel-class="medium-panel">
-                    <a href="">
-                        <dashboard-pie-chart percent="{{application.percent}}"
-                                             chartid="chartapp{{application.id}}"></dashboard-pie-chart>
-                    </a>
+
+                    <gauge-chart data="{{application.data}}"
+                                 chartid="{{application.chartId}}"
+                                 loading="{{ 'LOADING' | translate }}"
+                                 error="{{application.error}}">
+                    </gauge-chart>
+                    <span class="error-dashboard" ng-show="application.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
                 </div>
             </div>
 

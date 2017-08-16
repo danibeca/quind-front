@@ -6,31 +6,91 @@
         .controller('SystemsController', SystemsController);
 
     /* @ngInject */
-    function SystemsController(Restangular, user, $scope, $timeout, spinnerService) {
-        /*jshint unused:false*/
+    function SystemsController(user, storage, systemsService, spinnerService) {
         var vm = this;
+        vm.user = user.getUser();
+        vm.lang = storage.get('lang');
+        vm.vars = {
+            0: 'value',
+            1: 'date'
+        };
+        vm.systems = [];
 
-        Restangular.all('systems').getList().then(function (systems) {
-            var sys = systems.plain();
-            vm.systems = [];
+        activate();
 
-            sys.forEach(function (system) {
-                Restangular.one('systems', system.id)
-                    .one('indicators', 1)
-                    .get().then(function (indicator) {
-                    system.percent = indicator.data.value;
-                    system.indicatorName = indicator.data.name.toUpperCase();
+        function activate() {
+            systemsService.getAllSystems()
+                .then(success)
+                .catch(fail);
 
-                    Restangular.one('systems', system.id)
-                        .one('indicators', 1)
-                        .getList('series').then(function (series) {
-                        system.linedata = series.plain();
-                        vm.systems.push(system);
-                        spinnerService.hide('systemsSpinner');
-                    });
+            function success(systems) {
+                var remainingSystems = systems.length;
+                systems.forEach(function (system) {
+
+                    systemsService.getIndicators(system.id)
+                        .then(successIndicators)
+                        .catch(failIndicators);
+
+                    function successIndicators(indicators) {
+                        var auxSystem = [];
+                        auxSystem.name = system.name;
+                        auxSystem.chartId = 'gaugeChart' + remainingSystems;
+                        auxSystem.data = indicators;
+                        remainingSystems--;
+                        var remainingIndicators = indicators.length;
+                        var ids = [];
+                        var labels = [];
+                        var dSeries = [];
+                        indicators.forEach(function (indicator) {
+                            systemsService.getIndicatorSeries(system.id, indicator.id)
+                                .then(successSeries)
+                                .catch(failSeries);
+
+                            function successSeries(series) {
+                                remainingIndicators--;
+
+                                ids.push(indicator.id);
+                                labels[indicator.id] = {
+                                    'title': indicator.name
+                                };
+                                dSeries[indicator.id] = series;
+
+                                if (remainingIndicators === 0) {
+                                    createSystemCharts();
+                                }
+                            }
+
+                            function failSeries(error) {
+                                auxSystem.seriesError = true;
+                                vm.msgError = error['msgCode'];
+                            }
+                        });
+
+                        function createSystemCharts() {
+                            auxSystem.ids = ids;
+                            auxSystem.labels = labels;
+                            auxSystem.series = dSeries;
+                            vm.systems.push(auxSystem);
+                            spinnerService.hide('systemsSpinner');
+                        }
+                    }
+
+                    function failIndicators(error) {
+                        var auxSystem = [];
+                        auxSystem.name = system.name;
+                        auxSystem.chartId = 'gCError' + remainingSystems;
+                        auxSystem.error = true;
+                        auxSystem.seriesError = true;
+                        vm.systems.push(auxSystem);
+                        vm.msgError = error['msgCode'];
+                    }
 
                 });
-            });
-        });
+            }
+
+            function fail(error) {
+                vm.msgError = error['msgCode'];
+            }
+        }
     }
 })();

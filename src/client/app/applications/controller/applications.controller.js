@@ -6,8 +6,7 @@
         .controller('ApplicationsController', ApplicationsController);
 
     /* @ngInject */
-    function ApplicationsController(appservice, spinnerService, logger, $filter) {
-        /*jshint unused:false*/
+    function ApplicationsController(appservice, spinnerService) {
         var vm = this;
         vm.applications = [];
         activate();
@@ -17,22 +16,37 @@
                 .then(success)
                 .catch(fail);
 
-
             function success(apps) {
+                var remainingApplications = apps.length;
                 apps.forEach(function (application) {
-                    var indiccatorId = 44;
-                    appservice.getIndicator(application.id, indiccatorId).then(function (indicator) {
-                        application.percent = indicator.value;
-                        application.indicatorName = indicator.name.toUpperCase();
-                        vm.applications.push(application);
+                    appservice.getGeneralIndicators(application.id)
+                        .then(successIndicators)
+                        .catch(failIndicators);
+
+                    function successIndicators(indicators) {
+                        var auxApplication = [];
+                        auxApplication.name = application.name;
+                        auxApplication.chartId = 'gaugeChart' + remainingApplications;
+                        auxApplication.data = indicators;
+                        remainingApplications--;
+                        vm.applications.push(auxApplication);
                         spinnerService.hide('appSpinner');
-                    });
+                    }
+
+                    function failIndicators(error) {
+                        var auxApplication = [];
+                        auxApplication.name = application.name;
+                        auxApplication.chartId = 'gCError' + remainingApplications;
+                        auxApplication.error = true;
+                        vm.applications.push(auxApplication);
+                        vm.msgError = error['msgCode'];
+                    }
+
                 });
             }
 
             function fail(error) {
-                spinnerService.hide('appSpinner');
-                logger.error($filter('translate')(error['msgCode']));
+                vm.msgError = error['msgCode'];
             }
         }
     }

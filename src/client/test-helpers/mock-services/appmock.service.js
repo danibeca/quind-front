@@ -8,6 +8,7 @@ var mockAppService = (function () {
         getApplications: getApplications,
         getApplicationsData: getApplicationsData,
         getIndicator: getIndicator,
+        getGeneralIndicators: getGeneralIndicators,
         getIndicatorData: getIndicatorData
     };
 
@@ -50,5 +51,18 @@ var mockAppService = (function () {
             }
         };
     }
+
+    function getGeneralIndicators() {
+        var apps = {};
+        return {
+            then: function () {
+                return apps;
+            },
+            catch: function () {
+                return {};
+            }
+        };
+    }
+
 })();
 

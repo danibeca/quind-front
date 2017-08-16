@@ -114,10 +114,10 @@
             var color = '#ED2E08'; //red
             if (percentage >= 80) {
                 color = '#5EBE01'; //green
-            } else if (percentage <= 79 && percentage >= 51) {
+            } else if (percentage < 80 && percentage >= 51) {
                 color = '#FFFF4D';//yellow
             }
-            else if (percentage <= 50 && percentage >= 39) {
+            else if (percentage < 51 && percentage >= 39) {
                 color = '#FE7903';//orange
             }
             return color;
