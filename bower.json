@@ -97,6 +97,7 @@
         "amcharts/amcharts.js",
         "amcharts/plugins/responsive/responsive.min.js",
         "amcharts/serial.js",
+		"amcharts/xy.js",
         "amcharts/gauge.js",
         "amcharts/themes/light.js"        
       ]

@@ -23,7 +23,6 @@
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel
                  ba-panel-title="{{ 'ACCOUNT_RUN CHART' | translate }}"
-                 ba-panel-title-ext="{{vm.user.accountName}}"
                  ba-panel-class="medium-panel">
                 <stock-multiple-chart ids="{{ vm.ids}}"
                                       series="{{ vm.series}}"
@@ -36,7 +35,18 @@
                 </stock-multiple-chart>
                 <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
             </div>
-
+            <div class="col-lg-8 col-md-12 col-sm-12 hidden-xs"
+                 ba-panel
+                 ba-panel-title="{{ 'QUALITY_ATTRIBUTES_ISSUES' | translate }}"
+                 ba-panel-class="medium-panel">
+                <div id="gato" class="admin-chart"></div>
+                <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12 hidden-xs"
+                 ba-panel
+                 ba-panel-class="medium-panel">
+                <popular-app></popular-app>
+            </div>
         </div>
     </div>
 

@@ -66,8 +66,8 @@
                     'valueField': vars[0],
                     'comparable': true,
                     'compareField': vars[0],
-                    'balloonText': '[[title]]:<b>[[value]]</b>',
-                    'compareGraphBalloonText': '[[title]]:<b>[[value]]</b>'
+                    'balloonText': '[[title]]:<b>[[value]]%</b>',
+                    'compareGraphBalloonText': '[[title]]:<b>[[value]]%</b>'
 
                 }],
                 'stockLegend': {
