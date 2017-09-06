@@ -1,11 +1,8 @@
 {
   "local": {
     "environmentConfig": {
-<<<<<<< HEAD
+
       "api": "//192.168.0.12/quind/features/api",
-=======
-      "api": "http://192.168.0.12/quind/features/api",
->>>>>>> 55a1940f79c0f0d64fae2544543ff99b44843566
       "env": "dev"
     }
   },
