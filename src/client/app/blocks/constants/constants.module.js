@@ -1,4 +1,4 @@
 /* jshint ignore:start */
 // jscs:disable
 angular.module("blocks.constants", [])
-.constant("environmentConfig", {"api":"http://quind2.okazo.co/api","env":"pdn"});
+.constant("environmentConfig", {"api":"http://192.168.0.12/quind/features/api","env":"dev"});
