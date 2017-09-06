@@ -1,7 +1,7 @@
 {
   "local": {
     "environmentConfig": {
-      "api": "http://192.168.0.12/laravel/agilin/api",
+      "api": "http://192.168.0.12/quind/features/api",
       "env": "dev"
     }
   },
