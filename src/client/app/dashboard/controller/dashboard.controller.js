@@ -133,7 +133,7 @@
 
                         'axisAlpha': 0,
                         'position': 'left',
-                        'title': 'Impacto',
+                        'title': 'Criticidad',
                         'minimum': 0,
                         'maximum': 5,
                         'strictMinMax': true,
