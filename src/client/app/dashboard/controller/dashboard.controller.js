@@ -25,6 +25,19 @@
 
         function activate() {
 
+            accountService.getInfo(vm.user.accountId)
+                .then(successInfo)
+                .catch(failInfo);
+
+            function successInfo(info) {
+                vm.info = info[0];
+
+            }
+
+            function failInfo(error) {
+                vm.errorInfo = error;
+            }
+
             accountService.getQA(vm.user.accountId)
                 .then(successQA)
                 .catch(failQA);
@@ -133,7 +146,7 @@
 
                         'axisAlpha': 0,
                         'position': 'left',
-                        'title': 'Impacto',
+                        'title': 'Criticidad',
                         'minimum': 0,
                         'maximum': 5,
                         'strictMinMax': true,
