@@ -42,6 +42,11 @@
                 <div id="qagraph" class="admin-chart"></div>
                 <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
             </div>
+            <div class="col-lg-4 col-md-12 col-sm-12 hidden-xs"
+                 ba-panel
+                 ba-panel-class="medium-panel">
+                <popular-app vars="{{ vm.info}}"></popular-app>
+            </div>
         </div>
     </div>
 

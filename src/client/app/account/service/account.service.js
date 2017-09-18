@@ -8,12 +8,28 @@
     /* @ngInject */
     function accountService(Restangular, $q) {
         var service = {
+            getInfo: getInfo,
             getIndicators: getIndicators,
             getQA: getQA,
             getIndicator: getIndicator,
             getIndicatorSeries: getIndicatorSeries,
         };
         return service;
+
+        function getInfo(accountId) {
+            return Restangular.one('accounts', accountId)
+                .getList('details')
+                .then(success)
+                .catch(fail);
+
+            function success(details) {
+                return details.plain();
+            }
+
+            function fail(error) {
+                return $q.reject(error);
+            }
+        }
 
         function getIndicators(accountId) {
             return Restangular.one('accounts', accountId)
