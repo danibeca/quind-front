@@ -1,0 +1,32 @@
+<div class="popular-app-img-container">
+  <div class="popular-app-img">
+    <img ng-src="{{::( 'app/info.png' | appImage )}}"/>
+    <span class="logo-text hidden-xs">Información</span>
+  </div>
+</div>
+
+<div class="popular-app-cost row">
+  <div class="col-xs-4">
+    Sistemas
+  </div>
+  <div class="col-xs-8 text-right">
+    {{ vm.details.systems }}
+  </div>
+</div>
+
+<div class="popular-app-cost row">
+  <div class="col-xs-4">
+    Aplicaciones
+  </div>
+  <div class="col-xs-8 text-right">
+    {{ vm.details.applications }}
+  </div>
+</div>
+<div class="popular-app-cost row">
+  <div class="col-xs-4">
+    Deuda Técnica
+  </div>
+  <div class="col-xs-8 text-right">
+    {{vm.details.debt}}
+  </div>
+</div>

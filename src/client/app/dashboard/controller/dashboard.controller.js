@@ -1,3 +1,4 @@
+/* jshint -W117 */
 (function () {
     'use strict';
 
@@ -6,7 +7,7 @@
         .controller('DashboardController', DashboardController);
 
     /* @ngInject */
-    function DashboardController(user, accountService, Restangular, storage) {
+    function DashboardController(user, accountService, $timeout, storage) {
         var vm = this;
         vm.user = user.getUser();
         vm.chartId = 'dashChart1';
@@ -23,9 +24,28 @@
         activate();
 
         function activate() {
+
+            accountService.getInfo(vm.user.accountId)
+                .then(successInfo)
+                .catch(failInfo);
+
+            function successInfo(info) {
+                vm.info = info[0];
+
+            }
+
+            function failInfo(error) {
+                vm.errorInfo = error;
+            }
+
+            accountService.getQA(vm.user.accountId)
+                .then(successQA)
+                .catch(failQA);
+
             accountService.getIndicators(vm.user.accountId)
                 .then(success)
                 .catch(fail);
+
 
             function success(indicators) {
                 vm.data = indicators;
@@ -59,13 +79,106 @@
                     vm.ids = ids;
                     vm.labels = labels;
                     vm.series = dSeries;
+
                 }
+            }
+
+            function successQA(qa) {
+                vm.qa = qa;
+                var delay = 1000;
+                $timeout(function () {
+                    bubbles();
+                }, delay);
+
             }
 
             function fail(error) {
                 vm.error = true;
                 vm.seriesError = true;
                 vm.msgError = error['msgCode'];
+            }
+
+
+            function failQA(error) {
+                vm.errorQA = error;
+            }
+
+            function bubbles() {
+
+                AmCharts.makeChart('qagraph', {
+                    'type': 'xy',
+                    'theme': 'light',
+                    'legend': {
+                        'horizontalGap': 10,
+                        'maxColumns': 1,
+                        'position': 'right',
+                        'markerType': 'circle'
+
+                    },
+                    'dataProvider': vm.qa[1],
+                    'valueAxes': [{
+                        'position': 'bottom',
+                        'title': 'Esfuerzo',
+                        'minimum': 0,
+                        'maximum': 5,
+                        'strictMinMax': true,
+                        'labelFunction': function (value) {
+                            if (value === 1) {
+                                return 'Muy bajo';
+                            }
+                            if (value === 2) {
+                                return 'Bajo';
+                            }
+                            if (value === 3) {
+                                return 'Medio';
+                            }
+                            if (value === 4) {
+                                return 'Alto';
+                            }
+
+                            if (value === 5) {
+                                return 'Muy alto';
+                            }
+                            return '';
+                        }
+
+                    }, {
+
+                        'axisAlpha': 0,
+                        'position': 'left',
+                        'title': 'Criticidad',
+                        'minimum': 0,
+                        'maximum': 5,
+                        'strictMinMax': true,
+                        'minMaxMultiplier': 1.5,
+                        'labelFunction': function (value) {
+                            if (value === 1) {
+                                return 'Muy bajo';
+                            }
+                            if (value === 2) {
+                                return 'Bajo';
+                            }
+                            if (value === 3) {
+                                return 'Medio';
+                            }
+                            if (value === 4) {
+                                return 'Alto';
+                            }
+
+                            if (value === 5) {
+                                return 'Muy alto';
+                            }
+                            return '';
+                        }
+                    }],
+                    'startDuration': 1.5,
+                    'graphs': vm.qa[0],
+                    'responsive': {
+                        'enabled': true
+                    }
+
+                });
+
             }
         }
     }

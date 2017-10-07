@@ -2,28 +2,27 @@
     'use strict';
 
     angular
-        .module('app.account')
-        .factory('accountService', accountService);
+        .module('app.systems')
+        .factory('systemsService', systemsService);
 
     /* @ngInject */
-    function accountService(Restangular, $q) {
+    function systemsService(Restangular, $q) {
         var service = {
-            getInfo: getInfo,
+            getAllSystems: getAllSystems,
             getIndicators: getIndicators,
-            getQA: getQA,
             getIndicator: getIndicator,
-            getIndicatorSeries: getIndicatorSeries,
+            getIndicatorSeries: getIndicatorSeries
         };
         return service;
 
-        function getInfo(accountId) {
-            return Restangular.one('accounts', accountId)
-                .getList('details')
+        function getAllSystems() {
+            return Restangular.all('systems')
+                .getList()
                 .then(success)
                 .catch(fail);
 
-            function success(details) {
-                return details.plain();
+            function success(systems) {
+                return systems.plain();
             }
 
             function fail(error) {
@@ -31,8 +30,8 @@
             }
         }
 
-        function getIndicators(accountId) {
-            return Restangular.one('accounts', accountId)
+        function getIndicators(systemId) {
+            return Restangular.one('systems', systemId)
                 .getList('indicators')
                 .then(success)
                 .catch(fail);
@@ -46,23 +45,8 @@
             }
         }
 
-        function getQA(accountId) {
-            return Restangular.one('accounts', accountId)
-                .getList('qa')
-                .then(success)
-                .catch(fail);
-
-            function success(indicators) {
-                return indicators.plain();
-            }
-
-            function fail(error) {
-                return $q.reject(error);
-            }
-        }
-
-        function getIndicator(accountId, indicatorId) {
-            return Restangular.one('accounts', accountId)
+        function getIndicator(systemId, indicatorId) {
+            return Restangular.one('systems', systemId)
                 .one('indicators', indicatorId).get()
                 .then(success)
                 .catch(fail);
@@ -76,8 +60,8 @@
             }
         }
 
-        function getIndicatorSeries(accountId, indicatorId) {
-            return Restangular.one('accounts', accountId)
+        function getIndicatorSeries(systemId, indicatorId) {
+            return Restangular.one('systems', systemId)
                 .one('indicators', indicatorId)
                 .getList('series')
                 .then(success)

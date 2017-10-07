@@ -35,6 +35,7 @@ module.exports = function (gulp, plugins, args) {
             .pipe(plugins.plumber()) // exit gracefully if something fails after this
             .pipe(plugins.less())
             .pipe(plugins.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+            .pipe(plugins.replace('http://', 'https://'))
             .pipe(gulp.dest(config.temp))
             .pipe(browserSync.stream({match: '**/*.css'}));
         ;
@@ -48,6 +49,7 @@ module.exports = function (gulp, plugins, args) {
             .pipe(plugins.sourcemaps.init())
             .pipe(plugins.sass(sassOptions))
             .pipe(plugins.autoprefixer())
+            .pipe(plugins.replace('http://', 'https://'))
             .pipe(plugins.sourcemaps.write())
             .pipe(gulp.dest(config.temp));
     };

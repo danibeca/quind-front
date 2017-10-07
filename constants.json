@@ -1,13 +1,14 @@
 {
   "local": {
     "environmentConfig": {
-      "api": "http://192.168.0.12/laravel/agilin/api",
+
+      "api": "//192.168.0.12/quind/features/api",
       "env": "dev"
     }
   },
   "production": {
     "environmentConfig": {
-      "api": "http://quind2.okazo.co/api",
+      "api": "//app2.quind.io/api",
       "env": "pdn"
     }
   }

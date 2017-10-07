@@ -16,7 +16,7 @@ describe('ApplicationsController', function () {
 
         var deferred = $q.defer();
         sinon.stub(mockAppServ, 'getApplications').returns(deferred.promise);
-        sinon.stub(mockAppServ, 'getIndicator').returns($q.when(mockAppServ.getIndicatorData()));
+        sinon.stub(mockAppServ, 'getGeneralIndicators').returns($q.when([mockAppServ.getIndicatorData()]));
         sinon.stub(spinnerService, 'hide').returns(0);
 
         var error = [];
@@ -27,18 +27,19 @@ describe('ApplicationsController', function () {
         });
 
 
+        controller = $controller('ApplicationsController');
         $rootScope.$apply();
 
-        expect($log.error.logs).to.match(/HOUSTON_WE_GOT_A_PROBLEM/);
+        expect(error['msgCode']).to.equal(controller.msgError);
         mockAppServ.getApplications.restore();
-        mockAppServ.getIndicator.restore();
+        mockAppServ.getGeneralIndicators.restore();
     });
 
     describe('on activate', function () {
 
         beforeEach(function () {
             sinon.stub(mockAppServ, 'getApplications').returns($q.when(mockAppServ.getApplicationsData()));
-            sinon.stub(mockAppServ, 'getIndicator').returns($q.when(mockAppServ.getIndicatorData()));
+            sinon.stub(mockAppServ, 'getGeneralIndicators').returns($q.when(mockAppServ.getIndicatorData()));
 
             controller = $controller('ApplicationsController', {
                 'appservice': mockAppServ
@@ -48,7 +49,7 @@ describe('ApplicationsController', function () {
 
         afterEach(function () {
             mockAppServ.getApplications.restore();
-            mockAppServ.getIndicator.restore();
+            mockAppServ.getGeneralIndicators.restore();
         });
 
         it('should call app.getApplications once', function () {
@@ -56,16 +57,15 @@ describe('ApplicationsController', function () {
         });
 
         it('should call app.getIndicator once', function () {
-            expect(mockAppServ.getIndicator.calledOnce);
+            expect(mockAppServ.getGeneralIndicators.calledOnce);
         });
 
         it('vm.applications should have  once', function () {
-            expect(controller.applications).to.have.length(7);
+            expect(controller.applications).to.have.length(14);
         });
 
-        it('vm.applications[0] should have and attr percent equeal to 73', function () {
-            expect(controller.applications[0]).to.have.property('percent');
-            expect(controller.applications[0].percent).eq(73);
+        it('vm.applications[0] should have and attr chartID', function () {
+            expect(controller.applications[0]).to.have.property('chartId');
         });
 
     });

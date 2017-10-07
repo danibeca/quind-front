@@ -6,9 +6,10 @@
         .factory('appservice', appservice);
 
     /* @ngInject */
-    function appservice(Restangular, logger, $filter, $q) {
+    function appservice(Restangular, $q) {
         var service = {
             getApplications: getApplications,
+            getGeneralIndicators: getGeneralIndicators,
             getIndicator: getIndicator
         };
 
@@ -21,6 +22,22 @@
 
             function success(applications) {
                 return applications.plain();
+            }
+
+            function fail(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function getGeneralIndicators(applicationId) {
+
+            return Restangular.one('applications', applicationId)
+                .several('indicators', 44, 52, 57).getList()
+                .then(success)
+                .catch(fail);
+
+            function success(indicators) {
+                return indicators.plain();
             }
 
             function fail(error) {
@@ -42,5 +59,6 @@
                 return $q.reject(error);
             }
         }
+
     }
 })();

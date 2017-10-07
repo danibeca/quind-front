@@ -27,6 +27,7 @@ module.exports = function (gulp, plugins, args) {
             .src(config.index)
             .pipe(wiredep(options))
             .pipe(plugins.inject(gulp.src(js), '', config.jsOrder))
+            .pipe(plugins.replace('http://', '//'))
             .pipe(gulp.dest(config.client));
     };
 };
