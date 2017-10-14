@@ -1,0 +1,194 @@
+<div class="body-bg"></div>
+<main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+
+    <ba-sidebar ng-show="vm.hasApplications"></ba-sidebar>
+    <page-top></page-top>
+
+    <div class="al-main">
+        <div class="al-content">
+            <content-top></content-top>
+            <div ba-panel ba-panel-class="profile-page">
+                <div class="panel-content">
+
+                    <h3 class="with-line">{{ 'QUALITY_SYSTEM_CONFIG_TITLE' | translate }}</h3>
+
+                    <div class="row">
+                        <form class="ui large form" method="POST" ng-submit="vm.addQAS()">
+                            <div class="col-md-12">
+
+                                <div class="form-group row clearfix">
+                                    <label class="col-sm-2 control-label">Quality System Server</label>
+
+                                    <div class="col-sm-2">
+                                        <select class="form-control" ng-model="vm.qas.id"
+                                                ng-options="item.id as item.name for item in vm.qAServers" selectpicker
+                                                required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group row clearfix">
+                                    <label class="col-sm-2 control-label">Public/Private</label>
+
+                                    <div class="col-sm-2">
+                                        <select class="form-control" ng-model="vm.qas.type" selectpicker required>
+                                            <option value="1">Public</option>
+                                            <option value="2">Private</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row clearfix">
+                                    <label for="inputURL" class="col-sm-2 control-label">URL</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control"  ng-model="vm.qas.url" id="inputURL" placeholder="" value=""
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
+                                <i class="ion-android-checkmark-circle"></i>Add Server
+                            </button>
+                        </form>
+                    </div>
+
+                    <h3 class="with-line">Agregar Sistema</h3>
+
+                    <div class="row"  ng-show="vm.hasQAS">
+                        <form class="ui large form" method="POST" ng-submit="vm.addSystem()">
+                            <div class="col-md-12">
+
+                                <div class="form-group row clearfix">
+                                    <label for="inputURL" class="col-sm-2 control-label">Nombre</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control"  ng-model="vm.system.name" id="inputSystemName" placeholder="" value=""
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
+                                <i class="ion-android-checkmark-circle"></i>Add System
+                            </button>
+                        </form>
+                    </div>
+
+
+
+                    <h3 class="with-line">Agregar Aplicaciones</h3>
+
+                    <div class="row"  ng-show="vm.hasSystems">
+                        <form class="ui large form" method="POST" ng-submit="vm.addApplication()">
+                            <div class="col-md-12">
+                                <div class="form-group row clearfix">
+                                    <label class="col-sm-2 control-label">System</label>
+
+                                    <div class="col-sm-2">
+                                        <select class="form-control" ng-model="vm.app.parent_id"
+                                                ng-options="item.id as item.name for item in vm.components" selectpicker
+                                                required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row clearfix">
+                                    <label class="col-sm-2 control-label">Application Name</label>
+
+                                    <div class="col-sm-2">
+                                        <select class="form-control" ng-model="vm.app.id"
+                                                ng-options="item.key as item.name for item in vm.resources" selectpicker
+                                                required></select>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
+                                <i class="ion-android-checkmark-circle"></i>Add Application
+                            </button>
+                        </form>
+                    </div>
+
+                    <h3 class="with-line">Social Profiles</h3>
+
+                    <div class="social-profiles row clearfix">
+                        <div class="col-md-3 col-sm-4" ng-repeat="item in socialProfiles">
+
+                            <a class="sn-link" href ng-click="showModal(item)" ng-if="!item.href">
+                                <i class="socicon {{ item.icon }}"></i>
+                                <span>{{ item.name }}</span>
+                            </a>
+
+                            <a class="sn-link connected" href="{{ item.href }}" target="_blank" ng-if="item.href">
+                                <i class="socicon {{ item.icon }}"></i>
+                                <span>{{ item.name }}</span>
+                                <em class="ion-ios-close-empty sn-link-close" ng-mousedown="unconnect(item)"></em>
+                            </a>
+                        </div>
+                    </div>
+
+                    <h3 class="with-line">Send Email Notifications</h3>
+
+                    <div class="notification row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group row clearfix">
+                                <label class="col-xs-8">When I receive a message</label>
+
+                                <div class="col-xs-4">
+                                    <switch color="primary" ng-model="switches[0]"></switch>
+                                </div>
+                            </div>
+                            <div class="form-group row clearfix">
+                                <label class="col-xs-8">When Someone sends me an invitation</label>
+
+                                <div class="col-xs-4">
+                                    <switch color="primary" ng-model="switches[1]"></switch>
+                                </div>
+                            </div>
+                            <div class="form-group row clearfix">
+                                <label class="col-xs-8">When profile information changes</label>
+
+                                <div class="col-xs-4">
+                                    <switch color="primary" ng-model="switches[2]"></switch>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row clearfix">
+                                <label class="col-xs-8">When anyone logs into your account from a new device or
+                                    browser</label>
+
+                                <div class="col-xs-4">
+                                    <switch color="primary" ng-model="switches[3]"></switch>
+                                </div>
+                            </div>
+                            <div class="form-group row clearfix">
+                                <label class="col-xs-8">Weekly Reports</label>
+
+                                <div class="col-xs-4">
+                                    <switch color="primary" ng-model="switches[4]"></switch>
+                                </div>
+                            </div>
+
+                            <div class="form-group row clearfix">
+                                <label class="col-xs-8">Daily Reports</label>
+
+                                <div class="col-xs-4">
+                                    <switch color="primary" ng-model="switches[5]"></switch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-with-icon save-profile">
+                        <i class="ion-android-checkmark-circle"></i>Update Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+

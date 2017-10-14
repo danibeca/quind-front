@@ -3,17 +3,17 @@
 
     angular
         .module('app.user')
-        .factory('user', user);
+        .factory('userService', userService);
 
     /* @ngInject */
-    function user(storage) {
+    function userService(storage) {
         var currentUser;
 
         var service = {
             setUser: setUser,
             getUser: getUser,
             isLoggedIn: isLoggedIn,
-            logout: logout,
+            logout: logout
         };
 
         return service;
@@ -40,8 +40,12 @@
 
         function logout() {
             storage.remove('token');
+            storage.remove('refresh_token');
             storage.remove('user');
+            storage.remove('lastTimeCheck');
+            storage.remove('croot');
             currentUser = undefined;
         }
     }
 })();
+

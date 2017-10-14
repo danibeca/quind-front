@@ -23,7 +23,7 @@
         }
 
         function getJsonObject(name) {
-            return JSON.parse(window.localStorage.getItem(name));
+                return JSON.parse(window.localStorage.getItem(name));
         }
 
         function setJsonObject(name, object) {

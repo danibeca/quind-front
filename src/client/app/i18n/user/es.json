@@ -2,6 +2,8 @@
   "PAGE_TITLE": "Ingresa a tu cuenta",
   "EMAIL_REQUIRED": "El email es requerido",
   "PASS_REQUIRED": "El password es requerido",
+  "NAME_TITLE": "Nombre Completo",
+  "COMPANY_TITLE": "Empresa",
   "EMAIL_TITLE": "Email",
   "PASS_TITLE": "Password",
   "REMEMBERME": "Recuerdame",
@@ -16,6 +18,8 @@
   "EMAIL_SENT": "Para continuar revise su correo y siga las instrucciones dadas",
   "NEW_PASSWORD_SUCCESS": "Tu password ha sido cambiado",
   "NEW_PASSWORD": "Ingresa tu nuevo password",
-  "SUBMIT_UPDATE_PASS": "Actualizar"
+  "SUBMIT_UPDATE_PASS": "Actualizar",
+  "REGISTRATION_PAGE_TITLE": "Fomulario de Registro",
+  "SUBMIT_NEW_ACCOUNT": "Registrarse"
 
 }

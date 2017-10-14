@@ -10,7 +10,8 @@
         var service = {
             getApplications: getApplications,
             getGeneralIndicators: getGeneralIndicators,
-            getIndicator: getIndicator
+            getIndicator: getIndicator,
+            hasApplications: hasApplications,
         };
 
         return service;
@@ -58,6 +59,10 @@
             function fail(error) {
                 return $q.reject(error);
             }
+        }
+
+        function hasApplications() {
+            return true;
         }
 
     }
