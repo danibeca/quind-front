@@ -7,7 +7,7 @@
         .config(config);
 
     /* @ngInject */
-    function requestInterceptor($q, $injector, storage, environmentConfig, toastr, user) {
+    function requestInterceptor($q, $injector, storage, environmentConfig, toastr, userService) {
         var service = {
             request: request,
             responseError: responseError
@@ -57,7 +57,7 @@
         }
 
         function securityRedirect() {
-            user.logout();
+            userService.logout();
             $injector.get('$state').go('login');
         }
 

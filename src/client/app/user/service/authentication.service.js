@@ -6,23 +6,35 @@
         .factory('auth', auth);
 
     /* @ngInject */
-    function auth($http, $q, environmentConfig, storage, user) {
+    function auth($http, $q, environmentConfig, storage, userService) {
         var service = {
             getLogin: getLogin,
-            isTokenValid: isTokenValid
+            isTokenValid: isTokenValid,
+            getAuthUser:getAuthUser
         };
 
         return service;
 
         function getLogin(data) {
-            return $http.post(environmentConfig.api + '/login', data)
+
+            var serviceData = {
+                'grant_type' : 'password',
+                'client_id' : 2,
+                'client_secret' : 'veYPaSOkfdszhDGylgBTuoIiUVsezXiOmwcgvXzu',
+                'username' : data.email,
+                'password' : data.password
+            };
+
+            //alert(JSON.stringify(serviceData));
+            return $http.post(environmentConfig.userAPI + '/oauth/token', serviceData)
                 .then(success)
                 .catch(fail);
 
             function success(response) {
                 var result = response.data;
-                storage.set('token', result.token);
-                user.setUser(result);
+                storage.set('token', result.access_token);
+                storage.set('refresh_token', result.refresh_token);
+                getAuthUser();
                 return result;
             }
 
@@ -33,10 +45,10 @@
         }
 
         function isTokenValid() {
-            var last = new Date(storage.get('lastT'));
+            var last = new Date(storage.get('lastTimeCheck'));
             var now = new Date();
             if (now.getMinutes() - last.getMinutes() > 5) {
-                return $http.get(environmentConfig.api + '/token/valid')
+                return getAuthUser()
                     .then(success)
                     .catch(fail);
 
@@ -45,13 +57,28 @@
             }
 
             function success() {
-                storage.set('lastT', now);
+                storage.set('lastTimeCheck', now);
                 return true;
             }
 
             function fail() {
-                user.logout();
+                userService.logout();
                 return false;
+            }
+        }
+
+        function getAuthUser() {
+            return $http.get(environmentConfig.userAPI + '/user')
+                .then(success)
+                .catch(fail);
+
+            function success(response) {
+                userService.setUser(response.data);
+                return response.data;
+            }
+
+            function fail(error) {
+                return $q.reject(error);
             }
         }
     }

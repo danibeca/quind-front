@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="/bower_components/angular-xeditable/dist/css/xeditable.css" />
     <link rel="stylesheet" href="/bower_components/ionrangeslider/css/ion.rangeSlider.css" />
     <link rel="stylesheet" href="/bower_components/ionrangeslider/css/ion.rangeSlider.skinFlat.css" />
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css" />
     <!-- endbower -->
 
     <!-- inject:css -->
@@ -112,6 +113,9 @@
 <script src="/bower_components/angular-spinners/dist/angular-spinners.min.js"></script>
 <script src="/bower_components/ionrangeslider/js/ion.rangeSlider.js"></script>
 <script src="/bower_components/ng-fastclick/dist/index.min.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.js"></script>
+<script src="/bower_components/angular-messages/angular-messages.js"></script>
+<script src="/bower_components/angular-material/angular-material.js"></script>
 <!-- endbower -->
 
 
@@ -120,8 +124,9 @@
 <script src="/src/client/app/app.module.js"></script>
 <script src="/src/client/app/account/account.module.js"></script>
 <script src="/src/client/app/applications/applications.module.js"></script>
-<script src="/src/client/app/dashboard/dashboard.module.js"></script>
+<script src="/src/client/app/settings/settings.module.js"></script>
 <script src="/src/client/app/core/core.module.js"></script>
+<script src="/src/client/app/dashboard/dashboard.module.js"></script>
 <script src="/src/client/app/systems/systems.module.js"></script>
 <script src="/src/client/app/user/user.module.js"></script>
 <script src="/src/client/app/blocks/amcharts3/amcharts3.module.js"></script>
@@ -137,43 +142,51 @@
 <script src="/src/client/app/core/config.js"></script>
 <script src="/src/client/app/core/constants.js"></script>
 <script src="/src/client/app/account/service/account.service.js"></script>
+<script src="/src/client/app/account/service/component.service.js"></script>
+<script src="/src/client/app/account/service/qaserver.service.js"></script>
 <script src="/src/client/app/applications/controller/applications.controller.js"></script>
 <script src="/src/client/app/applications/route/applications.route.js"></script>
 <script src="/src/client/app/applications/service/applications.service.js"></script>
 <script src="/src/client/app/blocks/rest/rest.config.js"></script>
+<script src="/src/client/app/settings/controller/settings.controller.js"></script>
 <script src="/src/client/app/blocks/theme/theme.configProvider.js"></script>
 <script src="/src/client/app/blocks/theme/theme.constants.js"></script>
 <script src="/src/client/app/blocks/theme/theme.run.js"></script>
 <script src="/src/client/app/blocks/theme/theme.service.js"></script>
 <script src="/src/client/app/blocks/translate/translate.config.js"></script>
 <script src="/src/client/app/blocks/translate/translate.run.js"></script>
-<script src="/src/client/app/dashboard/controller/dashboard.controller.js"></script>
-<script src="/src/client/app/dashboard/directive/popularApp.directive.js"></script>
-<script src="/src/client/app/dashboard/route/dashboard.route.js"></script>
+<script src="/src/client/app/settings/route/settings.route.js"></script>
 <script src="/src/client/app/core/route/core.route.js"></script>
 <script src="/src/client/app/core/service/request.interceptor.js"></script>
+<script src="/src/client/app/dashboard/controller/dashboard.controller.js"></script>
+<script src="/src/client/app/dashboard/directive/popularApp.controller.js"></script>
+<script src="/src/client/app/dashboard/directive/popularApp.directive.js"></script>
+<script src="/src/client/app/dashboard/route/dashboard.route.js"></script>
 <script src="/src/client/app/systems/controller/systems.controller.js"></script>
 <script src="/src/client/app/systems/route/systems.route.js"></script>
 <script src="/src/client/app/systems/service/systems.service.js"></script>
+<script src="/src/client/app/user/route/user.route.js"></script>
 <script src="/src/client/app/user/controller/login.controller.js"></script>
 <script src="/src/client/app/user/controller/password.email.controller.js"></script>
 <script src="/src/client/app/user/controller/password.reset.controller.js"></script>
-<script src="/src/client/app/user/route/user.route.js"></script>
+<script src="/src/client/app/user/controller/registration.controller.js"></script>
 <script src="/src/client/app/user/service/authentication.service.js"></script>
+<script src="/src/client/app/user/service/user.remote.service.js"></script>
 <script src="/src/client/app/user/service/user.service.js"></script>
-<script src="/src/client/app/blocks/amcharts3/linechart/linechart.controller.js"></script>
-<script src="/src/client/app/blocks/amcharts3/linechart/linechart.directive.js"></script>
 <script src="/src/client/app/blocks/amcharts3/angulargauge/gauge.controller.js"></script>
 <script src="/src/client/app/blocks/amcharts3/angulargauge/gauge.directive.js"></script>
 <script src="/src/client/app/blocks/amcharts3/angulargauge/gauge.service.js"></script>
+<script src="/src/client/app/blocks/amcharts3/linechart/linechart.controller.js"></script>
+<script src="/src/client/app/blocks/amcharts3/linechart/linechart.directive.js"></script>
 <script src="/src/client/app/blocks/amcharts3/piechart/piechart.controller.js"></script>
 <script src="/src/client/app/blocks/amcharts3/piechart/piechart.directive.js"></script>
 <script src="/src/client/app/blocks/amcharts3/stockmultiple/stockmultiple.controller.js"></script>
 <script src="/src/client/app/blocks/amcharts3/stockmultiple/stockmultiple.directive.js"></script>
 <script src="/src/client/app/blocks/amcharts3/stockmultiple/stockmultiple.service.js"></script>
-<script src="/src/client/app/blocks/exception/provider/exception-handler.provider.js"></script>
 <script src="/src/client/app/blocks/exception/service/exception.service.js"></script>
+<script src="/src/client/app/blocks/exception/provider/exception-handler.provider.js"></script>
 <script src="/src/client/app/blocks/logger/service/logger.service.js"></script>
+<script src="/src/client/app/blocks/rest/service/account.service.js"></script>
 <script src="/src/client/app/blocks/router/provider/router-helper.provider.js"></script>
 <script src="/src/client/app/blocks/storage/service/storage.service.js"></script>
 <script src="/src/client/app/blocks/theme/directives/animatedChange.js"></script>

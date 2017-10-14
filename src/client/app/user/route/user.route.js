@@ -13,6 +13,22 @@
     function getStates() {
         return [
             {
+                state: 'registration',
+                config: {
+                    url: '/registration',
+                    templateUrl: 'app/user/template/registration.html',
+                    controller: 'RegistrationController',
+                    controllerAs: 'vm',
+                    title: 'Registration',
+                    resolve: {
+                        translations: function (translateHelper) {
+                            return translateHelper.addParts('user');
+                        }
+                    }
+                }
+            },
+
+            {
                 state: 'login',
                 config: {
                     url: '/login',
@@ -31,8 +47,8 @@
                 state: 'logout',
                 config: {
                     url: '/logout',
-                    onEnter: function (user) {
-                        user.logout();
+                    onEnter: function (userService) {
+                        userService.logout();
                     },
                     controller: function ($state) {
                         $state.go('login');

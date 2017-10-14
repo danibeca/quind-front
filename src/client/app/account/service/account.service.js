@@ -12,7 +12,7 @@
             getIndicators: getIndicators,
             getQA: getQA,
             getIndicator: getIndicator,
-            getIndicatorSeries: getIndicatorSeries,
+            getIndicatorSeries: getIndicatorSeries
         };
         return service;
 
