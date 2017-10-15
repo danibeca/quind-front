@@ -6,10 +6,10 @@
         .controller('SystemsController', SystemsController);
 
     /* @ngInject */
-    function SystemsController(userService, storage, systemsService, spinnerService) {
+    function SystemsController(userService, storageService, systemsService, spinnerService) {
         var vm = this;
         vm.user = userService.getUser();
-        vm.lang = storage.get('lang');
+        vm.lang = storageService.get('lang');
         vm.vars = {
             0: 'value',
             1: 'date'

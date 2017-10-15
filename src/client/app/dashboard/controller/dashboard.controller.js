@@ -7,11 +7,11 @@
         .controller('DashboardController', DashboardController);
 
     /* @ngInject */
-    function DashboardController(userService, accountService, $timeout, storage) {
+    function DashboardController($timeout,userService, accountService, storageService) {
         var vm = this;
         vm.user = userService.getUser();
         vm.chartId = 'dashChart1';
-        vm.lang = storage.get('lang');
+        vm.lang = storageService.get('lang');
         vm.vars = {
             0: 'value',
             1: 'date'

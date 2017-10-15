@@ -7,7 +7,7 @@
         .config(config);
 
     /* @ngInject */
-    function requestInterceptor($q, $injector, storage, environmentConfig, toastr, userService) {
+    function requestInterceptor($q, $injector, storageService, environmentConfig, toastr, userService) {
         var service = {
             request: request,
             responseError: responseError
@@ -17,12 +17,12 @@
 
         function request(config) {
             config.headers = config.headers || {};
-            var token = storage.get('token');
+            var token = storageService.get('token');
             if (token) {
                 config.headers.Authorization = 'Bearer ' + token;
             }
-            if (storage.get('lang')) {
-                config.headers['Accept-Language'] = storage.get('lang') + '_US';
+            if (storageService.get('lang')) {
+                config.headers['Accept-Language'] = storageService.get('lang') + '_US';
             }
             return config;
         }
