@@ -2,6 +2,8 @@
 /bower_components
 /build
 /report
+/nbproject
 .tmp
 .idea
 .sonar
+/nbproject/private/
