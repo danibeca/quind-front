@@ -6,7 +6,7 @@
         .factory('auth', auth);
 
     /* @ngInject */
-    function auth($http, $q, environmentConfig, storage, userService) {
+    function auth($http, $q, environmentConfig, storageService, userService) {
         var service = {
             getLogin: getLogin,
             isTokenValid: isTokenValid,
@@ -32,20 +32,20 @@
 
             function success(response) {
                 var result = response.data;
-                storage.set('token', result.access_token);
-                storage.set('refresh_token', result.refresh_token);
+                storageService.set('token', result.access_token);
+                storageService.set('refresh_token', result.refresh_token);
                 getAuthUser();
                 return result;
             }
 
             function fail(error) {
-                storage.remove('token');
+                storageService.remove('token');
                 return $q.reject(error);
             }
         }
 
         function isTokenValid() {
-            var last = new Date(storage.get('lastTimeCheck'));
+            var last = new Date(storageService.get('lastTimeCheck'));
             var now = new Date();
             if (now.getMinutes() - last.getMinutes() > 5) {
                 return getAuthUser()
@@ -57,7 +57,7 @@
             }
 
             function success() {
-                storage.set('lastTimeCheck', now);
+                storageService.set('lastTimeCheck', now);
                 return true;
             }
 

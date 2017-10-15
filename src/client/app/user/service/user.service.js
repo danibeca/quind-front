@@ -6,7 +6,7 @@
         .factory('userService', userService);
 
     /* @ngInject */
-    function userService(storage) {
+    function userService(storageService) {
         var currentUser;
 
         var service = {
@@ -20,12 +20,12 @@
 
         function setUser(data) {
             currentUser = data;
-            storage.setJsonObject('user', data);
+            storageService.setJsonObject('user', data);
         }
 
         function getUser() {
             if (!currentUser) {
-                currentUser = storage.getJsonObject('user');
+                currentUser = storageService.getJsonObject('user');
             }
             return currentUser;
         }
@@ -39,11 +39,11 @@
         }
 
         function logout() {
-            storage.remove('token');
-            storage.remove('refresh_token');
-            storage.remove('user');
-            storage.remove('lastTimeCheck');
-            storage.remove('croot');
+            storageService.remove('token');
+            storageService.remove('refresh_token');
+            storageService.remove('user');
+            storageService.remove('lastTimeCheck');
+            storageService.remove('croot');
             currentUser = undefined;
         }
     }

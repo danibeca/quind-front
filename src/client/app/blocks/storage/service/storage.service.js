@@ -3,17 +3,19 @@
 
     angular
         .module('blocks.storage')
-        .factory('storage', storage);
+        .factory('storageService', storageService);
 
     /* @ngInject */
-    function storage() {
+    function storageService() {
         var service = {
             clear: clear,
             getJsonObject: getJsonObject,
             setJsonObject: setJsonObject,
             get: get,
             set: set,
-            remove:remove
+            remove:remove,
+            has: has
+
         };
 
         return service;
@@ -22,12 +24,19 @@
             window.localStorage.clear();
         }
 
+        function has(name) {
+            if(get(name) === null){
+                return false;
+            }
+            return false;
+        }
+
         function getJsonObject(name) {
-                return JSON.parse(window.localStorage.getItem(name));
+                return JSON.parse(get(name));
         }
 
         function setJsonObject(name, object) {
-            window.localStorage.setItem(name, JSON.stringify(object));
+            set(name, JSON.stringify(object));
         }
 
         function get(name) {
