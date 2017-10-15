@@ -12,17 +12,17 @@
             add: add,
             getList:getList,
             associateToUser: associateToUser
-
         };
         return service;
 
         function getRoot(userId) {
-            return accountAPI.one("users", userId).all("croot").get()
+
+            return accountAPI.one('users', userId).getList('croot')
                 .then(success)
                 .catch(fail);
 
             function success(response) {
-                return response;
+                return response.plain()[0];
             }
 
             function fail(error) {

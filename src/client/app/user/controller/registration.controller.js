@@ -6,7 +6,7 @@
         .controller('RegistrationController', RegistrationController);
 
     /* @ngInject */
-    function RegistrationController(logger, userRemoteService, componentService, auth, storage, $filter, $state) {
+    function RegistrationController(logger, userRemoteService, componentService, auth, storageService, $filter, $state) {
         var vm = this;
         vm.registration = registration;
         vm.userComponentData = new Object();
@@ -36,7 +36,7 @@
                 .catch(fail);
 
             function success(resp) {
-                storage.setJsonObject('croot', resp);
+                storageService.setJsonObject('croot', resp);
                 vm.userComponentData.component_id = resp.id;
                 associateComponentToUser();
             }

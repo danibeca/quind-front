@@ -7,13 +7,13 @@
         .controller('SettingsController', SettingsController);
 
     /* @ngInject */
-    function SettingsController(userService, qualityServerService, componentService, storage) {
+    function SettingsController(croot, userService, qualityServerService, componentService, storageService) {
         var vm = this;
         vm.user = userService.getUser();
         vm.hasApplications = false;
         vm.hasSystems = false;
         vm.hasQAS = false;
-        vm.croot = storage.getJsonObject('croot').id;
+        vm.croot = croot.id;
 
         vm.addQAS = addQAS;
         vm.addSystem = addSystem;
@@ -107,7 +107,5 @@
             }
 
         }
-
-
     }
 })();
