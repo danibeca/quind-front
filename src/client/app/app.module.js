@@ -6,7 +6,8 @@
         'app.dashboard',
         'app.systems',
         'app.applications',
-        'app.account'
+        'app.account',
+        'angularValidator'
     ])
         .run(runApp);
 

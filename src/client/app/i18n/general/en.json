@@ -11,5 +11,7 @@
   "APPLICATION_TITLE": "Applications",
   "INSPECTION_SERVER_ERROR": "Information no available. Please check your platform for continuous inspection of code quality",
   "INTERNAL_SERVER_ERROR": "Information no available. Please contact us.",
-  "LOADING": "...Loading"
+  "LOADING": "...Loading",
+  "REQUIRED_FIELD": "Required field",
+  "REQUIRED": "Required"
 }
