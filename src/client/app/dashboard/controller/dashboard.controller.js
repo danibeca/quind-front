@@ -7,11 +7,12 @@
         .controller('DashboardController', DashboardController);
 
     /* @ngInject */
-    function DashboardController($timeout,userService, accountService, storageService) {
+    function DashboardController(croot, userService, accountService, componentService, storageService, $timeout) {
         var vm = this;
         vm.user = userService.getUser();
         vm.chartId = 'dashChart1';
         vm.lang = storageService.get('lang');
+        vm.indIds = '44,52,57';
         vm.vars = {
             0: 'value',
             1: 'date'
@@ -25,12 +26,12 @@
 
         function activate() {
 
-            accountService.getInfo(vm.user.accountId)
+            componentService.getInfo(croot.id)
                 .then(successInfo)
                 .catch(failInfo);
 
             function successInfo(info) {
-                vm.info = info[0];
+                vm.info = info;
 
             }
 
@@ -38,11 +39,11 @@
                 vm.errorInfo = error;
             }
 
-            accountService.getQA(vm.user.accountId)
+            componentService.getQA(croot.id)
                 .then(successQA)
                 .catch(failQA);
 
-            accountService.getIndicators(vm.user.accountId)
+            componentService.getIndicators(croot.id, vm.indIds)
                 .then(success)
                 .catch(fail);
 
@@ -50,30 +51,27 @@
             function success(indicators) {
                 vm.data = indicators;
                 var missing = indicators.length;
-                indicators.forEach(function (indicator) {
-                    accountService.getIndicatorSeries(vm.user.accountId, indicator.id)
-                        .then(successSeries)
-                        .catch(failSeries);
+                componentService.getIndicatorSeries(croot.id, vm.indIds)
+                    .then(successSeries)
 
-                    function successSeries(series) {
-                        missing--;
-                        ids.push(indicator.id);
-                        labels[indicator.id] = {
-                            'title': indicator.name
-                        };
-                        dSeries[indicator.id] = series;
+                function successSeries(indi) {
+                    indicators.forEach(function (name) {
+                        indi.forEach(function (indicator) {
+                            if (indicator[name.id] !== undefined) {
+                                missing--;
+                                ids.push(name.id);
+                                labels[name.id] = {
+                                    'title': name.name
+                                };
+                                dSeries[name.id] = indicator[name.id];
 
-                        if (missing === 0) {
-                            createRunChart();
-                        }
-                    }
-
-                    function failSeries(error) {
-                        vm.seriesError = true;
-                        vm.msgError = error['msgCode'];
-                    }
-                });
-
+                                if (missing === 0) {
+                                    createRunChart();
+                                }
+                            }
+                        });
+                    });
+                }
 
                 function createRunChart() {
                     vm.ids = ids;
