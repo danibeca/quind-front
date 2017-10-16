@@ -2,14 +2,15 @@
   "PAGE_TITLE": "Log-in to your account",
   "EMAIL_REQUIRED": "Email is required!",
   "PASS_REQUIRED": "Password is required",
+  "EMAIL_FORMAT": "Incorrect email format",
   "NAME_TITLE": "Fullname",
   "COMPANY_TITLE": "Company",
   "EMAIL_TITLE": "Email",
   "PASS_TITLE": "Password",
   "REMEMBERME": "Remember me",
-  "FORGOTPASS": "Forgot your password",
+  "FORGOTPASS": "Forgot my password",
   "SUBMIT_CREDENTIALS": "Login",
-  "LOGIN_FAILED": "Invalid credentials",
+  "LOGIN_FAILED": "Email or password incorrect",
   "LOGIN_SUCCESS": "Login success",
   "LOGIN_INTERNAL_ERROR": "An error occurred. Please try again later",
   "RESET_TITLE": "GET NEW PASSWORD",
@@ -20,6 +21,7 @@
   "NEW_PASSWORD": "Update your password",
   "SUBMIT_UPDATE_PASS": "Update",
   "REGISTRATION_PAGE_TITLE": "Sign up to Quind",
-  "SUBMIT_NEW_ACCOUNT": "Sign Up"
+  "SUBMIT_NEW_ACCOUNT": "Sign Up",
+  "LOGIN": "Login"
 
 }
