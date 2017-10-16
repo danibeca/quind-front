@@ -29,6 +29,9 @@
                     resolve: {
                         translations: function (translateHelper) {
                             return translateHelper.addParts('dashboard');
+                        },
+                        croot: function (userService, componentService) {
+                            return componentService.getCacheRoot(userService.getUser().id)
                         }
 
                     }
