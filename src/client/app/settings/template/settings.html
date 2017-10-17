@@ -112,21 +112,23 @@
 
                     <h3 class="with-line">Social Profiles</h3>
 
-                    <div class="social-profiles row clearfix">
-                        <div class="col-md-3 col-sm-4" ng-repeat="item in socialProfiles">
-
-                            <a class="sn-link" href ng-click="showModal(item)" ng-if="!item.href">
-                                <i class="socicon {{ item.icon }}"></i>
-                                <span>{{ item.name }}</span>
-                            </a>
-
-                            <a class="sn-link connected" href="{{ item.href }}" target="_blank" ng-if="item.href">
-                                <i class="socicon {{ item.icon }}"></i>
-                                <span>{{ item.name }}</span>
-                                <em class="ion-ios-close-empty sn-link-close" ng-mousedown="unconnect(item)"></em>
-                            </a>
+                    <div class="row">
+                        <div class="col-md-12"
+                             ba-panel
+                             ba-panel-title="Modals"
+                             ba-panel-class="with-scroll">
+                            <div class="modal-buttons clearfix">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="vm.open('app/settings/modalTemplates/basicModal.html', 'md')">Default modal</button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" ng-click="vm.open('app/settings/modalTemplates/largeModal.html', 'lg')">
+                                    Large modal
+                                </button>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" ng-click="vm.open('app/settings/modalTemplates/smallModal.html', 'sm')">
+                                    Small modal
+                                </button>
+                            </div>
                         </div>
                     </div>
+
 
                     <h3 class="with-line">Send Email Notifications</h3>
 
