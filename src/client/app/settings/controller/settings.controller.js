@@ -7,7 +7,7 @@
         .controller('SettingsController', SettingsController);
 
     /* @ngInject */
-    function SettingsController(croot, userService, qualityServerService, componentService, logger, $filter, storageService) {
+    function SettingsController(croot, userService, qualityServerService, componentService, logger, $filter, $uibModal, $scope) {
         var vm = this;
         vm.user = userService.getUser();
         vm.hasApplications = false;
@@ -59,7 +59,7 @@
             }
 
             componentService.getList({parent_id: vm.croot})
-                .then(success3)
+                .then(success3);
 
             function success3(data) {
                 if (data.length > 0) {
@@ -82,14 +82,12 @@
                     vm.qas.component_id = vm.croot;
                     qualityServerService.attachInstance(vm.qas);
                 } else {
-                    console.log('errro');
                     logger.error($filter('translate')('INVALID_URL'));
                 }
 
             }
 
             function fail(error) {
-                console.log('errro');
                 logger.error($filter('translate')('INVALID_URL'));
             }
         }
@@ -119,16 +117,33 @@
         }
 
         function open(page, size) {
+            componentService.getList()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.components = info;
+                }
+
+                function failInfo(error) {
+                }
+            
+            
             $uibModal.open({
+                scope: $scope,
                 animation: true,
                 templateUrl: page,
                 size: size,
                 resolve: {
                     items: function () {
                         return vm.items;
+                    },
+                    components: function () {
+                        return vm.components;
                     }
                 }
             });
         };
+        
     }
 })();

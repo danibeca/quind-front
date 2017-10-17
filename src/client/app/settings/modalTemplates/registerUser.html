@@ -1,0 +1,95 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">{{ 'CREATE_USER' | translate }}</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.registration()" novalidate angular-validator>
+
+                <div class="form-group row">
+                    <div class="col-xs-12">
+                        <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'NAME_TITLE' | translate }}" 
+                                   ng-model="vm.user.name" 
+                                   required 
+                                   validate-on="dirty"
+                                   required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                   />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-12">
+                        <input type="email" name="email" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'EMAIL_TITLE' | translate }}" 
+                                   ng-model="vm.user.email" 
+                                   required 
+                                   validate-on="dirty"
+                                   invalid-message = "'{{ 'EMAIL_FORMAT' | translate }}'"
+                                   required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                   />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-12">
+                        <input type="password" name="password" class="form-control" placeholder="{{ 'PASS_TITLE' | translate }}" 
+                               ng-model="vm.user.password" 
+                               required 
+                               validate-on="dirty"
+                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                               />
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <div class="col-xs-12">
+                        <label>Rows on page
+                            <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker
+                              ng-model="vm.smartTablePageSize" ng-options="i for i in [5,10,15,20,25]">
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <div class="col-xs-12">
+                        <table class="table" st-table="vm.components">
+                            <thead>
+                                <tr class="sortable">
+                                    <th></th>
+                                    <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+                                    <th st-sort="name" st-sort-default="true">Name</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th><input st-search="" placeholder="Search Name" class="input-sm form-control search-input" type="search"/></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in vm.components">
+                                    <td><input name="component" type="checkbox" value="{{item.id}}"></td>
+                                    <td class="table-id">{{item.id}}</td>
+                                    <td>{{item.name}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" class="text-center">
+                                        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="5"></div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>

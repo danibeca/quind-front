@@ -5,5 +5,11 @@
   "PUBLIC": "Público",
   "PRIVATE": "Privado",
   "QUALITY_SYSTEM_SERVICE": "Servidor de sistema de calidad",
-  "ADD_SERVER": "Agregar servidor"
+  "ADD_SERVER": "Agregar servidor",
+  "CREATE_USER": "Crear usuario",
+  "EMAIL_FORMAT": "Formato de email incorrecto",
+  "NAME_TITLE": "Nombre Completo",
+  "EMAIL_TITLE": "Email",
+  "PASS_TITLE": "Contraseña",
+  "SUBMIT_NEW_ACCOUNT": "Crear usuario"
 }
