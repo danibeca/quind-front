@@ -7,7 +7,7 @@
         .controller('SettingsController', SettingsController);
 
     /* @ngInject */
-    function SettingsController(croot, userService, qualityServerService, componentService, storageService) {
+    function SettingsController(croot, userService, qualityServerService, componentService, storageService, $uibModal) {
         var vm = this;
         vm.user = userService.getUser();
         vm.hasApplications = false;
@@ -18,9 +18,13 @@
         vm.addQAS = addQAS;
         vm.addSystem = addSystem;
         vm.addApplication = addApplication;
+
+        vm.open = open;
+
         activate();
 
         function activate() {
+
 
             qualityServerService.getList()
                 .then(success)
@@ -107,5 +111,18 @@
             }
 
         }
+
+        function open(page, size) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: page,
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.items;
+                    }
+                }
+            });
+        };
     }
 })();
