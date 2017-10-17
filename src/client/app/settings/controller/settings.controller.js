@@ -22,9 +22,13 @@
         vm.addQAS = addQAS;
         vm.addSystem = addSystem;
         vm.addApplication = addApplication;
+
+        vm.open = open;
+
         activate();
 
         function activate() {
+
 
             qualityServerService.getList()
                 .then(success);
@@ -113,5 +117,18 @@
             }
 
         }
+
+        function open(page, size) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: page,
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.items;
+                    }
+                }
+            });
+        };
     }
 })();
