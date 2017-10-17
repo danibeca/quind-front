@@ -1,3 +1,9 @@
 {
-  "QUALITY_SYSTEM_CONFIG_TITLE": "CONFIGURACION DE SISTEMA DE CALIDAD"
+  "QUALITY_SYSTEM_CONFIG_TITLE": "CONFIGURACION DE SISTEMA DE CALIDAD",
+  "INVALID_URL": "URL invalida",
+  "PUBLIC_PRIVATE": "Público/Privado",
+  "PUBLIC": "Público",
+  "PRIVATE": "Privado",
+  "QUALITY_SYSTEM_SERVICE": "Servidor de sistema de calidad",
+  "ADD_SERVER": "Agregar servidor"
 }

@@ -7,13 +7,17 @@
         .controller('SettingsController', SettingsController);
 
     /* @ngInject */
-    function SettingsController(croot, userService, qualityServerService, componentService, storageService) {
+    function SettingsController(croot, userService, qualityServerService, componentService, logger, $filter, storageService) {
         var vm = this;
         vm.user = userService.getUser();
         vm.hasApplications = false;
         vm.hasSystems = false;
         vm.hasQAS = false;
         vm.croot = croot.id;
+
+        vm.qas = [];
+        vm.qas.type = '0';
+        vm.qas.id = '0';
 
         vm.addQAS = addQAS;
         vm.addSystem = addSystem;
@@ -23,7 +27,7 @@
         function activate() {
 
             qualityServerService.getList()
-                .then(success)
+                .then(success);
 
             function success(data) {
                 vm.qAServers = data;
@@ -31,7 +35,7 @@
 
 
             qualityServerService.getInstances(vm.croot)
-                .then(success1)
+                .then(success1);
 
             function success1(data) {
 
@@ -74,33 +78,35 @@
                     vm.qas.component_id = vm.croot;
                     qualityServerService.attachInstance(vm.qas);
                 } else {
-                    alert('URL No valida');
+                    console.log('errro');
+                    logger.error($filter('translate')('INVALID_URL'));
                 }
 
             }
 
             function fail(error) {
-                alert('URL No valida');
+                console.log('errro');
+                logger.error($filter('translate')('INVALID_URL'));
             }
         }
 
         function addSystem() {
             vm.system.tag_id = 2;
             vm.system.parent_id = vm.croot;
-            return addComponent(vm.system)
+            return addComponent(vm.system);
 
         }
 
         function addApplication() {
             vm.app.tag_id = 3;
-            return addComponent(vm.app)
+            return addComponent(vm.app);
 
         }
 
 
         function addComponent(data) {
             componentService.add(data)
-                .then(success)
+                .then(success);
 
             function success(data) {
 
