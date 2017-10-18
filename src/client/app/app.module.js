@@ -7,7 +7,8 @@
         'app.systems',
         'app.applications',
         'app.account',
-        'angularValidator'
+        'angularValidator',
+        'smart-table'
     ])
         .run(runApp);
 

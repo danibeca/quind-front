@@ -69,6 +69,16 @@
             }
 
 
+            componentService.getList()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.components = info;
+                }
+
+                function failInfo(error) {
+                }
         }
 
         function addQAS() {
@@ -123,6 +133,7 @@
 
                 function successInfo(info) {
                     vm.components = info;
+                    vm.smartTablePageSize = '10';
                 }
 
                 function failInfo(error) {
