@@ -23,7 +23,8 @@
         vm.addSystem = addSystem;
         vm.addApplication = addApplication;
 
-        vm.open = open;
+        vm.openRegisterUser = openRegisterUser;
+        vm.openRegisterComponent = openRegisterComponent;
 
         activate();
 
@@ -126,7 +127,7 @@
 
         }
 
-        function open(page, size) {
+        function openRegisterUser(page, size) {
             componentService.getList()
                 .then(successInfo)
                 .catch(failInfo);
@@ -134,6 +135,64 @@
                 function successInfo(info) {
                     vm.components = info;
                     vm.smartTablePageSize = '10';
+                }
+
+                function failInfo(error) {
+                }
+            
+            /*
+            userService.getRole()
+                .then(successInfo)
+                .catch(failInfo);
+           */
+            successInfo();
+                function successInfo(info) {
+                    vm.role = [{"id": 1, "name": "Administrador"},
+                                {"id": 2, "name": "Miembro de equipo"}];
+                }
+
+                function failInfo(error) {
+                }
+            
+            $uibModal.open({
+                scope: $scope,
+                animation: true,
+                templateUrl: page,
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.items;
+                    },
+                    components: function () {
+                        return vm.components;
+                    }
+                }
+            });
+        };
+        
+        function openRegisterComponent(page, size) {
+
+            vm.new_component = [];
+            vm.new_component.type = '0';
+
+            componentService.getList()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.components = info;
+                    vm.smartTablePageSize = '10';
+                }
+
+                function failInfo(error) {
+                }
+            
+            qualityServerService.getInstanceResources()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.codes = info;
                 }
 
                 function failInfo(error) {

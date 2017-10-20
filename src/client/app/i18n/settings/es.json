@@ -7,9 +7,17 @@
   "QUALITY_SYSTEM_SERVICE": "Servidor de sistema de calidad",
   "ADD_SERVER": "Agregar servidor",
   "CREATE_USER": "Crear usuario",
+  "CREATE_COMPONENT": "Create component",
   "EMAIL_FORMAT": "Formato de email incorrecto",
   "NAME_TITLE": "Nombre Completo",
   "EMAIL_TITLE": "Email",
   "PASS_TITLE": "Contraseña",
-  "SUBMIT_NEW_ACCOUNT": "Crear usuario"
+  "TYPE_TITLE": "Tipo",
+  "ROL_TITLE": "Rol",
+  "CODE_TITLE": "Código",
+  "SUBMIT_NEW_ACCOUNT": "Crear usuario",
+  "ROWS_ON_PAGE": "Filas por pagina",
+  "NAME": "Nombre",
+  "SYSTEM": "Sistema",
+  "APPLICATION": "Aplicación"
 }

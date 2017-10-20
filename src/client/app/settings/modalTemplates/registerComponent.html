@@ -6,13 +6,14 @@
         <h4 class="modal-title" id="myModalLabel">{{ 'CREATE_USER' | translate }}</h4>
     </div>
     <div class="modal-body">
+        
         <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.registration()" novalidate angular-validator>
 
                 <div class="form-group row">
-                    <label class="col-sm-2">{{ 'NAME' | translate }}</label>
-                    <div class="col-xs-3">
+                    <label class="col-sm-2">{{ 'NAME_TITLE' | translate }}</label>
+                    <div class="col-sm-3">
                         <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'NAME_TITLE' | translate }}" 
-                                   ng-model="vm.user.name" 
+                                   ng-model="vm.new_component.name" 
                                    required 
                                    validate-on="dirty"
                                    required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
@@ -20,51 +21,45 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-2">{{ 'EMAIL_TITLE' | translate }}</label>
-                    <div class="col-sm-3">
-                        <input type="email" name="email" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'EMAIL_TITLE' | translate }}" 
-                                   ng-model="vm.user.email" 
-                                   required 
-                                   validate-on="dirty"
-                                   invalid-message = "'{{ 'EMAIL_FORMAT' | translate }}'"
-                                   required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
-                                   />
-                    </div>
-                </div>
+                <div class="form-group row clearfix">
+                    <label class="col-sm-2">{{ 'TYPE_TITLE' | translate }}</label>
 
-                <div class="form-group row">
-                    <label class="col-sm-2">{{ 'PASS_TITLE' | translate }}</label>
                     <div class="col-sm-3">
-                        <input type="password" name="password" class="form-control" placeholder="{{ 'PASS_TITLE' | translate }}" 
-                               ng-model="vm.user.password" 
-                               required 
-                               validate-on="dirty"
-                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
-                               />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2">{{ 'ROL_TITLE' | translate }}</label>
-                    <div class="col-sm-3">
-                        <select class="form-control" name="role" ng-model="vm.role.id" 
-                                selectpicker
+                        <select class="form-control" name="component_type" ng-model="vm.new_component.type" 
+                                selectpicker 
                                 required 
                                 validate-on="dirty"
-                                validator = "vm.role.id != 0"
+                                validator = "vm.new_component.type != 0"
                                 required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
                                 invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                            >
-                            <option ng-repeat="item in vm.role" value="{{item.id}}">{{item.name}}</option>
+                                >
+                            <option value="0"></option>
+                            <option value="1">{{ 'SYSTEM' | translate }}</option>
+                            <option value="2">{{ 'APPLICATION' | translate }}</option>
                         </select>
                     </div>
                 </div>
             
-                <hr>
-            
+                <div class="form-group row clearfix" ng-show="vm.new_component.type == 1">
+                    <label class="col-sm-2">{{ 'CODE_TITLE' | translate }}</label>
+
+                    <div class="col-sm-3">
+                        <select class="form-control" name="code" ng-model="vm.new_component.code" 
+                                selectpicker 
+                                required 
+                                validate-on="dirty"
+                                validator = "vm.new_component.code != 0"
+                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
+                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
+                                >
+                            <option ng-repeat="item in vm.codes" value="{{item.id}}">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group row ">
-                    <label class="col-sm-12">{{ 'ROWS_ON_PAGE' | translate }}</label>
-                    <div class="col-sm-2">
+                    <div class="col-xs-12">
+                        <label>{{ 'ROWS_ON_PAGE' | translate }}
                             <select class="form-control selectpicker show-tick" name="pagination" title="Rows on page" selectpicker
                               ng-model="vm.smartTablePageSize">
                                 <option value="5">5</option>
@@ -73,6 +68,7 @@
                                 <option value="20">20</option>
                                 <option value="25">25</option>
                             </select>
+                        </label>
                     </div>
                 </div>
 
@@ -93,7 +89,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="item in vm.components">
-                                    <td><input name="component" type="checkbox" value="{{item.id}}"></td>
+                                    <td><input name="component" type="radio" value="{{item.id}}"></td>
                                     <td class="table-id">{{item.id}}</td>
                                     <td>{{item.name}}</td>
                                 </tr>
