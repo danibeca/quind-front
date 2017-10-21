@@ -1,6 +1,6 @@
 /**
- * @author danibeca
- * created on 02.22.2017
+ * @author jmruiz6
+ * created on 10.20.2017
  */
 /* jshint -W101, -W117 */
 (function () {

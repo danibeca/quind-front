@@ -1,6 +1,6 @@
 /**
- * @author Daniel Betancur <danibeca@okazo.co>
- * created on 03.30.2017
+ * @author jmruiz6
+ * created on 10.20.2017
  */
 /* jshint -W117 */
 (function () {
