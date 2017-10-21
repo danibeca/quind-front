@@ -42,6 +42,22 @@
                 <div id="qagraph" class="admin-chart"></div>
                 <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
             </div>
+
+            <div class="col-lg-8 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'QUALITY_ATTRIBUTES_ISSUES' | translate }}"
+                 ba-panel-class="medium-panel">
+                <bubble-chart chartid="qabubblegraph"
+                              data="{{ vm.qaData }}"
+                              bottom-axe="{{ vm.bottomAxe }}"
+                              left-axe=" {{ vm.leftAxe }} "
+                              error="{{vm.seriesError}}"
+                              loading="{{ 'LOADING' | translate }}"
+                >
+                </bubble-chart>
+                <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
+            </div>
+
             <div class="col-lg-4 col-md-12 col-sm-12 hidden-xs"
                  ba-panel
                  ba-panel-class="medium-panel">

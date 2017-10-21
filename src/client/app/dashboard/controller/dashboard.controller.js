@@ -83,11 +83,11 @@
 
             function successQA(qa) {
                 vm.qa = qa;
+                vm.qaGraphsProvider = JSON.parse(JSON.stringify(vm.qa[0]))
                 var delay = 1000;
                 $timeout(function () {
-                    bubbles();
+                    bubbles(vm.qa[1], vm.qa[0]);
                 }, delay);
-
             }
 
             function fail(error) {
@@ -101,7 +101,105 @@
                 vm.errorQA = error;
             }
 
-            function bubbles() {
+            function bubbles(data, graphs) {
+                var labelsArray = [[0, ''], [1, 'Muy bajo'], [2, 'Bajo'], [3, 'Medio'], [4, 'Alto'], [5, 'Muy alto']];
+                vm.bottomAxe = {};
+                vm.bottomAxe.title = 'Esfuerzo';
+                vm.bottomAxe.labels = labelsArray;
+                vm.leftAxe = {};
+                vm.leftAxe.title = 'Criticidad';
+                vm.leftAxe.labels = labelsArray ;
+                vm.qaData = JSON.parse('[\n' +
+                    '  {\n' +
+                    '    "name": "Seguridad",\n' +
+                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
+                    '    "values": [\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"5",\n' +
+                    '        "value":"2"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"4",\n' +
+                    '        "value":"5"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"77"\n' +
+                    '      }\n' +
+                    '    ]\n' +
+                    '  },\n' +
+                    '  {\n' +
+                    '    "name": "Mantenibilidad",\n' +
+                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
+                    '    "values": [\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"4",\n' +
+                    '        "value":"11"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"1699"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"2",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"51"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"3",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"1"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"5",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"2"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"2",\n' +
+                    '        "value":"76"\n' +
+                    '      }\n' +
+                    '    ]\n' +
+                    '  },\n' +
+                    '  {\n' +
+                    '    "name": "Usabilidad",\n' +
+                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
+                    '    "values": [\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"5"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"1",\n' +
+                    '        "value":"53"\n' +
+                    '      }\n' +
+                    '    ]\n' +
+                    '  },\n' +
+                    '  {\n' +
+                    '    "name": "Confiabilidad",\n' +
+                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
+                    '    "values": [\n' +
+                    '      {\n' +
+                    '        "x":"2",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"1"\n' +
+                    '      },\n' +
+                    '      {\n' +
+                    '        "x":"1",\n' +
+                    '        "y":"3",\n' +
+                    '        "value":"9"\n' +
+                    '      }\n' +
+                    '    ]\n' +
+                    '  }\n' +
+                    ']\n');
 
                 AmCharts.makeChart('qagraph', {
                     'type': 'xy',
@@ -113,7 +211,7 @@
                         'markerType': 'circle'
 
                     },
-                    'dataProvider': vm.qa[1],
+                    'dataProvider': data,
                     'valueAxes': [{
                         'position': 'bottom',
                         'title': 'Esfuerzo',
@@ -170,13 +268,12 @@
                         }
                     }],
                     'startDuration': 1.5,
-                    'graphs': vm.qa[0],
+                    'graphs': graphs,
                     'responsive': {
                         'enabled': true
                     }
 
                 });
-
             }
         }
     }
