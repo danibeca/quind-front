@@ -28,11 +28,15 @@
         }
 
         function responseError(rejection) {
+            //alert(JSON.stringify(rejection));
             var msg = getErrorMessage(rejection);
             if (msg === null) {
                 rejection.msgCode = 'HOUSTON_WE_GOT_A_PROBLEM';
             } else {
-                rejection.msgCode = rejection.data.error.msgCode;
+                if (rejection.data !== undefined && rejection.data.error !== undefined) {
+                    rejection.msgCode = rejection.data.error.msgCode;
+                }
+
                 if (environmentConfig.env === 'dev') {
                     console.log(rejection);
                     toastr.error(rejection.config.url + ': ' + msg);
@@ -78,7 +82,7 @@
         function getErrorMessage(rejection) {
             var result = null;
             if (rejection.data !== undefined && rejection.data.error !== undefined) {
-                result = rejection.data.error.message;
+                result = JSON.stringify(rejection.data.error.message);
             }
             return result;
         }

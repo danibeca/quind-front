@@ -1,68 +1,75 @@
 <div class="middle-page">
 
-	<div class="ui grid">
-		<div class="column">
-			
-			<form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.registration()" novalidate angular-validator>
-				<div class="ui segment">
-                                    <h2 class="ui teal header ng-binding text-center">{{ 'REGISTRATION_PAGE_TITLE' | translate }}</h2>
-					
-                                        <div class="form-group row">
-                                            <div class="col-xs-12">
-                                                <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'NAME_TITLE' | translate }}" 
-                                                           ng-model="vm.user.name" 
-                                                           required 
-                                                           validate-on="dirty"
-                                                           required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
-                                                           />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-xs-12">
-                                                <input type="email" name="email" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'EMAIL_TITLE' | translate }}" 
-                                                           ng-model="vm.user.email" 
-                                                           required 
-                                                           validate-on="dirty"
-                                                           invalid-message = "'{{ 'EMAIL_FORMAT' | translate }}'"
-                                                           required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
-                                                           />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-xs-12">
-                                                <input type="password" name="password" class="form-control" placeholder="{{ 'PASS_TITLE' | translate }}" 
-                                                       ng-model="vm.user.password" 
-                                                       required 
-                                                       validate-on="dirty"
-                                                       required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
-                                                       />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-xs-12">
-                                                <input type="text" name="company" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'COMPANY_TITLE' | translate }}" 
-                                                           ng-model="vm.user.company" 
-                                                           required 
-                                                           validate-on="dirty"
-                                                           required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
-                                                           />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-12">
-						<button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}</button>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <a ui-sref="login" >{{ 'LOGIN' | translate }}</a>
-                                            </div>
-                                        </div>
-				</div>
+    <div class="ui grid">
+        <div class="column">
 
-			</form>
+            <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.registration()"
+                  novalidate angular-validator>
+                <div class="ui segment">
+                    <h2 class="ui teal header ng-binding text-center">{{ 'REGISTRATION_PAGE_TITLE' | translate }}</h2>
 
-		</div>
-	</div>
+                    <div class="form-group row">
+                        <div class="col-xs-12">
+                            <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control"
+                                   placeholder="{{ 'NAME_TITLE' | translate }}"
+                                   ng-model="vm.user.name"
+                                   required
+                                   validate-on="dirty"
+                                   required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-12">
+                            <input type="email" name="email" autocorrect="off" autocapitalize="none"
+                                   class="form-control" placeholder="{{ 'EMAIL_TITLE' | translate }}"
+                                   ng-model="vm.user.email"
+                                   required
+                                   validate-on="dirty"
+                                   invalid-message="'{{ 'EMAIL_FORMAT' | translate }}'"
+                                   required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-12">
+                            <input type="password" name="password" class="form-control"
+                                   placeholder="{{ 'PASS_TITLE' | translate }}"
+                                   ng-model="vm.user.password"
+                                   validator = "vm.passwordValidator(vm.user.password) === true"
+                                   invalid-message = "vm.passwordValidator(vm.user.password)"
+                                   validate-on="dirty"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-12">
+                            <input type="text" name="company" autocorrect="off" autocapitalize="none"
+                                   class="form-control" placeholder="{{ 'COMPANY_TITLE' | translate }}"
+                                   ng-model="vm.user.company"
+                                   required
+                                   validate-on="dirty"
+                                   required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_ACCOUNT' |
+                                translate }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <a ui-sref="login">{{ 'LOGIN' | translate }}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
 
 </div>
