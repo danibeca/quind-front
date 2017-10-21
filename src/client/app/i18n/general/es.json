@@ -12,6 +12,7 @@
   "INSPECTION_SERVER_ERROR": "Informacion no disponible. Por favor revise su servidor de inspeccion de codigo",
   "INTERNAL_SERVER_ERROR": "Informacion no disponible. Por favor contactenos.",
   "LOADING": "...Cargando",
+  "REQUIRED_SELECT": "Selección requerida",
   "REQUIRED_FIELD": "Campo requerido",
   "REQUIRED": "Requerido"
 }

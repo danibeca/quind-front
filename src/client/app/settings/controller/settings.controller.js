@@ -7,7 +7,7 @@
         .controller('SettingsController', SettingsController);
 
     /* @ngInject */
-    function SettingsController(croot, userService, qualityServerService, componentService, storageService, $uibModal) {
+    function SettingsController(croot, userService, qualityServerService, componentService, logger, $filter, $uibModal, $scope) {
         var vm = this;
         vm.user = userService.getUser();
         vm.hasApplications = false;
@@ -15,11 +15,16 @@
         vm.hasQAS = false;
         vm.croot = croot.id;
 
+        vm.qas = [];
+        vm.qas.type = '0';
+        vm.qas.id = '0';
+
         vm.addQAS = addQAS;
         vm.addSystem = addSystem;
         vm.addApplication = addApplication;
 
-        vm.open = open;
+        vm.openRegisterUser = openRegisterUser;
+        vm.openRegisterComponent = openRegisterComponent;
 
         activate();
 
@@ -27,7 +32,7 @@
 
 
             qualityServerService.getList()
-                .then(success)
+                .then(success);
 
             function success(data) {
                 vm.qAServers = data;
@@ -35,7 +40,7 @@
 
 
             qualityServerService.getInstances(vm.croot)
-                .then(success1)
+                .then(success1);
 
             function success1(data) {
 
@@ -55,7 +60,7 @@
             }
 
             componentService.getList({parent_id: vm.croot})
-                .then(success3)
+                .then(success3);
 
             function success3(data) {
                 if (data.length > 0) {
@@ -65,6 +70,16 @@
             }
 
 
+            componentService.getList()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.components = info;
+                }
+
+                function failInfo(error) {
+                }
         }
 
         function addQAS() {
@@ -78,33 +93,33 @@
                     vm.qas.component_id = vm.croot;
                     qualityServerService.attachInstance(vm.qas);
                 } else {
-                    alert('URL No valida');
+                    logger.error($filter('translate')('INVALID_URL'));
                 }
 
             }
 
             function fail(error) {
-                alert('URL No valida');
+                logger.error($filter('translate')('INVALID_URL'));
             }
         }
 
         function addSystem() {
             vm.system.tag_id = 2;
             vm.system.parent_id = vm.croot;
-            return addComponent(vm.system)
+            return addComponent(vm.system);
 
         }
 
         function addApplication() {
             vm.app.tag_id = 3;
-            return addComponent(vm.app)
+            return addComponent(vm.app);
 
         }
 
 
         function addComponent(data) {
             componentService.add(data)
-                .then(success)
+                .then(success);
 
             function success(data) {
 
@@ -112,17 +127,93 @@
 
         }
 
-        function open(page, size) {
+        function openRegisterUser(page, size) {
+            componentService.getList()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.components = info;
+                    vm.smartTablePageSize = '10';
+                }
+
+                function failInfo(error) {
+                }
+            
+            /*
+            userService.getRole()
+                .then(successInfo)
+                .catch(failInfo);
+           */
+            successInfo();
+                function successInfo(info) {
+                    vm.role = [{"id": 1, "name": "Administrador"},
+                                {"id": 2, "name": "Miembro de equipo"}];
+                }
+
+                function failInfo(error) {
+                }
+            
             $uibModal.open({
+                scope: $scope,
                 animation: true,
                 templateUrl: page,
                 size: size,
                 resolve: {
                     items: function () {
                         return vm.items;
+                    },
+                    components: function () {
+                        return vm.components;
                     }
                 }
             });
         };
+        
+        function openRegisterComponent(page, size) {
+
+            vm.new_component = [];
+            vm.new_component.type = '0';
+
+            componentService.getList()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.components = info;
+                    vm.smartTablePageSize = '10';
+                }
+
+                function failInfo(error) {
+                }
+            
+            qualityServerService.getInstanceResources()
+                .then(successInfo)
+                .catch(failInfo);
+
+                function successInfo(info) {
+                    vm.codes = info;
+                }
+
+                function failInfo(error) {
+                }
+            
+            
+            $uibModal.open({
+                scope: $scope,
+                animation: true,
+                templateUrl: page,
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.items;
+                    },
+                    components: function () {
+                        return vm.components;
+                    }
+                }
+            });
+        };
+        
     }
 })();

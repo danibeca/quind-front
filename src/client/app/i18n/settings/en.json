@@ -1,3 +1,23 @@
 {
-  "QUALITY_SYSTEM_CONFIG_TITLE": "QUALITY SYSTEM CONFIGURATION"
+  "QUALITY_SYSTEM_CONFIG_TITLE": "QUALITY SYSTEM CONFIGURATION",
+  "INVALID_URL": "Invalid URL",
+  "PUBLIC_PRIVATE": "Public/Private",
+  "PUBLIC": "Public",
+  "PRIVATE": "Private",
+  "QUALITY_SYSTEM_SERVICE": "Quality System Server",
+  "ADD_SERVER": "Add Server",
+  "CREATE_USER": "Create user",
+  "CREATE_COMPONENT": "Create component",
+  "EMAIL_FORMAT": "Formato de email incorrecto",
+  "NAME_TITLE": "Fullname",
+  "EMAIL_TITLE": "Email",
+  "PASS_TITLE": "Password",
+  "TYPE_TITLE": "Type",
+  "ROL_TITLE": "Role",
+  "CODE_TITLE": "Code",
+  "SUBMIT_NEW_ACCOUNT": "Create user",
+  "ROWS_ON_PAGE": "Rows on page",
+  "NAME": "Name",
+  "SYSTEM": "System",
+  "APPLICATION": "Application"
 }

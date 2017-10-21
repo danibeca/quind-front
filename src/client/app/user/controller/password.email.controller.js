@@ -6,21 +6,23 @@
         .controller('PasswordEmailController', PasswordEmailController);
 
     /* @ngInject */
-    function PasswordEmailController(logger, $http, $filter, environmentConfig) {
+    function PasswordEmailController(logger, password, $http, $filter, environmentConfig) {
         var vm = this;
         vm.success = false;
         vm.sendEmail = sendEmail;
 
         function sendEmail() {
-            $http.post(environmentConfig.api + '/password/email', vm.credential)
+            password.getEmail(vm.credential)
                 .then(success)
                 .catch(fail);
 
             function success() {
+                console.log('success');
                 vm.success = true;
             }
 
             function fail() {
+                console.log('error');
                 logger.error($filter('translate')('WRONG_EMAIL'));
             }
         }
