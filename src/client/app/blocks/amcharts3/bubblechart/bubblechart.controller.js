@@ -13,12 +13,12 @@
     function BubbleChartCtrl(bubbleChartService) {
         var vm = this;
 
+        vm.spinner = 'amSpinner' + Math.random() * 1000;
         vm.createChart = createChart;
         vm.isJsonString = isJsonString;
 
-        function createChart(id, data, graphs) {
-            var pros = bubbleChartService.transformData(vm.data);
-            vm.chart = bubbleChartService.createChart(vm.chartid, pros.data, pros.graphs, vm.bottomAxe, vm.leftAxe);
+        function createChart() {
+            vm.chart = bubbleChartService.createChart(vm.chartid, bubbleChartService.transformData(vm.data, vm.config));
         }
 
         function isJsonString(str) {

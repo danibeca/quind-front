@@ -9,7 +9,7 @@
         .directive('bubbleChart', bubbleChart);
 
     /* @ngInject */
-    function bubbleChart($timeout) {
+    function bubbleChart($timeout, spinnerService) {
 
         return {
             restrict: 'E',
@@ -19,8 +19,7 @@
             scope: {
                 chartid: '@',
                 data: '@',
-                bottomAxe: '@',
-                leftAxe: '@',
+                config: '@',
                 loading: '@',
                 error: '@'
             },
@@ -43,21 +42,24 @@
                     }
                 });
 
-                scope.$watch('bottomAxe', function () {
-                    if (scope.bottomAxe !== undefined && scope.bottomAxe !== '') {
-                        controller.bottomAxe = JSON.parse(scope.bottomAxe);
+                scope.$watch('config', function () {
+                    if (scope.config !== undefined && scope.config !== '') {
+                        controller.config = JSON.parse(scope.config);
                         if (isReady()) {
                             createChart();
                         }
                     }
                 });
 
-                scope.$watch('leftAxe', function () {
-                    if (scope.leftAxe !== undefined && scope.leftAxe !== '') {
-                        controller.leftAxe = JSON.parse(scope.leftAxe);
-                        if (isReady()) {
-                            createChart();
-                        }
+                scope.$watch('loading', function () {
+                    if (scope.loading !== undefined && scope.loading !== '') {
+                        controller.loading = scope.loading;
+                    }
+                });
+
+                scope.$watch('error', function () {
+                    if (scope.error !== undefined && scope.error !== '') {
+                        spinnerService.hide(controller.spinner);
                     }
                 });
 
@@ -65,8 +67,7 @@
                     var result = false;
                     if (controller.chartid !== undefined && controller.chartid !== '' &&
                         controller.data !== undefined && controller.data !== '' &&
-                        controller.bottomAxe !== undefined && controller.bottomAxe !== '' &&
-                        controller.leftAxe !== undefined && controller.leftAxe !== ''
+                        controller.config !== undefined && controller.config !== ''
                     ) {
                         result = true;
                     }
@@ -77,6 +78,7 @@
                     var delay = 0;
                     $timeout(function () {
                         controller.createChart();
+                        spinnerService.hide(controller.spinner);
                     }, delay);
                 }
             }

@@ -7,7 +7,7 @@
         .controller('DashboardController', DashboardController);
 
     /* @ngInject */
-    function DashboardController(croot, userService, accountService, componentService, storageService, $timeout) {
+    function DashboardController(croot, userService, accountService, componentService, $filter, storageService, $timeout) {
         var vm = this;
         vm.user = userService.getUser();
         vm.chartId = 'dashChart1';
@@ -39,9 +39,9 @@
                 vm.errorInfo = error;
             }
 
-            componentService.getQA(croot.id)
-                .then(successQA)
-                .catch(failQA);
+            componentService.getQAAttributes(croot.id)
+                .then(successQAAttributes)
+                .catch(failQAAttributes);
 
             componentService.getIndicators(croot.id, vm.indIds)
                 .then(success)
@@ -81,199 +81,50 @@
                 }
             }
 
-            function successQA(qa) {
-                vm.qa = qa;
-                vm.qaGraphsProvider = JSON.parse(JSON.stringify(vm.qa[0]))
-                var delay = 1000;
+            function successQAAttributes(qa) {
+                vm.qaData = qa;
+                var delay = 1;
                 $timeout(function () {
-                    bubbles(vm.qa[1], vm.qa[0]);
+                    bubblesQA(vm.qaData);
                 }, delay);
             }
 
             function fail(error) {
                 vm.error = true;
                 vm.seriesError = true;
-                vm.msgError = error['msgCode'];
+                vm.msgError = error.msgCode;
             }
 
-
-            function failQA(error) {
-                vm.errorQA = error;
+            function failQAAttributes(error) {
+                vm.errorQAAttributes = error;
             }
 
-            function bubbles(data, graphs) {
-                var labelsArray = [[0, ''], [1, 'Muy bajo'], [2, 'Bajo'], [3, 'Medio'], [4, 'Alto'], [5, 'Muy alto']];
-                vm.bottomAxe = {};
-                vm.bottomAxe.title = 'Esfuerzo';
-                vm.bottomAxe.labels = labelsArray;
-                vm.leftAxe = {};
-                vm.leftAxe.title = 'Criticidad';
-                vm.leftAxe.labels = labelsArray ;
-                vm.qaData = JSON.parse('[\n' +
-                    '  {\n' +
-                    '    "name": "Seguridad",\n' +
-                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
-                    '    "values": [\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"5",\n' +
-                    '        "value":"2"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"4",\n' +
-                    '        "value":"5"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"77"\n' +
-                    '      }\n' +
-                    '    ]\n' +
-                    '  },\n' +
-                    '  {\n' +
-                    '    "name": "Mantenibilidad",\n' +
-                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
-                    '    "values": [\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"4",\n' +
-                    '        "value":"11"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"1699"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"2",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"51"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"3",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"1"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"5",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"2"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"2",\n' +
-                    '        "value":"76"\n' +
-                    '      }\n' +
-                    '    ]\n' +
-                    '  },\n' +
-                    '  {\n' +
-                    '    "name": "Usabilidad",\n' +
-                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
-                    '    "values": [\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"5"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"1",\n' +
-                    '        "value":"53"\n' +
-                    '      }\n' +
-                    '    ]\n' +
-                    '  },\n' +
-                    '  {\n' +
-                    '    "name": "Confiabilidad",\n' +
-                    '    "balloonText":"Criticidad:<b>[[y]]<\\/b> Esfuerzo:<b>[[x]]<\\/b><br>Cantidad:<b>[[value]]<\\/b>",\n' +
-                    '    "values": [\n' +
-                    '      {\n' +
-                    '        "x":"2",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"1"\n' +
-                    '      },\n' +
-                    '      {\n' +
-                    '        "x":"1",\n' +
-                    '        "y":"3",\n' +
-                    '        "value":"9"\n' +
-                    '      }\n' +
-                    '    ]\n' +
-                    '  }\n' +
-                    ']\n');
+            function buildAxe(title) {
+                var labelsArray = [[0, ''],
+                                   [1, $filter('translate')('TOO_LOW_TEXT')],
+                                   [2, $filter('translate')('LOW_TEXT')],
+                                   [3, $filter('translate')('MEDIUM_TEXT')],
+                                   [4, $filter('translate')('HIGH_TEXT')],
+                                   [5, $filter('translate')('TOO_HIGH_TEXT')]];
+                var axe = {};
+                axe.title = title;
+                axe.labels = labelsArray;
+                return axe;
+            }
 
-                AmCharts.makeChart('qagraph', {
-                    'type': 'xy',
-                    'theme': 'light',
-                    'legend': {
-                        'horizontalGap': 10,
-                        'maxColumns': 1,
-                        'position': 'right',
-                        'markerType': 'circle'
-
-                    },
-                    'dataProvider': data,
-                    'valueAxes': [{
-                        'position': 'bottom',
-                        'title': 'Esfuerzo',
-                        'minimum': 0,
-                        'maximum': 5,
-                        'strictMinMax': true,
-                        'labelFunction': function (value) {
-                            if (value === 1) {
-                                return 'Muy bajo';
-                            }
-                            if (value === 2) {
-                                return 'Bajo';
-                            }
-                            if (value === 3) {
-                                return 'Medio';
-                            }
-                            if (value === 4) {
-                                return 'Alto';
-                            }
-
-                            if (value === 5) {
-                                return 'Muy alto';
-                            }
-                            return '';
-                        }
-
-                    }, {
-
-                        'axisAlpha': 0,
-                        'position': 'left',
-                        'title': 'Criticidad',
-                        'minimum': 0,
-                        'maximum': 5,
-                        'strictMinMax': true,
-                        'minMaxMultiplier': 1.5,
-                        'labelFunction': function (value) {
-                            if (value === 1) {
-                                return 'Muy bajo';
-                            }
-                            if (value === 2) {
-                                return 'Bajo';
-                            }
-                            if (value === 3) {
-                                return 'Medio';
-                            }
-                            if (value === 4) {
-                                return 'Alto';
-                            }
-
-                            if (value === 5) {
-                                return 'Muy alto';
-                            }
-                            return '';
-                        }
-                    }],
-                    'startDuration': 1.5,
-                    'graphs': graphs,
-                    'responsive': {
-                        'enabled': true
-                    }
-
-                });
+            function bubblesQA(data) {
+                vm.qaConfig = {};
+                vm.qaConfig.bottomAxe = buildAxe($filter('translate')('EFFORT_TEXT'));
+                vm.qaConfig.leftAxe = buildAxe($filter('translate')('CRITICITY_TEXT'));
+                vm.qaConfig.bullet = 'circle';
+                vm.qaConfig.lineAlpha = 0;
+                vm.qaConfig.fillAlphas = 0;
+                vm.qaConfig.maxBulletSize = 80;
+                vm.qaConfig.minBulletSize = 15;
+                vm.qaConfig.bulletBorderAlpha = 1;
+                vm.qaConfig.bulletBorderThickness = 2;
+                vm.qaConfig.bulletAlpha = 0.8;
+                vm.qaData = data;
             }
         }
     }

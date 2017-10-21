@@ -1,6 +1,6 @@
 {
-  "QUALITY_SYSTEM_CONFIG_TITLE": "CONFIGURACION DE SISTEMA DE CALIDAD",
-  "INVALID_URL": "URL invalida",
+  "QUALITY_SYSTEM_CONFIG_TITLE": "CONFIGURACIÓN DE SISTEMA DE CALIDAD",
+  "INVALID_URL": "URL inválida",
   "PUBLIC_PRIVATE": "Público/Privado",
   "PUBLIC": "Público",
   "PRIVATE": "Privado",
@@ -16,7 +16,7 @@
   "ROL_TITLE": "Rol",
   "CODE_TITLE": "Código",
   "SUBMIT_NEW_ACCOUNT": "Crear usuario",
-  "ROWS_ON_PAGE": "Filas por pagina",
+  "ROWS_ON_PAGE": "Filas por página",
   "NAME": "Nombre",
   "SYSTEM": "Sistema",
   "APPLICATION": "Aplicación"

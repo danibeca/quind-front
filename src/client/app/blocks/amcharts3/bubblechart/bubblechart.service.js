@@ -19,32 +19,98 @@
 
         return service;
 
-        function transformData(attributesArray) {
+        function transformData(attributesArray, config) {
             var result = {};
             result.graphs = [];
             attributesArray.forEach(function (item, index) {
-                result.graphs.push(getChartProvider(item.name, item.balloonText, index + 1));
+                result.graphs.push(buildChartProvider(item.name, item.balloonText, index + 1, config));
             });
             result.data = getDataProviders(attributesArray);
+            result.bottomAxe = config.bottomAxe;
+            result.leftAxe = config.leftAxe;
             return result;
         }
 
-        function getChartProvider(attributeTitle, attributeBalloonText, attributeIndex) {
+        function buildChartProvider(attributeTitle, attributeBalloonText, attributeIndex, config) {
             var result = {};
+            result.title = attributeTitle;
             result.balloonText = attributeBalloonText;
-            result.bullet = 'circle';
-            result.lineAlpha = 0;
             result.valueField = 'value' + attributeIndex;
             result.xField = 'x' + attributeIndex;
             result.yField = 'y' + attributeIndex;
-            result.fillAlphas = 0;
-            result.maxBulletSize = 80;
-            result.title = attributeTitle;
-            result.minBulletSize = 15;
-            result.bulletBorderAlpha = 1;
-            result.bulletBorderThickness = 2;
-            result.bulletAlpha = 0.8;
+            result.bullet = getBullet(config);
+            result.lineAlpha = getLineAlpha(config);
+            result.fillAlphas = getFillAlphas(config);
+            result.maxBulletSize = getMaxBulletSize(config);
+            result.minBulletSize = getMinBulletSize(config);
+            result.bulletBorderAlpha = getBulletBorderAlpha(config);
+            result.bulletBorderThickness = getBulletBorderThickness(config);
+            result.bulletAlpha = getBulletAlpha(config);
             return result;
+        }
+
+        function getBullet(config) {
+            if (config.bullet !== undefined && config.bullet !== '') {
+                return config.bullet;
+            } else {
+                return 'circle';
+            }
+        }
+
+        function getLineAlpha(config) {
+            if (config.lineAlpha !== undefined && config.lineAlpha !== '') {
+                return config.lineAlpha;
+            } else {
+                return 0;
+            }
+        }
+
+        function getFillAlphas(config) {
+            if (config.fillAlphas !== undefined && config.fillAlphas !== '') {
+                return config.fillAlphas;
+            } else {
+                return 0;
+            }
+        }
+
+        function getMaxBulletSize(config) {
+            if (config.maxBulletSize !== undefined && config.maxBulletSize !== '') {
+                return config.maxBulletSize;
+            } else {
+                return 80;
+            }
+        }
+
+        function getMinBulletSize(config) {
+            if (config.minBulletSize !== undefined && config.minBulletSize !== '') {
+                return config.minBulletSize;
+            } else {
+                return 15;
+            }
+        }
+
+        function getBulletBorderAlpha(config) {
+            if (config.bulletBorderAlpha !== undefined && config.bulletBorderAlpha !== '') {
+                return config.bulletBorderAlpha;
+            } else {
+                return 1;
+            }
+        }
+
+        function getBulletBorderThickness(config) {
+            if (config.bulletBorderThickness !== undefined && config.bulletBorderThickness !== '') {
+                return config.bulletBorderThickness;
+            } else {
+                return 2;
+            }
+        }
+
+        function getBulletAlpha(config) {
+            if (config.bulletAlpha !== undefined && config.bulletAlpha !== '') {
+                return config.bulletAlpha;
+            } else {
+                return 0.8;
+            }
         }
 
         function getDataProviders(attributesArray) {
@@ -106,8 +172,8 @@
             return '';
         }
 
-        function createChart(id, data, graphs, bottomAxe, leftAxe) {
-            return AmCharts.makeChart('qabubblegraph', {
+        function createChart(id, providers) {
+            return AmCharts.makeChart(id, {
                 'type': 'xy',
                 'theme': 'light',
                 'legend': {
@@ -116,30 +182,30 @@
                     'position': 'right',
                     'markerType': 'circle'
                 },
-                'dataProvider': data,
+                'dataProvider': providers.data,
                 'valueAxes': [{
                     'position': 'bottom',
-                    'title': bottomAxe.title,
-                    'minimum': getMinLabel(bottomAxe),
-                    'maximum': getMaxLabel(bottomAxe),
-                    'strictMinMax': getStrictMinMax(bottomAxe),
+                    'title': providers.bottomAxe.title,
+                    'minimum': getMinLabel(providers.bottomAxe),
+                    'maximum': getMaxLabel(providers.bottomAxe),
+                    'strictMinMax': getStrictMinMax(providers.bottomAxe),
                     'labelFunction': function (value) {
-                        return getLabelDescription(value, bottomAxe.labels);
+                        return getLabelDescription(value, providers.bottomAxe.labels);
                     }
                 }, {
 
                     'axisAlpha': 0,
                     'position': 'left',
-                    'title': leftAxe.title,
-                    'minimum': getMinLabel(leftAxe),
-                    'maximum': getMaxLabel(leftAxe),
-                    'strictMinMax': getStrictMinMax(leftAxe),
+                    'title': providers.leftAxe.title,
+                    'minimum': getMinLabel(providers.leftAxe),
+                    'maximum': getMaxLabel(providers.leftAxe),
+                    'strictMinMax': getStrictMinMax(providers.leftAxe),
                     'labelFunction': function (value) {
-                        return getLabelDescription(value, leftAxe.labels);
+                        return getLabelDescription(value, providers.leftAxe.labels);
                     }
                 }],
                 'startDuration': 1.5,
-                'graphs': graphs,
+                'graphs': providers.graphs,
                 'responsive': {
                     'enabled': true
                 }
