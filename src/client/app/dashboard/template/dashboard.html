@@ -33,15 +33,22 @@
                                       loading="{{ 'LOADING' | translate }}"
                 >
                 </stock-multiple-chart>
-                <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
+                <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}</span>
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel
                  ba-panel-title="{{ 'QUALITY_ATTRIBUTES_ISSUES' | translate }}"
                  ba-panel-class="medium-panel">
-                <div id="qagraph" class="admin-chart"></div>
-                <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
+                <bubble-chart chartid="qabubblegraph"
+                              data="{{ vm.qaData }}"
+                              config="{{ vm.qaConfig }}"
+                              error="{{vm.errorQAAttributes}}"
+                              loading="{{ 'LOADING' | translate }}"
+                >
+                </bubble-chart>
+                <span class="error-dashboard" ng-show="vm.errorQAAttributes">{{ 'INTERNAL_SERVER_ERROR' | translate }}</span>
             </div>
+
             <div class="col-lg-4 col-md-12 col-sm-12 hidden-xs"
                  ba-panel
                  ba-panel-class="medium-panel">
