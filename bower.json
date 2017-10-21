@@ -28,7 +28,7 @@
     "angular-route": "^1.4.6",
     "angular-slimscroll": "~1.1.5",
     "angular-smart-table": "~2.1.8",
-    "angular-toastr": "^1.7.0", 
+    "angular-toastr": "^1.7.0",
     "angular-ui-sortable": "~0.13.4",
     "angular-sanitize": "^1.5.8",
     "animate.css": "~3.4.0",
@@ -65,8 +65,8 @@
     "bardjs": "^0.1.4"
   },
   "resolutions": {
-    "jquery": "2.2.4",
-    "angular": "1.6.2"
+    "jquery": "~2.1.4",
+    "angular": "1.6.6"
   },
   "overrides": {
     "bootstrap": {

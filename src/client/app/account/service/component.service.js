@@ -13,7 +13,7 @@
             getRoot: getRoot,
             getIndicators: getIndicators,
             getIndicatorSeries: getIndicatorSeries,
-            getQA: getQA,
+            getQAAttributes: getQAAttributes,
             add: add,
             getList: getList,
             associateToUser: associateToUser
@@ -123,8 +123,7 @@
 
         }
 
-
-            function add(data) {
+        function add(data) {
             return accountAPI.all('components').post(data)
                 .then(success1)
                 .catch(fail1);
@@ -138,8 +137,8 @@
             }
         }
 
-        function getQA(componentId) {
-            return qastaAPI.one('components', componentId).getList('attributeissues')
+        function getQAAttributes(componentId) {
+            return qastaAPI.one('components', componentId).getList('attributeissues2')
                 .then(success)
                 .catch(fail);
 
@@ -151,7 +150,6 @@
                 return $q.reject(error);
             }
         }
-
 
         function getList(data) {
             return accountAPI.all('components').getList(data)
