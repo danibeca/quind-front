@@ -31,7 +31,7 @@
                             return translateHelper.addParts('dashboard');
                         },
                         croot: function (userService, componentService) {
-                            return componentService.getCacheRoot(userService.getUser().id)
+                            return componentService.getRoot(userService.getUser().id)
                         }
 
                     }

@@ -6,25 +6,41 @@
         .controller('LoginController', LoginController);
 
     /* @ngInject */
-    function LoginController(logger, auth, $state, $filter, componentService) {
+    function LoginController(logger, auth, $state, $filter, componentService, userService) {
         var vm = this;
         vm.login = login;
 
         function login() {
             auth.getLogin(vm.credential)
-                .then(success)
-                .catch(fail);
+                .then(successLogin)
+                .catch(failLogin);
 
-            function success(data) {
+            function successLogin(data) {
                 if (data) {
-                    logger.success($filter('translate')('LOGIN_SUCCESS'));
-                    $state.go('dashboard');
+                    componentService.getRoot(userService.getUser().id)
+                        .then(successGetRoot);
                 } else {
                     logger.error($filter('translate')('LOGIN_FAILED'));
                 }
+
+                function successGetRoot(root) {
+                    componentService.hasLeaves(root.id)
+                        .then(successHasLeaves);
+
+                    function successHasLeaves(hasLeaves) {
+                        if (hasLeaves) {
+                            $state.go('dashboard');
+                        } else {
+                            $state.go('settings');
+                        }
+                        logger.success($filter('translate')('LOGIN_SUCCESS'));
+                    }
+                }
+
             }
 
-            function fail() {
+            function failLogin(error) {
+                alert('Hola' + JSON.stringify(error));
                 logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }

@@ -9,10 +9,10 @@
     function componentService(accountAPI, qastaAPI, qalogAPI, $q, storageService) {
         var service = {
             createAccount: createAccount,
-            hasLeafComponents: hasLeafComponents,
-            getCacheRoot: getCacheRoot,
-            getInfo: getInfo,
             getRoot: getRoot,
+            getRemoteRoot: getRemoteRoot,
+            hasLeaves: hasLeaves,
+            getInfo: getInfo,
             getIndicators: getIndicators,
             getIndicatorSeries: getIndicatorSeries,
             getQAAttributes: getQAAttributes,
@@ -29,8 +29,8 @@
 
             function successCreateAccount(response) {
                 var accountData = {
-                    id : response.id,
-                    type_id : response.type_id
+                    id: response.id,
+                    type_id: response.type_id
                 };
                 qastaAPI.all('components').post(accountData);
                 qalogAPI.all('components').post(accountData);
@@ -42,9 +42,58 @@
             }
         }
 
+        function getRoot(userId) {
+            if (!storageService.has('croot')) {
+                return getRemoteRoot(userId)
+                    .then(successGetRoot)
+
+            } else {
+                return $q(function(resolve) {
+                    resolve(storageService.getJsonObject('croot'));
+                });
+            }
+
+            function successGetRoot(resp) {
+                storageService.setJsonObject('croot', resp);
+                return resp;
+            }
+        }
+
+        function getRemoteRoot(userId) {
+
+            return accountAPI.one('users', userId).getList('croot')
+                .then(successGetRemoteRoot)
+                .catch(failGetRemoteRoot);
+
+            function successGetRemoteRoot(response) {
+                return response.plain()[0];
+            }
+
+            function failGetRemoteRoot(error) {
+                return $q.reject(error);
+            }
+
+        }
+
+
+        function hasLeaves(componentId) {
+            return accountAPI.one('components', componentId)
+                .get({hasLeaves: true})
+                .then(successLeaves)
+                .catch(failLeaves);
+
+            function successLeaves(details) {
+                return details;
+            }
+
+            function failLeaves(error) {
+                return $q.reject(error);
+            }
+        }
+
         function getInfo(componentId) {
             return qastaAPI.one('components', componentId)
-                .get({details:true})
+                .get({details: true})
                 .then(success13)
                 .catch(fail13);
 
@@ -53,41 +102,10 @@
             }
 
             function fail13(error) {
-                alerts(JSON.stringify('hola'));
                 return $q.reject(error);
             }
         }
 
-        function getCacheRoot(userId) {
-            if (!storageService.has('croot')) {
-                return getRoot(userId)
-                    .then(success)
-
-            } else {
-                return storageService.getJsonObject('croot');
-            }
-
-            function success(resp) {
-                storageService.setJsonObject('croot', resp);
-                return resp;
-            }
-        }
-
-        function getRoot(userId) {
-
-            return accountAPI.one('users', userId).getList('croot')
-                .then(success)
-                .catch(fail);
-
-            function success(response) {
-                return response.plain()[0];
-            }
-
-            function fail(error) {
-                return $q.reject(error);
-            }
-
-        }
 
         function getIndicators(componentId, indicatorIds) {
             if (indicatorIds !== null) {
@@ -158,7 +176,6 @@
                 return $q.reject(error);
             }
         }
-
 
 
         function getQAAttributes(componentId) {

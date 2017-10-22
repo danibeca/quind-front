@@ -56,9 +56,9 @@
 
                                     <div class="col-sm-4">
                                         <input type="text" name="url" class="form-control"  ng-model="vm.qas.url" id="inputURL" placeholder="" value=""
-                                               required
                                                validate-on="dirty"
-                                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                               validator = "vm.urlValidator(vm.qas.url) === true"
+                                               invalid-message = "vm.urlValidator(vm.qas.url)"
                                                >
                                     </div>
                                 </div>
@@ -69,119 +69,6 @@
                             </button>
                         </form>
                     </div>
-
-                    <h3 class="with-line">Agregar Sistema</h3>
-
-                    <div class="row"  ng-show="vm.hasQAS">
-                        <form class="ui large form" method="POST" ng-submit="vm.addSystem()">
-                            <div class="col-md-12">
-
-                                <div class="form-group row clearfix">
-                                    <label for="inputURL" class="col-sm-2 control-label">Nombre</label>
-
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control"  ng-model="vm.system.name" id="inputSystemName" placeholder="" value=""
-                                               required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
-                                <i class="ion-android-checkmark-circle"></i>Add System
-                            </button>
-                        </form>
-                    </div>
-
-
-
-                    <h3 class="with-line">Agregar Aplicaciones</h3>
-
-                    <div class="row"  ng-show="vm.hasSystems">
-                        <form class="ui large form" method="POST" ng-submit="vm.addApplication()">
-                            <div class="col-md-12">
-                                <div class="form-group row clearfix">
-                                    <label class="col-sm-2 control-label">System</label>
-
-                                    <div class="col-sm-2">
-                                        <select class="form-control" ng-model="vm.app.parent_id"
-                                                ng-options="item.id as item.name for item in vm.components" selectpicker
-                                                required></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row clearfix">
-                                    <label class="col-sm-2 control-label">Application Name</label>
-
-                                    <div class="col-sm-2">
-                                        <select class="form-control" ng-model="vm.app.id"
-                                                ng-options="item.key as item.name for item in vm.resources" selectpicker
-                                                required></select>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
-                                <i class="ion-android-checkmark-circle"></i>Add Application
-                            </button>
-                        </form>
-                    </div>
-                    <h3 class="with-line">Send Email Notifications</h3>
-                    <div class="notification row clearfix">
-                        <div class="col-sm-6">
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When I receive a message</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[0]"></switch>
-                                </div>
-                            </div>
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When Someone sends me an invitation</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[1]"></switch>
-                                </div>
-                            </div>
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When profile information changes</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[2]"></switch>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When anyone logs into your account from a new device or
-                                    browser</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[3]"></switch>
-                                </div>
-                            </div>
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">Weekly Reports</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[4]"></switch>
-                                </div>
-                            </div>
-
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">Daily Reports</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[5]"></switch>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary btn-with-icon save-profile">
-                        <i class="ion-android-checkmark-circle"></i>Update Profile
-                    </button>
                 </div>
             </div>
         </div>

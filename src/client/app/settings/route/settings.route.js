@@ -27,7 +27,7 @@
                             return translateHelper.addParts('settings');
                         },
                         croot: function (userService, componentService) {
-                            return componentService.getCacheRoot(userService.getUser().id)
+                            return componentService.getRoot(userService.getUser().id);
                         }
                     }
                 }

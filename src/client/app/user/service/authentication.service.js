@@ -34,8 +34,7 @@
                 var result = response.data;
                 storageService.set('token', result.access_token);
                 storageService.set('refresh_token', result.refresh_token);
-                getAuthUser();
-                return result;
+                return getAuthUser();
             }
 
             function fail(error) {

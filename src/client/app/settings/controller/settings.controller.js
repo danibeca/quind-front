@@ -9,8 +9,6 @@
     /* @ngInject */
     function SettingsController(croot, qualityServerService, componentService, logger, $filter, $uibModal, $scope) {
         var vm = this;
-        vm.hasApplications = false;
-        vm.hasSystems = false;
         vm.hasQAS = false;
         vm.croot = croot.id;
 
@@ -19,8 +17,8 @@
         vm.qas.id = '0';
 
         vm.addQAS = addQAS;
-        vm.addSystem = addSystem;
-        vm.addApplication = addApplication;
+
+        vm.urlValidator = urlValidator;
 
         activate();
 
@@ -38,8 +36,7 @@
             function success1(data) {
 
                 if (data.length > 0) {
-                    vm.hasQAS = true;
-                    vm.qasInstances = data;
+
                 }
             }
 
@@ -51,28 +48,23 @@
                     vm.resources = data;
                 }
             }
-
-            componentService.getList({parent_id: vm.croot})
-                .then(success3);
-
-            function success3(data) {
-                if (data.length > 0) {
-                    vm.hasSystems = true;
-                    vm.components = data;
-                }
-            }
-
-            componentService.getList()
-                .then(successInfo)
-                .catch(failInfo);
-
-            function successInfo(info) {
-                vm.components = info;
-            }
-
-            function failInfo(error) {
-            }
         }
+
+        function urlValidator(url) {
+
+            if (!url) {
+                return $filter('translate')('REQUIRED_FIELD');
+            }
+            var expression = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g;
+            var regex = new RegExp(expression);
+
+
+            if (!url.match(regex)) {
+                return $filter('translate')('INVALID_URL');
+            }
+
+            return true;
+        };
 
         function addQAS() {
             qualityServerService.isInstanceValid(vm.qas.url)
@@ -91,28 +83,6 @@
 
             function fail(error) {
                 logger.error($filter('translate')('INVALID_URL'));
-            }
-        }
-
-        function addSystem() {
-            vm.system.tag_id = 2;
-            vm.system.parent_id = vm.croot;
-            return addComponent(vm.system);
-
-        }
-
-        function addApplication() {
-            vm.app.tag_id = 3;
-            return addComponent(vm.app);
-
-        }
-
-        function addComponent(data) {
-            componentService.add(data)
-                .then(success);
-
-            function success(data) {
-
             }
         }
     }
