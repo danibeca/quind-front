@@ -3,16 +3,16 @@
         <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
             <em class="ion-ios-close-empty sn-link-close"></em>
         </button>
-        <h4 class="modal-title" id="myModalLabel">{{ 'CREATE_USER' | translate }}</h4>
+        <h4 class="modal-title" id="myModalLabel">{{ 'CREATE_COMPONENT' | translate }}</h4>
     </div>
     <div class="modal-body">
         
         <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.registration()" novalidate angular-validator>
 
                 <div class="form-group row">
-                    <label class="col-sm-2">{{ 'NAME_TITLE' | translate }}</label>
+                    <label class="col-sm-2">{{ 'COMPONENT_NAME' | translate }}</label>
                     <div class="col-sm-3">
-                        <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'NAME_TITLE' | translate }}" 
+                        <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'COMPONENT_NAME' | translate }}"
                                    ng-model="vm.new_component.name" 
                                    required 
                                    validate-on="dirty"
@@ -40,7 +40,7 @@
                     </div>
                 </div>
             
-                <div class="form-group row clearfix" ng-show="vm.new_component.type == 1">
+                <div class="form-group row clearfix" ng-show="vm.newComponent.type == 1">
                     <label class="col-sm-2">{{ 'CODE_TITLE' | translate }}</label>
 
                     <div class="col-sm-3">
@@ -107,7 +107,7 @@
 
                 <div class="form-group row">
                     <div class="col-sm-12">
-                        <button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}</button>
+                        <button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_COMPONENT' | translate }}</button>
                     </div>
                 </div>
         </form>
