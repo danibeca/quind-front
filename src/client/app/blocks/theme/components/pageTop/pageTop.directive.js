@@ -12,7 +12,13 @@
     function pageTop() {
         return {
             restrict: 'E',
-            templateUrl: 'app/blocks/theme/components/pageTop/pageTop.html'
+            controller: 'PageTopCtrl',
+            controllerAs: 'vm',
+            templateUrl: 'app/blocks/theme/components/pageTop/pageTop.html',
+            scope: true,
+            link: function($scope, element, attrs, controller) {
+                controller.loadInfo();
+            }
         };
     }
 

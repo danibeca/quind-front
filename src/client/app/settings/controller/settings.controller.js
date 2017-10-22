@@ -7,9 +7,8 @@
         .controller('SettingsController', SettingsController);
 
     /* @ngInject */
-    function SettingsController(croot, userService, qualityServerService, componentService, logger, $filter, $uibModal, $scope) {
+    function SettingsController(croot, qualityServerService, componentService, logger, $filter, $uibModal, $scope) {
         var vm = this;
-        vm.user = userService.getUser();
         vm.hasApplications = false;
         vm.hasSystems = false;
         vm.hasQAS = false;
@@ -23,21 +22,15 @@
         vm.addSystem = addSystem;
         vm.addApplication = addApplication;
 
-        vm.openRegisterUser = openRegisterUser;
-        vm.openRegisterComponent = openRegisterComponent;
-
         activate();
 
         function activate() {
-
-
             qualityServerService.getList()
                 .then(success);
 
             function success(data) {
                 vm.qAServers = data;
             }
-
 
             qualityServerService.getInstances(vm.croot)
                 .then(success1);
@@ -69,21 +62,19 @@
                 }
             }
 
-
             componentService.getList()
                 .then(successInfo)
                 .catch(failInfo);
 
-                function successInfo(info) {
-                    vm.components = info;
-                }
+            function successInfo(info) {
+                vm.components = info;
+            }
 
-                function failInfo(error) {
-                }
+            function failInfo(error) {
+            }
         }
 
         function addQAS() {
-
             qualityServerService.isInstanceValid(vm.qas.url)
                 .then(success)
                 .catch(fail);
@@ -116,7 +107,6 @@
 
         }
 
-
         function addComponent(data) {
             componentService.add(data)
                 .then(success);
@@ -124,96 +114,6 @@
             function success(data) {
 
             }
-
         }
-
-        function openRegisterUser(page, size) {
-            componentService.getList()
-                .then(successInfo)
-                .catch(failInfo);
-
-                function successInfo(info) {
-                    vm.components = info;
-                    vm.smartTablePageSize = '10';
-                }
-
-                function failInfo(error) {
-                }
-            
-            /*
-            userService.getRole()
-                .then(successInfo)
-                .catch(failInfo);
-           */
-            successInfo();
-                function successInfo(info) {
-                    vm.role = [{"id": 1, "name": "Administrador"},
-                                {"id": 2, "name": "Miembro de equipo"}];
-                }
-
-                function failInfo(error) {
-                }
-            
-            $uibModal.open({
-                scope: $scope,
-                animation: true,
-                templateUrl: page,
-                size: size,
-                resolve: {
-                    items: function () {
-                        return vm.items;
-                    },
-                    components: function () {
-                        return vm.components;
-                    }
-                }
-            });
-        };
-        
-        function openRegisterComponent(page, size) {
-
-            vm.new_component = [];
-            vm.new_component.type = '0';
-
-            componentService.getList()
-                .then(successInfo)
-                .catch(failInfo);
-
-                function successInfo(info) {
-                    vm.components = info;
-                    vm.smartTablePageSize = '10';
-                }
-
-                function failInfo(error) {
-                }
-            
-            qualityServerService.getInstanceResources()
-                .then(successInfo)
-                .catch(failInfo);
-
-                function successInfo(info) {
-                    vm.codes = info;
-                }
-
-                function failInfo(error) {
-                }
-            
-            
-            $uibModal.open({
-                scope: $scope,
-                animation: true,
-                templateUrl: page,
-                size: size,
-                resolve: {
-                    items: function () {
-                        return vm.items;
-                    },
-                    components: function () {
-                        return vm.components;
-                    }
-                }
-            });
-        };
-        
     }
 })();
