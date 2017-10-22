@@ -13,23 +13,6 @@
         vm.userComponentData = new Object();
 
 
-        function registration() {
-            userRemoteService.create(vm.user)
-                .then(success)
-                .catch(fail);
-
-            function success(data) {
-                vm.userComponentData.user_id = data.id;
-                return createComponent();
-            }
-
-            function fail(response) {
-                if (response.status === 409) {
-                    logger.error($filter('translate')('REGISTER_FAILED'));
-                }
-            }
-        }
-
         function passwordValidator(password) {
 
             if(!password){
@@ -50,28 +33,44 @@
             return true;
         };
 
-        function createComponent(){
-            var dataObj = {
-                name : vm.user.company,
-                tag_id : 1
-            };
+        function registration() {
+            userRemoteService.create(vm.user)
+                .then(successCreateUser)
+                .catch(failCreateUser);
 
-            componentService.add(dataObj)
-                .then(success)
-                .catch(fail);
-
-            function success(resp) {
-                storageService.setJsonObject('croot', resp);
-                vm.userComponentData.component_id = resp.id;
-                associateComponentToUser();
+            function successCreateUser(data) {
+                vm.userComponentData.user_id = data.id;
+                return createAccount();
             }
 
-            function fail(error) {
+            function failCreateUser(response) {
+                if (response.status === 409) {
+                    logger.error($filter('translate')('REGISTER_FAILED'));
+                }
+            }
+        }
+
+        function createAccount(){
+            var accountData = {
+                name : vm.user.company
+            };
+
+            componentService.createAccount(accountData)
+                .then(successCreateAccount)
+                .catch(failCreateAccount);
+
+            function successCreateAccount(resp) {
+                storageService.setJsonObject('croot', resp);
+                vm.userComponentData.component_id = resp.id;
+                associateAccountToUser();
+            }
+
+            function failCreateAccount(error) {
                 logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }
 
-        function associateComponentToUser(){
+        function associateAccountToUser(){
             componentService.associateToUser(vm.userComponentData)
                 .then(success)
                 .catch(fail);

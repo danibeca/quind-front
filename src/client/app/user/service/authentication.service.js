@@ -19,8 +19,8 @@
 
             var serviceData = {
                 'grant_type' : 'password',
-                'client_id' : 2,
-                'client_secret' : 'veYPaSOkfdszhDGylgBTuoIiUVsezXiOmwcgvXzu',
+                'client_id' : 1,
+                'client_secret' : 'PU8KCsFQKkxaPGfwq2zrtYVHFpwwvgSaYlKNm4zX',
                 'username' : data.email,
                 'password' : data.password
             };

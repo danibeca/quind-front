@@ -8,6 +8,8 @@
     /* @ngInject */
     function componentService(accountAPI, qastaAPI, qalogAPI, $q, storageService) {
         var service = {
+            createAccount: createAccount,
+            hasLeafComponents: hasLeafComponents,
             getCacheRoot: getCacheRoot,
             getInfo: getInfo,
             getRoot: getRoot,
@@ -19,6 +21,26 @@
             associateToUser: associateToUser
         };
         return service;
+
+        function createAccount(data) {
+            return accountAPI.all('accounts').post(data)
+                .then(successCreateAccount)
+                .catch(failCreateAccount);
+
+            function successCreateAccount(response) {
+                var accountData = {
+                    id : response.id,
+                    type_id : response.type_id
+                };
+                qastaAPI.all('components').post(accountData);
+                qalogAPI.all('components').post(accountData);
+                return response;
+            }
+
+            function failCreateAccount(error) {
+                return $q.reject(error);
+            }
+        }
 
         function getInfo(componentId) {
             return qastaAPI.one('components', componentId)
@@ -136,6 +158,8 @@
                 return $q.reject(error);
             }
         }
+
+
 
         function getQAAttributes(componentId) {
             return qastaAPI.one('components', componentId).getList('attributeissues2')
