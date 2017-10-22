@@ -113,6 +113,7 @@
             }
 
             function bubblesQA(data) {
+                vm.qaData = data;
                 vm.qaConfig = {};
                 vm.qaConfig.bottomAxe = buildAxe($filter('translate')('EFFORT_TEXT'));
                 vm.qaConfig.leftAxe = buildAxe($filter('translate')('CRITICITY_TEXT'));
@@ -124,7 +125,6 @@
                 vm.qaConfig.bulletBorderAlpha = 1;
                 vm.qaConfig.bulletBorderThickness = 2;
                 vm.qaConfig.bulletAlpha = 0.8;
-                vm.qaData = data;
             }
         }
     }

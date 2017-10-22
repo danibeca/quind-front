@@ -14,5 +14,17 @@
   "LOADING": "...Loading",
   "REQUIRED_SELECT": "Required field selection",
   "REQUIRED_FIELD": "Required field",
-  "REQUIRED": "Required"
+  "REQUIRED": "Required",
+  "CREATE_USER": "Create user",
+  "CREATE_COMPONENT": "Create component",
+  "EMAIL_FORMAT": "Formato de email incorrecto",
+  "NAME_TITLE": "Fullname",
+  "EMAIL_TITLE": "Email",
+  "PASS_TITLE": "Password",
+  "TYPE_TITLE": "Type",
+  "ROL_TITLE": "Role",
+  "CODE_TITLE": "Code",
+  "SUBMIT_NEW_ACCOUNT": "Create user",
+  "COMPONENT_NAME": "Name",
+  "SUBMIT_NEW_COMPONENT": "Create component"
 }
