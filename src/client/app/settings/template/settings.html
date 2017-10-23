@@ -9,27 +9,29 @@
             <content-top></content-top>
             <div ba-panel ba-panel-class="profile-page">
                 <div class="panel-content">
-                    
+
                     <h3 class="with-line">{{ 'QUALITY_SYSTEM_CONFIG_TITLE' | translate }}</h3>
 
                     <div class="row">
 
-                        <form class="form-horizontal" method="POST" name="addqas" angular-validator-submit="vm.addQAS()" novalidate angular-validator>
+                        <form class="form-horizontal" method="POST" name="addqas" angular-validator-submit="vm.addQAS()"
+                              novalidate angular-validator>
                             <div class="col-md-12">
-                                
-                                
+
+
                                 <div class="form-group row clearfix">
                                     <label class="col-sm-2">{{ 'QUALITY_SYSTEM_SERVICE' | translate }}</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" name="quality" ng-model="vm.qas.id" 
+                                        <select class="form-control" name="quality" ng-model="vm.qas.id"
                                                 selectpicker
-                                                required 
+                                                required
                                                 validate-on="dirty"
-                                                validator = "vm.qas.id != 0"
-                                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                            >
-                                            <option ng-repeat="item in vm.qAServers" value="{{item.id}}">{{item.name}}</option>
+                                                validator="vm.qas.id != 0"
+                                                required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                        >
+                                            <option ng-repeat="item in vm.qAServers" value="{{item.id}}">{{item.name}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -37,14 +39,14 @@
                                     <label class="col-sm-2">{{ 'PUBLIC_PRIVATE' | translate }}</label>
 
                                     <div class="col-sm-2">
-                                        <select class="form-control" name="publicprivate" ng-model="vm.qas.type" 
-                                                selectpicker 
-                                                required 
+                                        <select class="form-control" name="publicprivate" ng-model="vm.qas.type"
+                                                selectpicker
+                                                required
                                                 validate-on="dirty"
-                                                validator = "vm.qas.type != 0"
-                                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                >
+                                                validator="vm.qas.type != 0"
+                                                required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                        >
                                             <option value="0"></option>
                                             <option value="1">{{ 'PUBLIC' | translate }}</option>
                                             <option value="2">{{ 'PRIVATE' | translate }}</option>
@@ -55,11 +57,12 @@
                                     <label for="inputURL" class="col-sm-2">URL</label>
 
                                     <div class="col-sm-4">
-                                        <input type="text" name="url" class="form-control"  ng-model="vm.qas.url" id="inputURL" placeholder="" value=""
-                                               required
+                                        <input type="text" name="url" class="form-control" ng-model="vm.qas.url"
+                                               id="inputURL" placeholder="" value=""
                                                validate-on="dirty"
-                                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
-                                               >
+                                               validator="vm.urlValidator(vm.qas.url) === true"
+                                               invalid-message="vm.urlValidator(vm.qas.url)"
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -69,121 +72,18 @@
                             </button>
                         </form>
                     </div>
-
-                    <h3 class="with-line">Agregar Sistema</h3>
-
-                    <div class="row"  ng-show="vm.hasQAS">
-                        <form class="ui large form" method="POST" ng-submit="vm.addSystem()">
-                            <div class="col-md-12">
-
-                                <div class="form-group row clearfix">
-                                    <label for="inputURL" class="col-sm-2 control-label">Nombre</label>
-
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control"  ng-model="vm.system.name" id="inputSystemName" placeholder="" value=""
-                                               required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
-                                <i class="ion-android-checkmark-circle"></i>Add System
-                            </button>
-                        </form>
-                    </div>
-
-
-
-                    <h3 class="with-line">Agregar Aplicaciones</h3>
-
-                    <div class="row"  ng-show="vm.hasSystems">
-                        <form class="ui large form" method="POST" ng-submit="vm.addApplication()">
-                            <div class="col-md-12">
-                                <div class="form-group row clearfix">
-                                    <label class="col-sm-2 control-label">System</label>
-
-                                    <div class="col-sm-2">
-                                        <select class="form-control" ng-model="vm.app.parent_id"
-                                                ng-options="item.id as item.name for item in vm.components" selectpicker
-                                                required></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row clearfix">
-                                    <label class="col-sm-2 control-label">Application Name</label>
-
-                                    <div class="col-sm-2">
-                                        <select class="form-control" ng-model="vm.app.id"
-                                                ng-options="item.key as item.name for item in vm.resources" selectpicker
-                                                required></select>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
-                                <i class="ion-android-checkmark-circle"></i>Add Application
-                            </button>
-                        </form>
-                    </div>
-                    <h3 class="with-line">Send Email Notifications</h3>
-                    <div class="notification row clearfix">
-                        <div class="col-sm-6">
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When I receive a message</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[0]"></switch>
-                                </div>
-                            </div>
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When Someone sends me an invitation</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[1]"></switch>
-                                </div>
-                            </div>
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When profile information changes</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[2]"></switch>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">When anyone logs into your account from a new device or
-                                    browser</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[3]"></switch>
-                                </div>
-                            </div>
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">Weekly Reports</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[4]"></switch>
-                                </div>
-                            </div>
-
-                            <div class="form-group row clearfix">
-                                <label class="col-xs-8">Daily Reports</label>
-
-                                <div class="col-xs-4">
-                                    <switch color="primary" ng-model="switches[5]"></switch>
-                                </div>
-                            </div>
+                    <br>
+                    <div class="row" ng-if="vm.hasQAS">
+                        <div class="col-lg-6 col-md-12">
+                            <div include-with-scope="app/settings/tables/server.instance.table.html"></div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-with-icon save-profile">
-                        <i class="ion-android-checkmark-circle"></i>Update Profile
-                    </button>
+
                 </div>
+
+
             </div>
+
         </div>
     </div>
 

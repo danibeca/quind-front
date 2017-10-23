@@ -6,7 +6,7 @@
         .controller('PasswordResetController', PasswordResetController);
 
     /* @ngInject */
-    function PasswordResetController(logger, password, $http, $state, $timeout, environmentConfig, $stateParams) {
+    function PasswordResetController(logger, password, $filter, $state, $timeout, $stateParams) {
         var vm = this;
         vm.credential = {};
         vm.credential.token = $stateParams.token;
@@ -24,8 +24,34 @@
                 }, 1000);
             }
 
-            function fail(data) {
-                logger.error(data);
+            function fail(response) {
+                if (response.status === 422) {
+
+                    for (var error in response.data) {
+
+                        for (var detail in response.data[error]) {
+                            logger.error(response.data[error][detail]);
+                        }
+                    }
+
+                }
+                else if (response.status === 400) {
+                    //alert(JSON.stringify(response.data));
+                    //passwords.user
+                    //passwords.token
+                    if(response.data.error.message.email === 'passwords.user'){
+                        logger.error($filter('translate')('WRONG_EMAIL'));
+                    }
+                    if(response.data.error.message.email === 'passwords.token'){
+                        logger.error($filter('translate')('INVALID_TOKEN'));
+                    }
+
+                }
+                else {
+                    logger.error(response);
+                }
+
+
             }
         }
 

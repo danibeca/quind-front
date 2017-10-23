@@ -17,13 +17,10 @@
         function getEmail(data) {
 
             var serviceData = {
-                'grant_type' : 'password',
-                'client_id' : 2,
-                'client_secret' : 'veYPaSOkfdszhDGylgBTuoIiUVsezXiOmwcgvXzu',
-                'username' : data.email
+                'email' : data.email
             };
 
-            return $http.post(environmentConfig.api + '/password/email', serviceData)
+            return $http.post(environmentConfig.userAPI + '/password/email', serviceData)
                 .then(success)
                 .catch(fail);
 
@@ -39,14 +36,7 @@
 
         function postReset(data) {
 
-            var serviceData = {
-                'grant_type' : 'password',
-                'client_id' : 2,
-                'client_secret' : 'veYPaSOkfdszhDGylgBTuoIiUVsezXiOmwcgvXzu',
-                'username' : data.email
-            };
-
-            return $http.post(environmentConfig.api + '/password/reset', serviceData)
+            return $http.post(environmentConfig.userAPI + '/password/reset', data)
                 .then(success)
                 .catch(fail);
 

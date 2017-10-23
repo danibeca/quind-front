@@ -1,0 +1,22 @@
+<div class="horizontal-scroll">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Server</th>
+      <th class="align-right">URL</th>
+      <th class="align-right">Verified?</th>
+      <th class="align-right">Edit</th>
+      <th class="align-right">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in vm.serverInstances">
+      <td>{{item.name}}</td>
+      <td class="align-right">{{item.pivot.url}}</td>
+      <td class="align-center" style="color:green;font-size: 20px"><span ng-show="item.pivot.verified"><i class="ion-android-checkmark-circle"></i></span></td>
+      <td class="align-right"></td>
+      <td class="align-right"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

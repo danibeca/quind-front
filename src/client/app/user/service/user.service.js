@@ -12,7 +12,6 @@
         var service = {
             setUser: setUser,
             getUser: getUser,
-            getRoles: getRoles,
             isLoggedIn: isLoggedIn,
             logout: logout
         };
@@ -29,16 +28,6 @@
                 currentUser = storageService.getJsonObject('user');
             }
             return currentUser;
-        }
-
-        function getRoles() {
-            return $q(function(resolve, reject) {
-                setTimeout(function() {
-                    resolve([{'id': 1, 'name': 'Administrador'},
-                             {'id': 2, 'name': 'Miembro de equipo'}]);
-
-                }, 1000);
-            });
         }
 
         function isLoggedIn() {

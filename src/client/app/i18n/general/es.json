@@ -14,6 +14,8 @@
   "LOADING": "...Cargando",
   "REQUIRED_SELECT": "Selección requerida",
   "REQUIRED_FIELD": "Campo requerido",
+  "PASS_REQUIRED": "La contraseña es requerida",
+  "PASS_REQUIRED_SIX": "La contraseña debe tener al menos 6 digitos",
   "REQUIRED": "Requerido",
   "CREATE_USER": "Crear usuario",
   "CREATE_COMPONENT": "Crear componente",
@@ -26,5 +28,9 @@
   "CODE_TITLE": "Código",
   "SUBMIT_NEW_ACCOUNT": "Crear usuario",
   "COMPONENT_NAME": "Nombre",
-  "SUBMIT_NEW_COMPONENT": "Crear componente"
+  "SUBMIT_NEW_COMPONENT": "Crear componente",
+  "ASSIGN_COMPONENT_TITLE": "Asinar a",
+  "CREATE_USER_SUCCESS": "Usuario creado",
+  "QUALITY_SYSTEM_ERROR": "Parece que su sistema de calidad no esta funcionando",
+  "CREATE_COMPONENT_SUCCESS": "Componente Creado"
 }
