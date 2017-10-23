@@ -25,19 +25,18 @@
                 'password' : data.password
             };
 
-            //alert(JSON.stringify(serviceData));
             return $http.post(environmentConfig.userAPI + '/oauth/token', serviceData)
-                .then(success)
-                .catch(fail);
+                .then(successToken)
+                .catch(failToken);
 
-            function success(response) {
+            function successToken(response) {
                 var result = response.data;
                 storageService.set('token', result.access_token);
                 storageService.set('refresh_token', result.refresh_token);
                 return getAuthUser();
             }
 
-            function fail(error) {
+            function failToken(error) {
                 storageService.remove('token');
                 return $q.reject(error);
             }
@@ -68,15 +67,15 @@
 
         function getAuthUser() {
             return $http.get(environmentConfig.userAPI + '/user')
-                .then(success)
-                .catch(fail);
+                .then(successGetUser)
+                .catch(failGetUser);
 
-            function success(response) {
+            function successGetUser(response) {
                 userService.setUser(response.data);
                 return response.data;
             }
 
-            function fail(error) {
+            function failGetUser(error) {
                 return $q.reject(error);
             }
         }

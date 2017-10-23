@@ -2,7 +2,7 @@
   "PAGE_TITLE": "Ingresa a tu cuenta",
   "EMAIL_REQUIRED": "El email es requerido",
   "PASS_REQUIRED": "La contraseña es requerida",
-  "PASS_REQUIRED_SIX": "La contraseña debe tener almenos 6 digitos",
+  "PASS_REQUIRED_SIX": "La contraseña debe tener al menos 6 digitos",
   "EMAIL_FORMAT": "Formato de email incorrecto",
   "NAME_TITLE": "Nombre Completo",
   "COMPANY_TITLE": "Empresa",

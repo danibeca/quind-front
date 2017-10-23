@@ -9,27 +9,29 @@
             <content-top></content-top>
             <div ba-panel ba-panel-class="profile-page">
                 <div class="panel-content">
-                    
+
                     <h3 class="with-line">{{ 'QUALITY_SYSTEM_CONFIG_TITLE' | translate }}</h3>
 
                     <div class="row">
 
-                        <form class="form-horizontal" method="POST" name="addqas" angular-validator-submit="vm.addQAS()" novalidate angular-validator>
+                        <form class="form-horizontal" method="POST" name="addqas" angular-validator-submit="vm.addQAS()"
+                              novalidate angular-validator>
                             <div class="col-md-12">
-                                
-                                
+
+
                                 <div class="form-group row clearfix">
                                     <label class="col-sm-2">{{ 'QUALITY_SYSTEM_SERVICE' | translate }}</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" name="quality" ng-model="vm.qas.id" 
+                                        <select class="form-control" name="quality" ng-model="vm.qas.id"
                                                 selectpicker
-                                                required 
+                                                required
                                                 validate-on="dirty"
-                                                validator = "vm.qas.id != 0"
-                                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                            >
-                                            <option ng-repeat="item in vm.qAServers" value="{{item.id}}">{{item.name}}</option>
+                                                validator="vm.qas.id != 0"
+                                                required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                        >
+                                            <option ng-repeat="item in vm.qAServers" value="{{item.id}}">{{item.name}}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -37,14 +39,14 @@
                                     <label class="col-sm-2">{{ 'PUBLIC_PRIVATE' | translate }}</label>
 
                                     <div class="col-sm-2">
-                                        <select class="form-control" name="publicprivate" ng-model="vm.qas.type" 
-                                                selectpicker 
-                                                required 
+                                        <select class="form-control" name="publicprivate" ng-model="vm.qas.type"
+                                                selectpicker
+                                                required
                                                 validate-on="dirty"
-                                                validator = "vm.qas.type != 0"
-                                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                >
+                                                validator="vm.qas.type != 0"
+                                                required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                        >
                                             <option value="0"></option>
                                             <option value="1">{{ 'PUBLIC' | translate }}</option>
                                             <option value="2">{{ 'PRIVATE' | translate }}</option>
@@ -55,11 +57,12 @@
                                     <label for="inputURL" class="col-sm-2">URL</label>
 
                                     <div class="col-sm-4">
-                                        <input type="text" name="url" class="form-control"  ng-model="vm.qas.url" id="inputURL" placeholder="" value=""
+                                        <input type="text" name="url" class="form-control" ng-model="vm.qas.url"
+                                               id="inputURL" placeholder="" value=""
                                                validate-on="dirty"
-                                               validator = "vm.urlValidator(vm.qas.url) === true"
-                                               invalid-message = "vm.urlValidator(vm.qas.url)"
-                                               >
+                                               validator="vm.urlValidator(vm.qas.url) === true"
+                                               invalid-message="vm.urlValidator(vm.qas.url)"
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -69,8 +72,18 @@
                             </button>
                         </form>
                     </div>
+                    <br>
+                    <div class="row" ng-if="vm.hasQAS">
+                        <div class="col-lg-6 col-md-12">
+                            <div include-with-scope="app/settings/tables/server.instance.table.html"></div>
+                        </div>
+                    </div>
+
                 </div>
+
+
             </div>
+
         </div>
     </div>
 

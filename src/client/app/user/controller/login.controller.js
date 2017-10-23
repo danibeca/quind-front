@@ -40,7 +40,6 @@
             }
 
             function failLogin(error) {
-                alert('Hola' + JSON.stringify(error));
                 logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }

@@ -9,6 +9,7 @@
     function componentService(accountAPI, qastaAPI, qalogAPI, $q, storageService) {
         var service = {
             createAccount: createAccount,
+            create: create,
             getRoot: getRoot,
             getRemoteRoot: getRemoteRoot,
             hasLeaves: hasLeaves,
@@ -23,21 +24,30 @@
         return service;
 
         function createAccount(data) {
-            return accountAPI.all('accounts').post(data)
-                .then(successCreateAccount)
-                .catch(failCreateAccount);
+            return createGeneral('accounts',data);
+        }
 
-            function successCreateAccount(response) {
+        function create(data) {
+            return createGeneral('components',data);
+        }
+
+        function createGeneral(resource,data) {
+            return accountAPI.all(resource).post(data)
+                .then(successCreateComponent)
+                .catch(failCreateComponent);
+
+            function successCreateComponent(response) {
                 var accountData = {
                     id: response.id,
-                    type_id: response.type_id
+                    type_id: response.type_id,
+                    parent_id: response.parent_id
                 };
                 qastaAPI.all('components').post(accountData);
                 qalogAPI.all('components').post(accountData);
                 return response;
             }
 
-            function failCreateAccount(error) {
+            function failCreateComponent(error) {
                 return $q.reject(error);
             }
         }
@@ -48,7 +58,7 @@
                     .then(successGetRoot)
 
             } else {
-                return $q(function(resolve) {
+                return $q(function (resolve) {
                     resolve(storageService.getJsonObject('croot'));
                 });
             }
@@ -90,6 +100,39 @@
                 return $q.reject(error);
             }
         }
+
+
+        function getList(data) {
+            return accountAPI.all('components').getList(data)
+                .then(successGetList)
+                .catch(failGetList);
+
+            function successGetList(response) {
+                return response.plain();
+            }
+
+            function failGetList(error) {
+                alert('as2');
+                return $q.reject(error);
+            }
+        }
+
+
+        function associateToUser(data) {
+
+            return accountAPI.one('components', data.component_id).all('users').post(data)
+                .then(successAssociate)
+                .catch(failAssociate);
+
+            function successAssociate(response) {
+                return response;
+            }
+
+            function failAssociate(error) {
+                return $q.reject(error);
+            }
+        }
+
 
         function getInfo(componentId) {
             return qastaAPI.one('components', componentId)
@@ -192,35 +235,6 @@
             }
         }
 
-        function getList(data) {
-            return accountAPI.all('components').getList(data)
-                .then(success2)
-                .catch(fail2);
-
-            function success2(response) {
-                return response.plain();
-            }
-
-            function fail2(error) {
-                return $q.reject(error);
-            }
-        }
-
-
-        function associateToUser(data) {
-
-            return accountAPI.one('components', data.component_id).all('users').post(data)
-                .then(success3)
-                .catch(fail3);
-
-            function success3(response) {
-                return response;
-            }
-
-            function fail3(error) {
-                return $q.reject(error);
-            }
-        }
     }
 
 })();

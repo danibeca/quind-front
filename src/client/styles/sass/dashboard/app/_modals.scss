@@ -35,8 +35,8 @@ $modal-input-border: #e7e7e7;
 .modal {
   text-align: center;
   .modal-dialog {
-    display: inline-block;
     text-align: left;
+    padding-top: 20px;
     margin: 0 auto;
     .form-control{
       color: $github-color;
@@ -67,15 +67,6 @@ $modal-input-border: #e7e7e7;
     &:hover {
       color: $danger;
     }
-  }
-}
-
-@media screen and (min-width: $resM) {
-  .modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
   }
 }
 

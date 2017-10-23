@@ -17,7 +17,7 @@
             templateUrl: 'app/blocks/theme/components/pageTop/pageTop.html',
             scope: true,
             link: function($scope, element, attrs, controller) {
-                controller.loadInfo();
+
             }
         };
     }

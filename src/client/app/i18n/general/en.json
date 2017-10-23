@@ -15,6 +15,8 @@
   "REQUIRED_SELECT": "Required field selection",
   "REQUIRED_FIELD": "Required field",
   "REQUIRED": "Required",
+  "PASS_REQUIRED": "Password is required",
+  "PASS_REQUIRED_SIX": "Password must be at least 6 characters long",
   "CREATE_USER": "Create user",
   "CREATE_COMPONENT": "Create component",
   "EMAIL_FORMAT": "Formato de email incorrecto",
@@ -26,5 +28,9 @@
   "CODE_TITLE": "Code",
   "SUBMIT_NEW_ACCOUNT": "Create user",
   "COMPONENT_NAME": "Name",
-  "SUBMIT_NEW_COMPONENT": "Create component"
+  "SUBMIT_NEW_COMPONENT": "Create component",
+  "ASSIGN_COMPONENT_TITLE": "Assign to",
+  "CREATE_USER_SUCCESS": "User Created",
+  "QUALITY_SYSTEM_ERROR": "Looks like your quality system is not working",
+  "CREATE_COMPONENT_SUCCESS": "Component Created"
 }
