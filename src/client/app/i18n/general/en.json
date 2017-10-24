@@ -32,5 +32,6 @@
   "ASSIGN_COMPONENT_TITLE": "Assign to",
   "CREATE_USER_SUCCESS": "User Created",
   "QUALITY_SYSTEM_ERROR": "Looks like your quality system is not working",
-  "CREATE_COMPONENT_SUCCESS": "Component Created"
+  "CREATE_COMPONENT_SUCCESS": "Component Created",
+  "ROWS_ON_PAGE": "Rows on page"
 }

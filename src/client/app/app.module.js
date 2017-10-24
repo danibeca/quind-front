@@ -23,11 +23,10 @@
                         redirect(loginState);
                     } else {
                         if (toState.name !== 'settings') {
-                            if (componentService.hasLeaves(componentService.getRoot(userService.getUser().id).id)) {
+                            if (!hasLeaves) {
                                 redirect('settings');
                             }
                         }
-
                     }
                 }
                 else if (toState.name === loginState) {
@@ -36,20 +35,34 @@
                     }
                 }
 
+
                 function redirect(currentState) {
                     event.preventDefault();
                     $state.go(currentState);
-
-
                 }
 
-                function redirectLogedUser(){
-                    if (componentService.hasLeaves(componentService.getRoot(userService.getUser().id).id)) {
+                function redirectLogedUser() {
+                    if (!hasLeaves) {
                         redirect('settings');
                     }
                     redirect('dashboard');
 
                 }
+
+                function hasLeaves(){
+                    componentService.getRoot(userService.getUser().id)
+                        .then(successRoot);
+
+                    function successRoot(croot) {
+                        componentService.hasLeaves(croot.id)
+                            .then(successHasLeaves);
+
+                        function successHasLeaves(hasLeaves) {
+                            return hasLeaves;
+                        }
+                    }
+                }
+
             }
         );
     }

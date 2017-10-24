@@ -16,28 +16,28 @@
 
         function create(data) {
             return $http.post(environmentConfig.userAPI + '/users', data)
-                .then(success)
-                .catch(fail);
+                .then(successCreate)
+                .catch(failCreate);
 
-            function success(response) {
+            function successCreate(response) {
                 return response.data;
             }
 
-            function fail(error) {
+            function failCreate(error) {
                 return $q.reject(error);
             }
         }
 
         function createChild(data) {
             return $http.post(environmentConfig.userAPI + '/children', data)
-                .then(success)
-                .catch(fail);
+                .then(successCreateChild)
+                .catch(failCreateChild);
 
-            function success(response) {
+            function successCreateChild(response) {
                 return response.data;
             }
 
-            function fail(error) {
+            function failCreateChild(error) {
                 return $q.reject(error);
             }
         }

@@ -43,13 +43,15 @@
                     <label class="col-sm-3">{{ 'CODE_TITLE' | translate }}</label>
 
                     <div class="col-sm-6">
-                        <select class="form-control" name="code" ng-model="vm.new_component.code" 
+                        <select class="form-control" name="code" ng-model="vm.new_component.code"
                                 selectpicker
                                 validator = "vm.componentCodeValidator(vm.new_component.code) === true"
                                 invalid-message = "vm.componentCodeValidator(vm.new_component.code)"
                                 validate-on="dirty"
-                                >
-                            <option ng-repeat="item in vm.codes" value="{{item.key}}">{{item.name}}</option>
+                        >
+                            <option ng-repeat="item in vm.codes" value="{{item.key}}">
+                                {{item.name}}
+                            </option>
                         </select>
                     </div>
                 </div>

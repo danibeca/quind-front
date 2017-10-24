@@ -11,7 +11,6 @@
         var vm = this;
         vm.hasQAS = false;
         vm.croot = croot.id;
-
         vm.qas = [];
 
         vm.addQAS = addQAS;
@@ -90,7 +89,7 @@
         }
 
         function checkServerInstances() {
-            qualityServerService.getInstances(vm.croot)
+            qualityServerService.getInstances({component_id: vm.croot})
                 .then(successServerInstances);
 
             function successServerInstances(data) {
