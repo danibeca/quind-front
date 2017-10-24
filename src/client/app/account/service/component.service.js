@@ -31,8 +31,8 @@
             return createGeneral('components',data);
         }
 
-        function createGeneral(resource,data) {
-            return accountAPI.all(resource).post(data)
+        function createGeneral(resource,dataCreateGeneral) {
+            return accountAPI.all(resource).post(dataCreateGeneral)
                 .then(successCreateGeneral)
                 .catch(failCreateGeneral);
 
@@ -44,8 +44,9 @@
                 };
                 qastaAPI.all('components').post(componentData);
                 if(response.type_id === 3){
-                    componentData.quality_system_instance_id = response.quality_system_instance_id;
-                    componentData.app_code = response.code;
+                    alert('Holi');
+                    componentData.quality_system_instance_id = dataCreateGeneral.quality_system_instance_id;
+                    componentData.app_code = dataCreateGeneral.code;
                 }
 
                 qalogAPI.all('components').post(componentData);
