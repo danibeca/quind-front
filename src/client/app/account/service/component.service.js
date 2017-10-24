@@ -44,7 +44,6 @@
                 };
                 qastaAPI.all('components').post(componentData);
                 if(response.type_id === 3){
-                    alert('Holi');
                     componentData.quality_system_instance_id = dataCreateGeneral.quality_system_instance_id;
                     componentData.app_code = dataCreateGeneral.code;
                 }
