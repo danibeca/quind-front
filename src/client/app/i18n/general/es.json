@@ -32,5 +32,6 @@
   "ASSIGN_COMPONENT_TITLE": "Asinar a",
   "CREATE_USER_SUCCESS": "Usuario creado",
   "QUALITY_SYSTEM_ERROR": "Parece que su sistema de calidad no esta funcionando",
-  "CREATE_COMPONENT_SUCCESS": "Componente Creado"
+  "CREATE_COMPONENT_SUCCESS": "Componente Creado",
+  "ROWS_ON_PAGE": "Filas por página"
 }

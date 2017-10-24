@@ -15,7 +15,7 @@
             restrict: 'E',
             controller: 'BubbleChartCtrl',
             controllerAs: 'vm',
-            templateUrl: 'app/blocks/amcharts3/bubbleChart/bubblechart.template.html',
+            templateUrl: 'app/blocks/amcharts3/bubblechart/bubblechart.template.html',
             scope: {
                 chartid: '@',
                 data: '@',

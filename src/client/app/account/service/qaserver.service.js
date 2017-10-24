@@ -6,7 +6,7 @@
         .factory('qualityServerService', qualityServerService);
 
     /* @ngInject */
-    function qualityServerService(accountAPI, $q) {
+    function qualityServerService(qalogAPI, $q) {
         var service = {
             getList: getList,
             getInstances: getInstances,
@@ -18,7 +18,7 @@
         return service;
 
         function getList() {
-            return accountAPI.all('qas').getList()
+            return qalogAPI.all('quality-systems').getList()
                 .then(success)
                 .catch(fail);
 
@@ -31,8 +31,9 @@
             }
         }
 
-        function getInstances(componentId) {
-            return accountAPI.one('components', componentId).getList('qas')
+        function getInstances(data) {
+
+            return qalogAPI.all('quality-system-instances').getList(data)
                 .then(success)
                 .catch(fail);
 
@@ -46,7 +47,7 @@
         }
 
         function getInstanceResources(componentId) {
-            return accountAPI.one('components', componentId).all('qas').getList({resources: true})
+            return qalogAPI.one('components', componentId).all('qas').getList({resources: true})
                 .then(success)
                 .catch(fail);
 
@@ -61,7 +62,7 @@
 
 
         function attachInstance(data) {
-            return accountAPI.one("components", data.component_id).all("qas").post(data)
+            return qalogAPI.all("quality-system-instances").post(data)
                 .then(success)
                 .catch(fail);
 
@@ -77,7 +78,7 @@
 
         function isInstanceValid(serverURL) {
             serverURL = serverURL + '/api/resources';
-            return accountAPI.one('qas/validate').get({'url': serverURL})
+            return qalogAPI.one('quality-system-instances/verify').get({'url': serverURL})
                 .catch(fail);
 
             function success(response) {

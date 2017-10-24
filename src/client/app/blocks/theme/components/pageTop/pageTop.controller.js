@@ -10,7 +10,7 @@
         .controller('PageTopCtrl', PageTopCtrl);
 
     /* @ngInject */
-    function PageTopCtrl(userService, roleService, componentService, qualityServerService, userRemoteService, $uibModal, $scope, $filter) {
+    function PageTopCtrl(userService, roleService, componentService, qualityServerService, userRemoteService, $uibModal, $scope, $filter, logger, $rootScope) {
         var vm = this;
         vm.showAddUser = false;
         vm.showAddComponent = false;
@@ -32,6 +32,7 @@
             showAddComponentOption();
             loadComponents();
             loadRoles();
+            showMenu();
         }
 
         function componentCodeValidator(code) {
@@ -89,11 +90,15 @@
 
             function successGetRoot(croot) {
                 vm.crootId = croot.id;
+
+                loadInstanceResources();
+
                 var requestData = {
                     parent_id: vm.crootId,
                     self_included: true,
                     no_leaves: true
                 }
+
                 componentService.getList(requestData)
                     .then(successGetComponents);
 
@@ -101,11 +106,9 @@
                     vm.new_component.parent_id = info[0].id;
                     vm.components = info;
                     vm.smartTablePageSize = '5';
+
                 }
-
-                loadInstanceResources();
             }
-
         }
 
         function loadRoles() {
@@ -119,12 +122,17 @@
         }
 
         function loadInstanceResources() {
-            qualityServerService.getInstanceResources(vm.crootId)
+            qualityServerService.getInstances({component_id: vm.crootId, with_resources: true})
                 .then(successGetResources)
                 .catch(failGetResources);
 
-            function successGetResources(info) {
-                vm.codes = info;
+            function successGetResources(instances) {
+                vm.codes = [];
+                instances.forEach(function (instance) {
+                    //TODO Change for multiple instances
+                    vm.new_component.quality_system_instance_id = instance.id;
+                    vm.codes = vm.codes.concat(instance.resources);
+                });
             }
 
             function failGetResources(error) {
@@ -164,17 +172,17 @@
 
         function userRegistration() {
             userRemoteService.createChild(vm.user)
-                .then(successCreateUser)
-                .catch(failCreateUser);
+                .then(successCreateChild)
+                .catch(failCreateChild);
 
-            function successCreateUser(data) {
+            function successCreateChild(data) {
                 logger.success($filter('translate')('CREATE_USER_SUCCESS'));
                 vm.userComponentData.user_id = data.id;
                 vm.userComponentData.component_id = vm.crootId;
                 componentService.associateToUser(vm.userComponentData);
             }
 
-            function failCreateUser(response) {
+            function failCreateChild(response) {
                 if (response.status === 409) {
                     logger.error($filter('translate')('REGISTER_FAILED'));
                 }
@@ -182,14 +190,13 @@
         }
 
         function componentRegistration() {
-
             componentService.create(vm.new_component)
                 .then(successCreateComponent)
                 .catch(failCreateComponent);
 
-            function successCreateComponent(user) {
-                vm.userComponentData.user_id = user.id;
-                vm.userComponentData.component_id = resp.id;
+            function successCreateComponent(component) {
+                vm.userComponentData.component_id = component.id;
+                vm.userComponentData.user_id = userService.getUser().id;
                 associateComponentToUser();
             }
 
@@ -203,10 +210,26 @@
                 .then(successAssociate())
 
             function successAssociate() {
+                //loadComponents();
+                showMenu();
                 logger.success($filter('translate')('CREATE_COMPONENT_SUCCESS'));
             }
 
 
+        }
+
+        function showMenu(){
+            componentService.getRoot(userService.getUser().id)
+                .then(successRoot);
+
+            function successRoot(croot) {
+                componentService.hasLeaves(croot.id)
+                    .then(successHasLeaves);
+
+                function successHasLeaves(hasLeaves) {
+                    $rootScope.hasLeaves =  hasLeaves;
+                }
+            }
         }
     }
 

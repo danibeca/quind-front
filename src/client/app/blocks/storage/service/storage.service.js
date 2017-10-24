@@ -28,7 +28,7 @@
             if(get(name) === null){
                 return false;
             }
-            return false;
+            return true;
         }
 
         function getJsonObject(name) {
