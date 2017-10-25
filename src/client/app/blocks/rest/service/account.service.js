@@ -1,4 +1,4 @@
- (function() {
+(function () {
     'use strict';
 
     angular
@@ -6,8 +6,8 @@
         .factory('accountAPI', accountAPI);
 
     /* @ngInject */
-    function accountAPI(Restangular,environmentConfig) {
-        return Restangular.withConfig(function(RestangularConfigurer) {
+    function accountAPI(Restangular, environmentConfig) {
+        return Restangular.withConfig(function (RestangularConfigurer) {
             RestangularConfigurer.setBaseUrl(environmentConfig.accountAPI);
         });
     }

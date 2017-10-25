@@ -62,7 +62,7 @@
 
 
         function attachInstance(data) {
-            return qalogAPI.all("quality-system-instances").post(data)
+            return qalogAPI.all('quality-system-instances').post(data)
                 .then(success)
                 .catch(fail);
 
@@ -77,7 +77,7 @@
         }
 
         function updateInstance(data) {
-            return qalogAPI.one("quality-system-instances", data.id).customPUT(data)
+            return qalogAPI.one('quality-system-instances', data.id).customPUT(data)
                 .then(success)
                 .catch(fail);
 
@@ -93,6 +93,7 @@
 
         function isInstanceValid(data) {
             return qalogAPI.one('quality-system-instances/verify').get(data)
+                .then(success)
                 .catch(fail);
 
             function success(response) {

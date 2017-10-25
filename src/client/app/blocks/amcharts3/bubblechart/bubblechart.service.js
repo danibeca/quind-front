@@ -2,7 +2,8 @@
  * @author jmruiz6
  * created on 10.20.2017
  */
-/* jshint -W117 */
+/* jshint -W117, -W101 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -11,7 +12,7 @@
         .factory('bubbleChartService', bubbleChartService);
 
     /* @ngInject */
-    function bubbleChartService(layoutPaths) {
+    function bubbleChartService() {
         var service = {
             transformData: transformData,
             createChart: createChart
@@ -146,14 +147,18 @@
             if (axe.minimal !== undefined) {
                 return axe.minimal;
             }
-            return Math.min.apply(Math, axe.labels.map(function(o) { return o[0]; }));
+            return Math.min.apply(Math, axe.labels.map(function (o) {
+                return o[0];
+            }));
         }
 
         function getMaxLabel(axe) {
             if (axe.maximum !== undefined) {
                 return axe.maximum;
             }
-            return Math.max.apply(Math, axe.labels.map(function(o) { return o[0]; }));
+            return Math.max.apply(Math, axe.labels.map(function (o) {
+                return o[0];
+            }));
         }
 
         function getStrictMinMax(axe) {

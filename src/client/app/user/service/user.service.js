@@ -6,7 +6,7 @@
         .factory('userService', userService);
 
     /* @ngInject */
-    function userService(storageService, $q) {
+    function userService(storageService) {
         var currentUser;
 
         var service = {

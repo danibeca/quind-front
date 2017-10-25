@@ -1,4 +1,4 @@
- (function() {
+(function () {
     'use strict';
 
     angular
@@ -6,8 +6,8 @@
         .factory('qalogAPI', qalogAPI);
 
     /* @ngInject */
-    function qalogAPI(Restangular,environmentConfig) {
-        return Restangular.withConfig(function(RestangularConfigurer) {
+    function qalogAPI(Restangular, environmentConfig) {
+        return Restangular.withConfig(function (RestangularConfigurer) {
             RestangularConfigurer.setBaseUrl(environmentConfig.qalogAPI);
         });
     }

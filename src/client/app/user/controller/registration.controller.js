@@ -1,3 +1,5 @@
+/* jshint -W101,-W106, -W117 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -10,12 +12,12 @@
         var vm = this;
         vm.registration = registration;
         vm.passwordValidator = passwordValidator;
-        vm.userComponentData = new Object();
+        vm.userComponentData = {};
 
 
         function passwordValidator(password) {
 
-            if(!password){
+            if (!password) {
                 return $filter('translate')('PASS_REQUIRED');
             }
 
@@ -31,7 +33,7 @@
             }*/
 
             return true;
-        };
+        }
 
         function registration() {
             userRemoteService.create(vm.user)
@@ -50,9 +52,9 @@
             }
         }
 
-        function createAccount(){
+        function createAccount() {
             var accountData = {
-                name : vm.user.company
+                name: vm.user.company
             };
 
             componentService.createAccount(accountData)
@@ -65,21 +67,21 @@
                 associateAccountToUser();
             }
 
-            function failCreateAccount(error) {
+            function failCreateAccount() {
                 logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }
 
-        function associateAccountToUser(){
+        function associateAccountToUser() {
             componentService.associateToUser(vm.userComponentData)
                 .then(success)
                 .catch(fail);
 
-            function success(data) {
+            function success() {
                 login();
             }
 
-            function fail(error) {
+            function fail() {
                 logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }
@@ -89,7 +91,7 @@
                 .then(success)
                 .catch(fail);
 
-            function success(data) {
+            function success() {
                 logger.success($filter('translate')('LOGIN_SUCCESS'));
                 getUser();
             }
@@ -103,16 +105,13 @@
 
         function getUser() {
             auth.getAuthUser()
-                .then(success)
-                .catch(fail);
+                .then(success);
 
-            function success(data) {
+
+            function success() {
                 $state.go('settings');
             }
 
-            function fail(error) {
-                //logger.error($filter('translate')('LOGIN_FAILED'));
-            }
 
         }
     }

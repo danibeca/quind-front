@@ -6,7 +6,7 @@
         .factory('password', password);
 
     /* @ngInject */
-    function password($http, $q, environmentConfig, storageService, userService) {
+    function password($http, $q, environmentConfig) {
         var service = {
             getEmail: getEmail,
             postReset: postReset
@@ -17,7 +17,7 @@
         function getEmail(data) {
 
             var serviceData = {
-                'email' : data.email
+                'email': data.email
             };
 
             return $http.post(environmentConfig.userAPI + '/password/email', serviceData)

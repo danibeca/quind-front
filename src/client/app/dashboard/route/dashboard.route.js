@@ -10,7 +10,6 @@
         routerHelper.configureStates(getStates());
     }
 
-
     function getStates() {
 
         return [
@@ -31,7 +30,7 @@
                             return translateHelper.addParts('dashboard');
                         },
                         croot: function (userService, componentService) {
-                            return componentService.getRoot(userService.getUser().id)
+                            return componentService.getRoot(userService.getUser().id);
                         }
 
                     }

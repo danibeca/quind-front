@@ -1,3 +1,5 @@
+/* jshint -W101,-W106, -W117 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -60,7 +62,7 @@
         function getRoot(userId) {
             if (!storageService.has('croot')) {
                 return getRemoteRoot(userId)
-                    .then(successGetRoot)
+                    .then(successGetRoot);
 
             } else {
                 return $q(function (resolve) {
@@ -167,7 +169,7 @@
                     .catch(fail);
 
                 function success(indicators) {
-                    var result = new Array();
+                    var result = [];
                     names.plain().forEach(function (name) {
                         indicators.plain().forEach(function (indicator) {
                             if (indicator[name.id] !== undefined) {
@@ -204,7 +206,7 @@
                 return series;
             }
 
-            function failSerie(series) {
+            function failSerie(error) {
                 return $q.reject(error);
             }
 

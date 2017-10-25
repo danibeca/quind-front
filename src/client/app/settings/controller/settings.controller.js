@@ -1,4 +1,5 @@
-/* jshint -W117 */
+/* jshint -W117, -W101, -W106  */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -52,7 +53,7 @@
             }*/
 
             return true;
-        };
+        }
 
         function saveQAS() {
             if (parseInt(vm.qas.type) === 1) {
@@ -77,7 +78,7 @@
                 }
             }
 
-            function failIsValid(error) {
+            function failIsValid() {
                 logger.error($filter('translate')('INVALID_URL'));
             }
 
@@ -93,11 +94,11 @@
 
                 };
 
-                function successAttachInstance(data) {
+                function successAttachInstance() {
                     checkServerInstances();
                 }
 
-                function failAttachInstance(error) {
+                function failAttachInstance() {
                     logger.error($filter('translate')('CREATE_ERROR'));
                 }
 
@@ -122,12 +123,12 @@
 
                 };
 
-                function successUpdateInstance(data) {
+                function successUpdateInstance() {
                     vm.mustShowEdit = false;
                     checkServerInstances();
                 }
 
-                function failUpdateInstance(error) {
+                function failUpdateInstance() {
                     logger.error($filter('translate')('UPDATE_ERROR'));
                 }
 

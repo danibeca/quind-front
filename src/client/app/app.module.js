@@ -49,7 +49,7 @@
 
                 }
 
-                function hasLeaves(){
+                function hasLeaves() {
                     componentService.getRoot(userService.getUser().id)
                         .then(successRoot);
 

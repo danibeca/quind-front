@@ -9,7 +9,7 @@
         .directive('bootstrapSwitch', bootstrapSwitch);
 
     /* @ngInject */
-    function bootstrapSwitch($timeout, spinnerService) {
+    function bootstrapSwitch($timeout) {
         return {
             restrict: 'A',
             require: '?ngModel',
@@ -19,7 +19,7 @@
                 first: '@',
                 model: '=ngModel'
             },
-            link: function(scope, element, attrs, ngModel) {
+            link: function (scope, element, attrs, ngModel) {
                 scope.$watch('positivetext', function () {
                     if (scope.positivetext !== undefined && scope.positivetext !== '') {
                         if (isReady()) {
@@ -36,7 +36,7 @@
                     }
                 });
 
-                scope.$watch('model', function(newValue, oldValue) {
+                scope.$watch('model', function (newValue) {
                     if (newValue) {
                         element.bootstrapSwitch('state', true, true);
                     } else {
@@ -61,9 +61,9 @@
                         element.bootstrapSwitch('onText', scope.positivetext);
                         element.bootstrapSwitch('offText', scope.offtext);
 
-                        element.on('switchChange.bootstrapSwitch', function(event, state) {
+                        element.on('switchChange.bootstrapSwitch', function (event, state) {
                             if (ngModel) {
-                                scope.$apply(function() {
+                                scope.$apply(function () {
                                     ngModel.$setViewValue(state);
                                 });
                             }

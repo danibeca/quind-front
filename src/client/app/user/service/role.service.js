@@ -13,7 +13,7 @@
 
         return service;
 
-        function getList(data) {
+        function getList() {
             return $http.get(environmentConfig.userAPI + '/roles')
                 .then(successGetList)
                 .catch(failGetList);

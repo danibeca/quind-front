@@ -1,3 +1,5 @@
+/* jshint -W101,-W106, -W117 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -10,7 +12,7 @@
         var service = {
             getLogin: getLogin,
             isTokenValid: isTokenValid,
-            getAuthUser:getAuthUser
+            getAuthUser: getAuthUser
         };
 
         return service;
@@ -18,11 +20,11 @@
         function getLogin(data) {
 
             var serviceData = {
-                'grant_type' : 'password',
-                'client_id' : 1,
-                'client_secret' : 'PU8KCsFQKkxaPGfwq2zrtYVHFpwwvgSaYlKNm4zX',
-                'username' : data.email,
-                'password' : data.password
+                'grant_type': 'password',
+                'client_id': 1,
+                'client_secret': 'PU8KCsFQKkxaPGfwq2zrtYVHFpwwvgSaYlKNm4zX',
+                'username': data.email,
+                'password': data.password
             };
 
             return $http.post(environmentConfig.userAPI + '/oauth/token', serviceData)

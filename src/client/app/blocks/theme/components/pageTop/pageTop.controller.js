@@ -2,7 +2,8 @@
  * @author jmruiz6
  * created on 10.21.2017
  */
-/* jshint -W101, -W117 */
+/* jshint -W101,-W106, -W117 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -14,14 +15,14 @@
         var vm = this;
         vm.showAddUser = false;
         vm.showAddComponent = false;
-        vm.userComponentData = new Object();
-        vm.crootId;
-        vm.new_component = new Object();
+        vm.userComponentData = {};
+        vm.crootId = null;
+        vm.new_component = {};
 
         vm.openRegisterUser = openRegisterUser;
         vm.openRegisterComponent = openRegisterComponent;
         vm.userRegistration = userRegistration;
-        vm.componentRegistration= componentRegistration;
+        vm.componentRegistration = componentRegistration;
         vm.passwordValidator = passwordValidator;
         vm.componentCodeValidator = componentCodeValidator;
 
@@ -37,19 +38,21 @@
 
         function componentCodeValidator(code) {
 
-            if(vm.new_component.type === 1)
+            if (vm.new_component.type === 1) {
                 return true;
+            }
 
-            if(code === 0){
+
+            if (code === 0) {
                 return $filter('translate')('FIELD_REQUIRED');
             }
 
             return true;
-        };
+        }
 
         function passwordValidator(password) {
 
-            if(!password){
+            if (!password) {
                 return $filter('translate')('PASS_REQUIRED');
             }
 
@@ -58,7 +61,7 @@
             }
 
             return true;
-        };
+        }
 
         function hasAdminPermission() {
             var result = false;
@@ -73,7 +76,8 @@
 
         function showAddUserOption() {
             if (hasAdminPermission()) {
-                vm.showAddUser = true;vm.userComponentData = new Object();
+                vm.showAddUser = true;
+                vm.userComponentData = {};
             }
         }
 
@@ -97,7 +101,7 @@
                     parent_id: vm.crootId,
                     self_included: true,
                     no_leaves: true
-                }
+                };
 
                 componentService.getList(requestData)
                     .then(successGetComponents);
@@ -135,7 +139,7 @@
                 });
             }
 
-            function failGetResources(error) {
+            function failGetResources() {
                 logger.error($filter('translate')('QUALITY_SYSTEM_ERROR'));
             }
         }
@@ -200,14 +204,14 @@
                 associateComponentToUser();
             }
 
-            function failCreateComponent(error) {
+            function failCreateComponent() {
                 logger.error($filter('translate')('LOGIN_FAILED'));
             }
         }
 
-        function associateComponentToUser(){
+        function associateComponentToUser() {
             componentService.associateToUser(vm.userComponentData)
-                .then(successAssociate())
+                .then(successAssociate());
 
             function successAssociate() {
                 //loadComponents();
@@ -218,7 +222,7 @@
 
         }
 
-        function showMenu(){
+        function showMenu() {
             componentService.getRoot(userService.getUser().id)
                 .then(successRoot);
 
@@ -227,7 +231,7 @@
                     .then(successHasLeaves);
 
                 function successHasLeaves(hasLeaves) {
-                    $rootScope.hasLeaves =  hasLeaves;
+                    $rootScope.hasLeaves = hasLeaves;
                 }
             }
         }

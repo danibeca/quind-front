@@ -7,7 +7,7 @@
         .controller('DashboardController', DashboardController);
 
     /* @ngInject */
-    function DashboardController(croot, userService, accountService, componentService, $filter, storageService, $timeout) {
+    function DashboardController(croot, userService, componentService, $filter, storageService, $timeout) {
         var vm = this;
         vm.user = userService.getUser();
         vm.chartId = 'dashChart1';
@@ -52,7 +52,7 @@
                 vm.data = indicators;
                 var missing = indicators.length;
                 componentService.getIndicatorSeries(croot.id, vm.indIds)
-                    .then(successSeries)
+                    .then(successSeries);
 
                 function successSeries(indi) {
                     indicators.forEach(function (name) {
@@ -101,11 +101,11 @@
 
             function buildAxe(title) {
                 var labelsArray = [[0, ''],
-                                   [1, $filter('translate')('TOO_LOW_TEXT')],
-                                   [2, $filter('translate')('LOW_TEXT')],
-                                   [3, $filter('translate')('MEDIUM_TEXT')],
-                                   [4, $filter('translate')('HIGH_TEXT')],
-                                   [5, $filter('translate')('TOO_HIGH_TEXT')]];
+                    [1, $filter('translate')('TOO_LOW_TEXT')],
+                    [2, $filter('translate')('LOW_TEXT')],
+                    [3, $filter('translate')('MEDIUM_TEXT')],
+                    [4, $filter('translate')('HIGH_TEXT')],
+                    [5, $filter('translate')('TOO_HIGH_TEXT')]];
                 var axe = {};
                 axe.title = title;
                 axe.labels = labelsArray;

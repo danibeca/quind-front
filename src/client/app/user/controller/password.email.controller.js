@@ -6,7 +6,7 @@
         .controller('PasswordEmailController', PasswordEmailController);
 
     /* @ngInject */
-    function PasswordEmailController(logger, password, $http, $filter, environmentConfig) {
+    function PasswordEmailController(logger, password, $filter) {
         var vm = this;
         vm.success = false;
         vm.sendEmail = sendEmail;

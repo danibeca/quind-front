@@ -1,3 +1,4 @@
+/* jshint -W089 */
 (function () {
     'use strict';
 
@@ -39,10 +40,10 @@
                     //alert(JSON.stringify(response.data));
                     //passwords.user
                     //passwords.token
-                    if(response.data.error.message.email === 'passwords.user'){
+                    if (response.data.error.message.email === 'passwords.user') {
                         logger.error($filter('translate')('WRONG_EMAIL'));
                     }
-                    if(response.data.error.message.email === 'passwords.token'){
+                    if (response.data.error.message.email === 'passwords.token') {
                         logger.error($filter('translate')('INVALID_TOKEN'));
                     }
 

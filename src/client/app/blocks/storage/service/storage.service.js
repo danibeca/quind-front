@@ -13,7 +13,7 @@
             setJsonObject: setJsonObject,
             get: get,
             set: set,
-            remove:remove,
+            remove: remove,
             has: has
 
         };
@@ -25,25 +25,25 @@
         }
 
         function has(name) {
-            if(get(name) === null){
+            if (get(name) === null) {
                 return false;
             }
             return true;
         }
 
         function getJsonObject(name) {
-                return JSON.parse(get(name));
+            return JSON.parse(get(name));
         }
 
         function setJsonObject(name, object) {
             set(name, JSON.stringify(object));
         }
 
-        function get(name) {
+        function get (name) {
             return window.localStorage.getItem(name);
         }
 
-        function set(name, variable) {
+        function set (name, variable) {
             window.localStorage.setItem(name, variable);
         }
 
