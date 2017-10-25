@@ -33,5 +33,9 @@
   "CREATE_USER_SUCCESS": "User Created",
   "QUALITY_SYSTEM_ERROR": "Looks like your quality system is not working",
   "CREATE_COMPONENT_SUCCESS": "Component Created",
-  "ROWS_ON_PAGE": "Rows on page"
+  "ROWS_ON_PAGE": "Rows on page",
+  "USERNAME_TITLE": "Username",
+  "PASSWORD_TITLE": "Password",
+  "YES_TEXT": "YES",
+  "NO_TEXT": "NO"
 }

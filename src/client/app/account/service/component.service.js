@@ -117,7 +117,6 @@
             }
 
             function failGetList(error) {
-                alert('as2');
                 return $q.reject(error);
             }
         }

@@ -8,5 +8,9 @@
   "ADD_SERVER": "Agregar servidor",
   "NAME": "Nombre",
   "SYSTEM": "Sistema",
-  "APPLICATION": "Aplicación"
+  "APPLICATION": "Aplicación",
+  "AUTH_REQUIRED_TITLE": "¿Requiere Autenticación?",
+  "UPDATE_SERVER": "Actualizar servidor",
+  "CREATE_ERROR": "Error creando servidor",
+  "UPDATE_ERROR": "Error actualizando servidor"
 }

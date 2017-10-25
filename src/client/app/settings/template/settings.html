@@ -11,35 +11,33 @@
                 <div class="panel-content">
 
                     <h3 class="with-line">{{ 'QUALITY_SYSTEM_CONFIG_TITLE' | translate }}</h3>
-
+                    <div class="row" ng-if="vm.hasQAS">
+                        <div class="col-lg-6 col-md-12">
+                            <div include-with-scope="app/settings/tables/server.instance.table.html"></div>
+                        </div>
+                    </div>
+                    <br>
                     <div class="row">
-
-                        <form class="form-horizontal" method="POST" name="addqas" angular-validator-submit="vm.addQAS()"
+                        <form class="form-horizontal" method="POST" name="saveQAS" angular-validator-submit="vm.saveQAS()"
                               novalidate angular-validator
-                              ng-if="!vm.hasQAS"
-                        >
+                              ng-if="!vm.hasQAS || vm.mustShowEdit">
                             <div class="col-md-12">
-
-
                                 <div class="form-group row clearfix">
                                     <label class="col-sm-2">{{ 'QUALITY_SYSTEM_SERVICE' | translate }}</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" name="quality" ng-model="vm.qas.id"
-                                                selectpicker
+                                        <select class="form-control" name="quality" ng-model="vm.qas.systemIid"
                                                 required
                                                 validate-on="dirty"
-                                                validator="vm.qas.id != 0"
+                                                validator="vm.qas.systemIid != 0"
                                                 required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
                                                 invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
-                                        >
-                                            <option ng-repeat="item in vm.qAServers" value="{{item.id}}">{{item.name}}
-                                            </option>
+                                                ng-options="i.id as (i.name) for i in vm.qAServers">
+                                            <option></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row clearfix">
                                     <label class="col-sm-2">{{ 'PUBLIC_PRIVATE' | translate }}</label>
-
                                     <div class="col-sm-2">
                                         <select class="form-control" name="publicprivate" ng-model="vm.qas.type"
                                                 selectpicker
@@ -48,46 +46,69 @@
                                                 validator="vm.qas.type != 0"
                                                 required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
                                                 invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
-                                        >
-                                            <option value="1">{{ 'PUBLIC' | translate }}</option>
-                                            <option value="2">{{ 'PRIVATE' | translate }}</option>
+                                                ng-options="i.id as (i.name) for i in vm.typeOptions">
+                                            <option></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row clearfix">
                                     <label for="inputURL" class="col-sm-2">URL</label>
-
                                     <div class="col-sm-4">
                                         <input type="text" name="url" class="form-control" ng-model="vm.qas.url"
                                                id="inputURL" placeholder="" value=""
                                                validate-on="dirty"
                                                validator="vm.urlValidator(vm.qas.url) === true"
-                                               invalid-message="vm.urlValidator(vm.qas.url)"
-                                        >
+                                               invalid-message="vm.urlValidator(vm.qas.url)">
+                                    </div>
+                                </div>
+                                <div class="form-group row clearfix">
+                                    <label for="requiresAuthentication" class="col-sm-2">{{ 'AUTH_REQUIRED_TITLE' | translate }}</label>
+                                    <div class="col-sm-2">
+                                        <input type="checkbox"
+                                               positivetext="{{ 'YES_TEXT' | translate }}"
+                                               offtext="{{ 'NO_TEXT' | translate }}"
+                                               first="{{vm.qas.boRequiresAuthentication}}"
+                                               id="requiresAuthentication"
+                                               name="requiresAuthentication"
+                                               ng-model="vm.qas.boRequiresAuthentication"
+                                               bootstrap-switch />
+                                    </div>
+                                </div>
+                                <div class="form-group row clearfix" ng-show="vm.qas.boRequiresAuthentication">
+                                    <label for="inputUserName" class="col-sm-2">{{ 'USERNAME_TITLE' | translate }}</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="username" class="form-control" ng-model="vm.qas.username"
+                                               id="inputUserName" placeholder="" value=""
+                                               validate-on="dirty"
+                                               validator = "vm.userNameValidator(vm.qas.boRequiresAuthentication) === true"
+                                               required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                               invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
+                                    </div>
+                                </div>
+                                <div class="form-group row clearfix" ng-show="vm.qas.boRequiresAuthentication">
+                                    <label for="inputPassword" class="col-sm-2">{{ 'PASSWORD_TITLE' | translate }}</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="password" class="form-control" ng-model="vm.qas.password"
+                                               id="inputPassword" placeholder="" value=""
+                                               validate-on="dirty"
+                                               validator = "vm.passwordValidator(vm.qas.boRequiresAuthentication) === true"
+                                               required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                               invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
                                     </div>
                                 </div>
                             </div>
-
-                            <button type="submit" class="btn btn-primary btn-with-icon save-profile">
+                            <button type="submit" class="btn btn-primary btn-with-icon save-profile" ng-show="!vm.mustShowEdit">
                                 <i class="ion-android-checkmark-circle"></i>{{ 'ADD_SERVER' | translate }}
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-with-icon save-profile" ng-show="vm.mustShowEdit">
+                                <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_SERVER' | translate }}
                             </button>
                         </form>
                     </div>
-                    <br>
-                    <div class="row" ng-if="vm.hasQAS">
-                        <div class="col-lg-6 col-md-12">
-                            <div include-with-scope="app/settings/tables/server.instance.table.html"></div>
-                        </div>
-                    </div>
-
                 </div>
-
-
             </div>
-
         </div>
     </div>
-
 </main>
 
 

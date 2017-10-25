@@ -12,8 +12,8 @@
             getInstances: getInstances,
             getInstanceResources: getInstanceResources,
             attachInstance: attachInstance,
-            isInstanceValid: isInstanceValid
-
+            isInstanceValid: isInstanceValid,
+            updateInstance: updateInstance
         };
         return service;
 
@@ -76,9 +76,23 @@
 
         }
 
-        function isInstanceValid(serverURL) {
-            serverURL = serverURL + '/api/resources';
-            return qalogAPI.one('quality-system-instances/verify').get({'url': serverURL})
+        function updateInstance(data) {
+            return qalogAPI.one("quality-system-instances", data.id).customPUT(data)
+                .then(success)
+                .catch(fail);
+
+            function success(data) {
+                return data;
+            }
+
+            function fail(error) {
+                return $q.reject(error);
+            }
+
+        }
+
+        function isInstanceValid(data) {
+            return qalogAPI.one('quality-system-instances/verify').get(data)
                 .catch(fail);
 
             function success(response) {
