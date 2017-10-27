@@ -18,10 +18,10 @@
         vm.userComponentData = {};
         vm.form = {};
         vm.paginationArray = [{id: 5, name: 5},
-                              {id: 10, name: 10},
-                              {id: 15, name: 15},
-                              {id: 20, name: 20},
-                              {id: 25, name: 25}];
+            {id: 10, name: 10},
+            {id: 15, name: 15},
+            {id: 20, name: 20},
+            {id: 25, name: 25}];
 
         vm.componentRegistration = componentRegistration;
         vm.componentCodeValidator = componentCodeValidator;
@@ -42,7 +42,6 @@
                 loadInstanceResources();
                 var requestData = {
                     parent_id: vm.crootId,
-                    self_included: true,
                     no_leaves: true
                 };
                 componentService.getList(requestData)
@@ -68,6 +67,7 @@
                     //TODO Change for multiple instances
                     vm.new_component.quality_system_instance_id = instance.id;
                     vm.codes = vm.codes.concat(instance.resources);
+                    vm.resourcesLoaded = true;
                 });
             }
 
@@ -88,6 +88,9 @@
         }
 
         function componentRegistration() {
+            if (vm.new_component.tag_id == 2) {
+                vm.new_component.parent_id = vm.croot;
+            }
             componentService.create(vm.new_component)
                 .then(successCreateComponent)
                 .catch(failCreateComponent);

@@ -12,49 +12,101 @@
     ])
         .run(runApp);
 
-    function runApp($rootScope, $state, userService, auth, componentService, $translatePartialLoader) {
+    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions) {
         $translatePartialLoader.addPart('general');
-        $rootScope.$on('$stateChangeStart', function (event, toState) {
+
+        //$transitions.onStart({ to: 'dashboard.**' }, function(trans, state) {
+        $transitions.onStart({}, function (trans) {
                 var loginState = 'login';
-                var routesNoAuth = [loginState, 'registration', 'logout', 'passwordreset', 'passwordemail', '404'];
+                var stateName = trans.$to().name;
 
-                if (routesNoAuth.indexOf(toState.name) < 0) {
-                    if (!auth.isTokenValid() || !userService.isLoggedIn()) {
-                        redirect(loginState);
-                    } else {
-                        if (toState.name !== 'settings') {
-                            if (!hasLeaves) {
-                                redirect('settings');
-                            }
+
+                if (isSecureRoute(stateName)) {
+                    if (isUserLogged()) {
+                        if (!isAdminRoute(stateName)) {
+                            return hasLeaves().then(successEvalLeaves);
                         }
+
+                    } else {
+                        return redirect(loginState);
                     }
                 }
-                else if (toState.name === loginState) {
-                    if (auth.isTokenValid() && userService.isLoggedIn()) {
-                        redirectLogedUser();
+                else if (stateName === loginState) {
+                    if (isUserLogged()) {
+                        return redirect('dashboard');
                     }
+                } else {
+                    return redirect('servers');
                 }
 
 
-                function redirect(currentState) {
-                    event.preventDefault();
-                    $state.go(currentState);
+                function redirect(newState) {
+                    return $state.target(newState);
                 }
 
-                function redirectLogedUser() {
+                function successEvalLeaves(hasLeaves) {
                     if (!hasLeaves) {
-                        redirect('settings');
+                        return redirect('servers');
                     }
-                    redirect('dashboard');
+                }
 
+
+                function isSecureRoute(stateName) {
+                    var routesNoAuth = ['login', 'registration', 'logout', 'passwordreset', 'passwordemail', '404'];
+
+                    if (routesNoAuth.indexOf(stateName) < 0) {
+                        return true;
+                    }
+                    return false;
+
+                }
+
+                function isAdminRoute(stateName) {
+                    var routesNoAuth = ['servers', 'users', 'components'];
+
+                    if (routesNoAuth.indexOf(stateName) < 0) {
+                        return false;
+                    }
+                    return true;
+
+                }
+
+
+                function isUserLogged() {
+                    if (!userService.isLoggedIn()) {
+                        return false;
+                    };
+                    return true
+                }
+
+                function isTokenValid() {
+
+                    return auth.isTokenValid()
+                        .then(successToken)
+                        .fail(failToken);
+
+                    function successToken(response) {
+                        return response;
+                    }
+
+                    function failToken() {
+                        return false;
+                    }
                 }
 
                 function hasLeaves() {
-                    componentService.getRoot(userService.getUser().id)
-                        .then(successRoot);
+                    var user = userService.getUser();
+                    if (user != undefined) {
+                        return componentService.getRoot(user.id)
+                            .then(successRoot);
+                    } else {
+                        return $q(function (resolve) {
+                            resolve(false);
+                        });
+                    }
 
                     function successRoot(croot) {
-                        componentService.hasLeaves(croot.id)
+                        return componentService.hasLeaves(croot.id)
                             .then(successHasLeaves);
 
                         function successHasLeaves(hasLeaves) {
@@ -66,4 +118,5 @@
             }
         );
     }
-})();
+})
+();

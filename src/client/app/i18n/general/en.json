@@ -28,7 +28,7 @@
   "SUBMIT_NEW_ACCOUNT": "Create user",
   "COMPONENT_NAME": "Name",
   "SUBMIT_NEW_COMPONENT": "Create component",
-  "ASSIGN_COMPONENT_TITLE": "Assign to",
+  "ASSIGN_COMPONENT_TITLE": "Assign to a System",
   "CREATE_USER_SUCCESS": "User Created",
   "QUALITY_SYSTEM_ERROR": "Looks like your quality system is not working",
   "CREATE_COMPONENT_SUCCESS": "Component Created",

@@ -7,11 +7,9 @@
         .controller('DashboardController', DashboardController);
 
     /* @ngInject */
-    function DashboardController(croot, userService, componentService, $filter, storageService, $timeout, $state) {
+    function DashboardController(userService, componentService, $filter, storageService, $timeout, $state) {
         var vm = this;
-        if(croot === undefined){
-            $state.go('login');
-        }
+        var croot = storageService.getJsonObject('croot');
 
         vm.user = userService.getUser();
         vm.chartId = 'dashChart1';

@@ -16,16 +16,18 @@
                     </div>
                     <br>
                     <div class="row">
-                        <form class="form-horizontal" name="vm.form.componentRegistration" method="POST" angular-validator-submit="vm.componentRegistration()" novalidate angular-validator>
+                        <form class="form-horizontal" name="vm.form.componentRegistration" method="POST"
+                              angular-validator-submit="vm.componentRegistration()" novalidate angular-validator>
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'COMPONENT_NAME' | translate }}</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'COMPONENT_NAME' | translate }}"
+                                        <input type="text" name="name" autocorrect="off" autocapitalize="none"
+                                               class="form-control" placeholder="{{ 'COMPONENT_NAME' | translate }}"
                                                ng-model="vm.new_component.name"
                                                required
                                                validate-on="dirty"
-                                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                               required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
                                         />
                                     </div>
                                 </div>
@@ -35,13 +37,14 @@
                                     <label class="col-sm-1">{{ 'TYPE_TITLE' | translate }}</label>
 
                                     <div class="col-sm-4">
-                                        <select class="form-control" name="component_tag" ng-model="vm.new_component.tag_id"
+                                        <select class="form-control" name="component_tag"
+                                                ng-model="vm.new_component.tag_id"
                                                 selectpicker
                                                 required
                                                 validate-on="dirty"
-                                                validator = "vm.new_component.type != 0"
-                                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                validator="vm.new_component.type != 0"
+                                                required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
                                         >
                                             <option value="2">{{ 'SYSTEM' | translate }}</option>
                                             <option value="3">{{ 'APPLICATION' | translate }}</option>
@@ -50,13 +53,13 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group row clearfix" ng-show="vm.new_component.tag_id == 3">
+                                <div class="form-group row clearfix" ng-if="vm.resourcesLoaded" ng-show="vm.new_component.tag_id == 3">
                                     <label class="col-sm-1">{{ 'CODE_TITLE' | translate }}</label>
                                     <div class="col-sm-4">
                                         <select class="form-control" name="code" ng-model="vm.new_component.code"
                                                 selectpicker
-                                                validator = "vm.componentCodeValidator(vm.new_component.code) === true"
-                                                invalid-message = "vm.componentCodeValidator(vm.new_component.code)"
+                                                validator="vm.componentCodeValidator(vm.new_component.code) === true"
+                                                invalid-message="vm.componentCodeValidator(vm.new_component.code)"
                                                 validate-on="dirty"
                                         >
                                             <option ng-repeat="item in vm.codes" value="{{item.key}}">
@@ -66,7 +69,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12" ng-if="vm.componentsLoaded">
+                            <div class="col-md-12" ng-if="vm.componentsLoaded" ng-show="vm.new_component.tag_id == 3">
                                 <div class="col-sm-1">
                                     <div class="row">
                                         <label>{{ 'ASSIGN_COMPONENT_TITLE' | translate }}</label>
@@ -76,28 +79,32 @@
                                     <div class="row">
                                         <table class="table" st-table="vm.components">
                                             <thead>
-                                                <tr class="sortable">
-                                                    <th></th>
-                                                    <th class="table-id" st-sort="id" st-sort-default="true"></th>
-                                                    <th st-sort="name" st-sort-default="true">{{ 'NAME' | translate }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th><input st-search="" name="filter" placeholder="Search Name" class="input-sm form-control search-input" type="search"/></th>
-                                                </tr>
+                                            <tr class="sortable">
+                                                <th></th>
+                                                <th class="table-id" st-sort="id" st-sort-default="true"></th>
+                                                <th st-sort="name" st-sort-default="true">{{ 'NAME' | translate }}</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th><input st-search="" name="filter" placeholder="Search Name"
+                                                           class="input-sm form-control search-input" type="search"/>
+                                                </th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="item in vm.components track by item.id">
-                                                    <td><input name="component" type="radio" ng-value="item.id" ng-model="vm.new_component.parent_id" /></td>
-                                                    <td class="table-id"><span class="hide">{{item.id}}</span></td>
-                                                    <td>{{item.name}}</td>
-                                                </tr>
+                                            <tr ng-repeat="item in vm.components track by item.id">
+                                                <td><input name="component" type="radio" ng-value="item.id"
+                                                           ng-model="vm.new_component.parent_id"/></td>
+                                                <td class="table-id"><span class="hide">{{item.id}}</span></td>
+                                                <td>{{item.name}}</td>
+                                            </tr>
                                             </tbody>
                                             <tfoot>
                                             <tr>
                                                 <td colspan="6" class="text-center">
-                                                    <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="10"></div>
+                                                    <div st-pagination="" st-items-by-page="vm.smartTablePageSize"
+                                                         st-displayed-pages="10"></div>
                                                 </td>
                                             </tr>
                                             </tfoot>
@@ -105,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12" ng-if="vm.componentsLoaded">
+                            <div class="col-md-12" ng-if="vm.componentsLoaded" ng-show="vm.new_component.tag_id == 3">
                                 <br>
                                 <div class="col-sm-1">
                                     <div class="row">
@@ -125,7 +132,9 @@
                                 <br>
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        <button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_COMPONENT' | translate }}</button>
+                                        <button name="login" type="submit" class="btn btn-sm btn-default">{{
+                                            'SUBMIT_NEW_COMPONENT' | translate }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>

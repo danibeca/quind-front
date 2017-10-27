@@ -104,12 +104,13 @@
         }
 
         function getUser() {
+
             auth.getAuthUser()
-                .then(success);
+                .then(successGetUser);
 
 
-            function success() {
-                $state.go('settings');
+            function successGetUser() {
+                $state.go('servers');
             }
 
 

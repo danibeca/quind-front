@@ -53,7 +53,9 @@
                     .catch(fail);
 
             } else {
-                return true;
+                return $q(function (resolve) {
+                    resolve(true);
+                });
             }
 
             function success() {

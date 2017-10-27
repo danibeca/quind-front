@@ -28,14 +28,7 @@
                     resolve: {
                         translations: function (translateHelper) {
                             return translateHelper.addParts('dashboard');
-                        },
-                        croot: function (userService, componentService) {
-                            if(userService.getUser()){
-                                return componentService.getRoot(userService.getUser().id);
-                            }
-
                         }
-
                     }
                 }
             },
@@ -43,13 +36,16 @@
                 state: 'home',
                 config: {
                     url: '/',
-                    controller: function ($state) {
-                        $state.go('dashboard');
+                    controller: function ($state, componentService, userService) {
+
+                        return $state.go('dashboard');
+
                     },
                     title: 'home'
+
                 }
-            }
-        ];
+            }]
     }
-})();
+})
+();
 
