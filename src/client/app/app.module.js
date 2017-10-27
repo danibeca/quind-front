@@ -35,8 +35,6 @@
                     if (isUserLogged()) {
                         return redirect('dashboard');
                     }
-                } else {
-                    return redirect('servers');
                 }
 
 
