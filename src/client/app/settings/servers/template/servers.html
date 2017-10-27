@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <br>
-                    <div class="row">
+                    <div class="row" ng-if="vm.renderServerForm">
                         <form class="form-horizontal" method="POST" name="saveQAS" angular-validator-submit="vm.saveQAS()"
                               novalidate angular-validator
                               ng-if="!vm.hasQAS || vm.mustShowEdit">
@@ -96,13 +96,23 @@
                                                invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
                                     </div>
                                 </div>
+                                <div class="form-group row clearfix" >
+                                    <br>
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowEdit">
+                                            <i class="ion-android-checkmark-circle"></i>{{ 'ADD_SERVER' | translate }}
+                                        </button>
+
+                                        <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.mustShowEdit">
+                                            <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_SERVER' | translate }}
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="loader" ng-show="vm.showLoader"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-with-icon save-profile" ng-show="!vm.mustShowEdit">
-                                <i class="ion-android-checkmark-circle"></i>{{ 'ADD_SERVER' | translate }}
-                            </button>
-                            <button type="submit" class="btn btn-primary btn-with-icon save-profile" ng-show="vm.mustShowEdit">
-                                <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_SERVER' | translate }}
-                            </button>
+
                         </form>
                     </div>
                 </div>

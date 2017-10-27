@@ -25,9 +25,6 @@
                     resolve: {
                         translations: function (translateHelper) {
                             return translateHelper.addParts('settings');
-                        },
-                        croot: function (userService, componentService) {
-                            return componentService.getRoot(userService.getUser().id);
                         }
                     }
                 }
@@ -43,9 +40,6 @@
                     resolve: {
                         translations: function (translateHelper) {
                             return translateHelper.addParts('settings');
-                        },
-                        croot: function (userService, componentService) {
-                            return componentService.getRoot(userService.getUser().id);
                         }
                     }
                 }
@@ -61,9 +55,6 @@
                     resolve: {
                         translations: function (translateHelper) {
                             return translateHelper.addParts('settings');
-                        },
-                        croot: function (userService, componentService) {
-                            return componentService.getRoot(userService.getUser().id);
                         }
                     }
                 }
