@@ -6,31 +6,38 @@
         .controller('ApplicationsController', ApplicationsController);
 
     /* @ngInject */
-    function ApplicationsController(appservice, spinnerService) {
+    function ApplicationsController(componentService, spinnerService, storageService) {
         var vm = this;
         vm.applications = [];
+        vm.indIds = '44,52,57';
         activate();
 
         function activate() {
-            return appservice.getApplications()
+            var requestData = {
+                parent_id: storageService.getJsonObject('croot').id,
+                only_leaves: true
+            };
+
+            componentService.getList(requestData)
                 .then(success)
                 .catch(fail);
 
             function success(apps) {
                 var remainingApplications = apps.length;
                 apps.forEach(function (application) {
-                    appservice.getGeneralIndicators(application.id)
+                    componentService.getIndicators(application.id, vm.indIds)
                         .then(successIndicators)
                         .catch(failIndicators);
 
                     function successIndicators(indicators) {
+                        spinnerService.hide('appSpinner');
                         var auxApplication = [];
                         auxApplication.name = application.name;
                         auxApplication.chartId = 'gaugeChart' + remainingApplications;
                         auxApplication.data = indicators;
                         remainingApplications--;
                         vm.applications.push(auxApplication);
-                        spinnerService.hide('appSpinner');
+
                     }
 
                     function failIndicators(error) {
