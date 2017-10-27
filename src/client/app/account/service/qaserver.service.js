@@ -93,14 +93,14 @@
 
         function isInstanceValid(data) {
             return qalogAPI.one('quality-system-instances/verify').get(data)
-                .then(success)
-                .catch(fail);
+                .then(successInstanceValid)
+                .catch(failInstanceValid);
 
-            function success(response) {
-                return response.data;
+            function successInstanceValid(response) {
+                return response;
             }
 
-            function fail() {
+            function failInstanceValid() {
                 return false;
             }
 

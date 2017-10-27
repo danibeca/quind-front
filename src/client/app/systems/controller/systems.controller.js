@@ -6,7 +6,7 @@
         .controller('SystemsController', SystemsController);
 
     /* @ngInject */
-    function SystemsController(userService, storageService, systemsService, spinnerService) {
+    function SystemsController(userService, storageService, systemsService, componentService, spinnerService) {
         var vm = this;
         vm.user = userService.getUser();
         vm.lang = storageService.get('lang');
@@ -14,20 +14,28 @@
             0: 'value',
             1: 'date'
         };
+        vm.indIds = '44,52,57';
         vm.systems = [];
 
         activate();
 
         function activate() {
-            systemsService.getAllSystems()
+
+            var requestData = {
+                parent_id: vm.crootId,
+                no_leaves: true
+            };
+
+            componentService.getList(requestData)
                 .then(success)
                 .catch(fail);
+
 
             function success(systems) {
                 var remainingSystems = systems.length;
                 systems.forEach(function (system) {
 
-                    systemsService.getIndicators(system.id)
+                    componentService.getIndicators(croot.id, vm.indIds)
                         .then(successIndicators)
                         .catch(failIndicators);
 
