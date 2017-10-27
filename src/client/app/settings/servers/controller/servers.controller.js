@@ -10,8 +10,15 @@
     /* @ngInject */
     function ServersController(croot, qualityServerService, logger, $filter) {
         var vm = this;
+
+        if(croot === undefined){
+            $state.go('login');
+        }else{
+            vm.croot = croot.id;
+        }
+
         vm.hasQAS = false;
-        vm.croot = croot.id;
+
         vm.qas = [];
 
         vm.saveQAS = saveQAS;
@@ -45,7 +52,8 @@
             }
 
             /*var expression = /^http(s?):\/\/((\w+\.)?\w+\.\w+|((2[0-5]{2}|1[0-9]{2}|[0-9]{1,2})\.){3}(2[0-5]{2}|1[0-9]{2}|[0-9]{1,2}))(:[0-9]{1,5})?(\/:.*)?$/gm;
-            var regex = new RegExp(expression);
+            var regex = new RegExp(expressio        vm.qas = [];
+n);
 
 
             if (!url.match(regex)) {
