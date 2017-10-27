@@ -2,18 +2,16 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th>Server</th>
-      <th class="align-right">URL</th>
-      <th class="align-right">Verified?</th>
-      <th class="align-right">Edit</th>
-      <th class="align-right">Delete</th>
+      <th class="align-center">{{ 'NAME_TITLE' | translate }}</th>
+      <th class="align-center">{{ 'EMAIL_TITLE' | translate }}</th>
+      <th class="align-center">{{ 'EDIT_TITLE' | translate }}</th>
+      <th class="align-center">{{ 'DELETE_TITLE' | translate }}</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="item in vm.serverInstances">
-      <td>{{item.name}}</td>
-      <td class="align-right">{{item.url}}</td>
-      <td class="align-center" style="color:green;font-size: 20px"><span ng-show="item.verified"><i class="ion-android-checkmark-circle"></i></span></td>
+      <td>{{item.username}}</td>
+      <td class="align-right">{{item.email}}</td>
       <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.showEdit()"><i class="ion-edit"></i></a></td>
       <td class="align-right"></td>
     </tr>

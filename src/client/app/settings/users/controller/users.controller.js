@@ -11,18 +11,32 @@
     function UsersController(roleService, userRemoteService, logger, $filter) {
         var vm = this;
 
+        vm.hasUsers = false;
+
         vm.userRegistration = userRegistration;
         vm.passwordValidator = passwordValidator;
         vm.loadRoles = loadRoles;
+        vm.loadUsers = loadUsers;
 
         activate();
 
         function activate() {
+            loadUsers();
             loadRoles();
         }
 
         function loadRoles() {
             roleService.getList()
+                .then(rolesSuccessInfo);
+
+            function rolesSuccessInfo(info) {
+                vm.roles = info;
+            }
+
+        }
+
+        function loadUsers() {
+            userRemoteService.getList()
                 .then(rolesSuccessInfo);
 
             function rolesSuccessInfo(info) {
@@ -54,6 +68,7 @@
                 vm.userComponentData.user_id = data.id;
                 vm.userComponentData.component_id = vm.crootId;
                 componentService.associateToUser(vm.userComponentData);
+                $state.reload();
             }
 
             function failCreateChild(response) {

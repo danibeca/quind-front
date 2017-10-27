@@ -168,7 +168,7 @@ n);
             vm.qas.type = vm.serverInstances[0].type;
             vm.qas.url = vm.serverInstances[0].url;
             vm.qas.username = vm.serverInstances[0].username;
-            if (vm.qas.username !== '' && vm.qas.username !== undefined) {
+            if (vm.qas.username !== null && vm.qas.username !== '' && vm.qas.username !== undefined) {
                 vm.qas.boRequiresAuthentication = true;
             }
         }
@@ -177,7 +177,7 @@ n);
             if (vm.qas.boRequiresAuthentication !== true) {
                 return true;
             } else {
-                if (vm.qas.username !== '' && vm.qas.username !== undefined) {
+                if (vm.qas.username !== null && vm.qas.username !== '' && vm.qas.username !== undefined) {
                     return true;
                 }
             }

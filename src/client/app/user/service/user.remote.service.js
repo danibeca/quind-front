@@ -9,10 +9,25 @@
     function userRemoteService($http, $q, environmentConfig) {
         var service = {
             create: create,
-            createChild:createChild
+            createChild:createChild,
+            getList: getList
         };
 
         return service;
+
+        function getList() {
+            return $http.get(environmentConfig.userAPI + '/users')
+                .then(successGetUsersList)
+                .catch(failGetUsersList);
+
+            function successGetUsersList(response) {
+                return response.data;
+            }
+
+            function failGetUsersList(error) {
+                return $q.reject(error);
+            }
+        }
 
         function create(data) {
             return $http.post(environmentConfig.userAPI + '/users', data)

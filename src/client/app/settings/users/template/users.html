@@ -9,14 +9,14 @@
             <div ba-panel ba-panel-class="profile-page">
                 <div class="panel-content">
                     <h3 class="with-line">{{ 'USERS_TITLE' | translate }}</h3>
-                    <div class="row" ng-if="vm.hasQAS">
+                    <div class="row" ng-if="vm.hasUsers">
                         <div class="col-lg-6 col-md-12">
                             <div include-with-scope="app/settings/users/tables/user.instance.table.html"></div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.userRegistration()" novalidate angular-validator>
+                        <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.userRegistration()" novalidate angular-validator ng-if="!vm.hasUsers">
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'NAME_TITLE' | translate }}</label>

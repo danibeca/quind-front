@@ -114,9 +114,7 @@
             function successAssociate() {
                 showMenu();
                 loadComponents();
-
                 $state.reload();
-
                 logger.success($filter('translate')('CREATE_COMPONENT_SUCCESS'));
             }
         }
