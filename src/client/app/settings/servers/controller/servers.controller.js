@@ -5,10 +5,10 @@
 
     angular
         .module('app.settings')
-        .controller('SettingsController', SettingsController);
+        .controller('ServersController', ServersController);
 
     /* @ngInject */
-    function SettingsController(croot, qualityServerService, logger, $filter) {
+    function ServersController(croot, qualityServerService, logger, $filter) {
         var vm = this;
         vm.hasQAS = false;
         vm.croot = croot.id;
@@ -78,8 +78,9 @@
                 }
             }
 
-            function failIsValid() {
+            function failIsValid(error) {
                 logger.error($filter('translate')('INVALID_URL'));
+                console.log(error);
             }
 
             function postAddQAS(verified) {
@@ -99,7 +100,7 @@
                 }
 
                 function failAttachInstance() {
-                    logger.error($filter('translate')('CREATE_ERROR'));
+                    logger.error($filter('translate')('CREATE_SERVER_ERROR'));
                 }
 
                 qualityServerService.attachInstance(qaData)
@@ -129,7 +130,7 @@
                 }
 
                 function failUpdateInstance() {
-                    logger.error($filter('translate')('UPDATE_ERROR'));
+                    logger.error($filter('translate')('UPDATE_SERVER_ERROR'));
                 }
 
                 qualityServerService.updateInstance(qaData)

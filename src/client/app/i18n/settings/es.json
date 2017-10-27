@@ -11,6 +11,6 @@
   "APPLICATION": "Aplicación",
   "AUTH_REQUIRED_TITLE": "¿Requiere Autenticación?",
   "UPDATE_SERVER": "Actualizar servidor",
-  "CREATE_ERROR": "Error creando servidor",
-  "UPDATE_ERROR": "Error actualizando servidor"
+  "CREATE_SERVER_ERROR": "Error creando servidor",
+  "UPDATE_SERVER_ERROR": "Error actualizando servidor"
 }

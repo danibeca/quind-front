@@ -1,7 +1,6 @@
 {
   "BUTTON_LANG_ES": "Spanish",
   "BUTTON_LANG_EN": "English",
-  "SETTINGS_TITLE": "Settings",
   "SIGN_OUT": "Sign Out",
   "HOUSTON_WE_GOT_A_PROBLEM": "Houston we got a problem",
   "HOME_TITLE": "Home",
@@ -19,7 +18,7 @@
   "PASS_REQUIRED_SIX": "Password must be at least 6 characters long",
   "CREATE_USER": "Create user",
   "CREATE_COMPONENT": "Create component",
-  "EMAIL_FORMAT": "Formato de email incorrecto",
+  "EMAIL_FORMAT": "Incorrect email format",
   "NAME_TITLE": "Fullname",
   "EMAIL_TITLE": "Email",
   "PASS_TITLE": "Password",
@@ -33,9 +32,13 @@
   "CREATE_USER_SUCCESS": "User Created",
   "QUALITY_SYSTEM_ERROR": "Looks like your quality system is not working",
   "CREATE_COMPONENT_SUCCESS": "Component Created",
+  "CREATE_COMPONENT_ERROR": "An error ocurred creating component",
   "ROWS_ON_PAGE": "Rows on page",
   "USERNAME_TITLE": "Username",
   "PASSWORD_TITLE": "Password",
   "YES_TEXT": "YES",
-  "NO_TEXT": "NO"
+  "NO_TEXT": "NO",
+  "SERVERS_TITLE": "Servers",
+  "USERS_TITLE": "Users",
+  "COMPONENTS_TITLE": "Components"
 }

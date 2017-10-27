@@ -31,7 +31,7 @@
                         if (hasLeaves) {
                             $state.go('dashboard');
                         } else {
-                            $state.go('settings');
+                            $state.go('servers');
                         }
                         logger.success($filter('translate')('LOGIN_SUCCESS'));
                     }

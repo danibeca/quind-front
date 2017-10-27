@@ -97,7 +97,7 @@
                 .catch(fail);
 
             function success(response) {
-                return response.data;
+                return response;
             }
 
             function fail() {

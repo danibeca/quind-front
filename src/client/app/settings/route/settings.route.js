@@ -15,13 +15,49 @@
 
         return [
             {
-                state: 'settings',
+                state: 'servers',
                 config: {
-                    url: '/settings',
-                    templateUrl: 'app/settings/template/settings.html',
-                    controller: 'SettingsController',
+                    url: '/servers',
+                    templateUrl: 'app/settings/servers/template/servers.html',
+                    controller: 'ServersController',
                     controllerAs: 'vm',
-                    title: 'SETTINGS_TITLE',
+                    title: 'SERVERS_TITLE',
+                    resolve: {
+                        translations: function (translateHelper) {
+                            return translateHelper.addParts('settings');
+                        },
+                        croot: function (userService, componentService) {
+                            return componentService.getRoot(userService.getUser().id);
+                        }
+                    }
+                }
+            },
+            {
+                state: 'users',
+                config: {
+                    url: '/users',
+                    templateUrl: 'app/settings/users/template/users.html',
+                    controller: 'UsersController',
+                    controllerAs: 'vm',
+                    title: 'USERS_TITLE',
+                    resolve: {
+                        translations: function (translateHelper) {
+                            return translateHelper.addParts('settings');
+                        },
+                        croot: function (userService, componentService) {
+                            return componentService.getRoot(userService.getUser().id);
+                        }
+                    }
+                }
+            },
+            {
+                state: 'components',
+                config: {
+                    url: '/components',
+                    templateUrl: 'app/settings/components/template/components.html',
+                    controller: 'ComponentsController',
+                    controllerAs: 'vm',
+                    title: 'COMPONENTS_TITLE',
                     resolve: {
                         translations: function (translateHelper) {
                             return translateHelper.addParts('settings');

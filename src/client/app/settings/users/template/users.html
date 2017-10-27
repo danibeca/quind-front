@@ -1,0 +1,90 @@
+<div class="body-bg"></div>
+<main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+
+    <ba-sidebar ng-show="hasLeaves"></ba-sidebar>
+    <page-top></page-top>
+    <div class="al-main">
+        <div class="al-content">
+            <content-top></content-top>
+            <div ba-panel ba-panel-class="profile-page">
+                <div class="panel-content">
+                    <h3 class="with-line">{{ 'USERS_TITLE' | translate }}</h3>
+                    <div class="row" ng-if="vm.hasQAS">
+                        <div class="col-lg-6 col-md-12">
+                            <div include-with-scope="app/settings/users/tables/user.instance.table.html"></div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.userRegistration()" novalidate angular-validator>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-1">{{ 'NAME_TITLE' | translate }}</label>
+                                    <div class="col-xs-3">
+                                        <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'NAME_TITLE' | translate }}"
+                                               ng-model="vm.user.name"
+                                               required
+                                               validate-on="dirty"
+                                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-1">{{ 'EMAIL_TITLE' | translate }}</label>
+                                    <div class="col-sm-3">
+                                        <input type="email" name="email" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'EMAIL_TITLE' | translate }}"
+                                               ng-model="vm.user.email"
+                                               required
+                                               validate-on="dirty"
+                                               invalid-message = "'{{ 'EMAIL_FORMAT' | translate }}'"
+                                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-1">{{ 'PASS_TITLE' | translate }}</label>
+                                    <div class="col-sm-3">
+                                        <input type="password" name="password" class="form-control" placeholder="{{ 'PASS_TITLE' | translate }}"
+                                               ng-model="vm.user.password"
+                                               validator = "vm.passwordValidator(vm.user.password) === true"
+                                               invalid-message = "vm.passwordValidator(vm.user.password)"
+                                               validate-on="dirty"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-1">{{ 'ROL_TITLE' | translate }}</label>
+                                    <div class="col-sm-1">
+                                        <select class="form-control" name="role" ng-model="vm.user.role_id"
+                                                selectpicker
+                                                required
+                                                validate-on="dirty"
+                                                validator = "vm.role.id != 0"
+                                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
+                                        >
+                                            <option ng-repeat="role in vm.roles" value="{{role.id}}">{{role.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -2,30 +2,15 @@
     <a href="/dashboard" class="al-logo clearfix"><span>Qu</span>ind</a>
     <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
     <div class="user-profile clearfix">
-        <div class="al-user-profile" ng-show="vm.showAddComponent" ng-click="vm.openRegisterComponent('app/blocks/theme/components/pageTop/modals/registerComponent.html', 'md')">
-            <a class="profile-toggle-link">
-                <img ng-src="{{::( 'AddComponent' | profilePicture )}}">
-            </a>
-        </div>
-        <div class="al-user-profile" ng-show="vm.showAddUser" ng-click="vm.openRegisterUser('app/blocks/theme/components/pageTop/modals/registerUser.html', 'md')">
-            <!--md-button class="profile-toggle-link">
-                <md-tooltip md-direction="{{bottom}}">
-                    Insert Drive
-                </md-tooltip>
-                <md-icon md-svg-src="{{::( 'AddUser' | profilePicture )}}">
-                </md-icon>
-            </md-button-->
-            <a class="profile-toggle-link">
-                <img ng-src="{{::( 'AddUser' | profilePicture )}}">
-            </a>
-        </div>
         <div class="al-user-profile" uib-dropdown>
             <a uib-dropdown-toggle class="profile-toggle-link">
                 <img ng-src="{{::( 'Default' | profilePicture )}}">
             </a>
             <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
                 <li><i class="dropdown-arr"></i></li>
-                <li><a href="/settings" class="signout"><i class="fa fa-gear"></i>{{ 'SETTINGS' | translate }}</a></li>
+                <li><a href="/servers" class="signout"><i class="fa fa-database"></i>{{ 'SERVERS_TITLE' | translate }}</a></li>
+                <li><a href="/users" class="signout" ng-show="vm.showAddUser"><i class="fa fa-group"></i>{{ 'USERS_TITLE' | translate }}</a></li>
+                <li><a href="/components" class="signout" ng-show="vm.showAddComponent"><i class="fa fa-desktop"></i>{{ 'COMPONENTS_TITLE' | translate }}</a></li>
                 <li><a class="item" ng-click="changeLanguage('es')">{{ 'BUTTON_LANG_ES' | translate }}</a></li>
                 <li><a class="item" ng-click="changeLanguage('en')">{{ 'BUTTON_LANG_EN' | translate }}</a></li>
                 <li><a href="/logout" class="signout"><i class="fa fa-power-off"></i>{{ 'SIGN_OUT' | translate }}</a></li>
