@@ -8,10 +8,10 @@
         .controller('ComponentsController', ComponentsController);
 
     /* @ngInject */
-    function ComponentsController(croot, userService, componentService, qualityServerService, logger, $filter, $state) {
+    function ComponentsController(userService, storageService, componentService, qualityServerService, logger, $filter, $state) {
         var vm = this;
         vm.new_component = {};
-        vm.croot = croot.id;
+        var croot = storageService.getJsonObject('croot');
         vm.components = [];
         vm.smartTablePageSize = 5;
         vm.componentsLoaded = false;
@@ -34,30 +34,27 @@
         }
 
         function loadComponents() {
-            componentService.getRoot(userService.getUser().id)
-                .then(successGetRoot);
 
-            function successGetRoot(croot) {
-                vm.crootId = croot.id;
-                loadInstanceResources();
-                var requestData = {
-                    parent_id: vm.crootId,
-                    no_leaves: true
-                };
-                componentService.getList(requestData)
-                    .then(successGetComponents);
 
-                function successGetComponents(info) {
-                    vm.components = info;
-                    vm.smartTablePageSize = 5;
-                    vm.new_component.parent_id = info[0].id;
-                    vm.componentsLoaded = true;
-                }
+            loadInstanceResources();
+            var requestData = {
+                parent_id: croot.id,
+                no_leaves: true
+            };
+            componentService.getList(requestData)
+                .then(successGetComponents);
+
+            function successGetComponents(info) {
+                vm.components = info;
+                vm.smartTablePageSize = 5;
+                vm.new_component.parent_id = info[0].id;
+                vm.componentsLoaded = true;
             }
+
         }
 
         function loadInstanceResources() {
-            qualityServerService.getInstances({component_id: vm.crootId, with_resources: true})
+            qualityServerService.getInstances({component_id: croot.id, with_resources: true})
                 .then(successGetResources)
                 .catch(failGetResources);
 
@@ -89,7 +86,7 @@
 
         function componentRegistration() {
             if (vm.new_component.tag_id == 2) {
-                vm.new_component.parent_id = vm.croot;
+                vm.new_component.parent_id = croot.id;
             }
             componentService.create(vm.new_component)
                 .then(successCreateComponent)
@@ -122,17 +119,14 @@
         }
 
         function showMenu() {
-            componentService.getRoot(userService.getUser().id)
-                .then(successRoot);
 
-            function successRoot(croot) {
-                componentService.hasLeaves(croot.id)
-                    .then(successHasLeaves);
+            componentService.hasLeaves(croot.id)
+                .then(successHasLeaves);
 
-                function successHasLeaves(hasLeaves) {
-                    $rootScope.hasLeaves = hasLeaves;
-                }
+            function successHasLeaves(hasLeaves) {
+                $rootScope.hasLeaves = hasLeaves;
             }
         }
+
     }
 })();

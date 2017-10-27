@@ -8,14 +8,12 @@
         .controller('ServersController', ServersController);
 
     /* @ngInject */
-    function ServersController(croot, qualityServerService, logger, $filter) {
+    function ServersController(storageService, qualityServerService, logger, $filter) {
         var vm = this;
 
-        if(croot === undefined){
-            $state.go('login');
-        }else{
-            vm.croot = croot.id;
-        }
+
+        var croot = storageService.getJsonObject('croot');
+
 
         vm.hasQAS = false;
 
@@ -51,20 +49,23 @@
                 return $filter('translate')('REQUIRED_FIELD');
             }
 
-            /*var expression = /^http(s?):\/\/((\w+\.)?\w+\.\w+|((2[0-5]{2}|1[0-9]{2}|[0-9]{1,2})\.){3}(2[0-5]{2}|1[0-9]{2}|[0-9]{1,2}))(:[0-9]{1,5})?(\/:.*)?$/gm;
-            var regex = new RegExp(expressio        vm.qas = [];
-n);
-
+            var expression = /^(http(s?)(:\/\/)?)|((\w+\.)?\w+\.\w+|((2[0-5]{2}|1[0-9]{2}|[0-9]{1,2})\.){3}(2[0-5]{2}|1[0-9]{2}|[0-9]{1,2}))(:[0-9]{1,5})?(\/:.*)?(\/?)$/gm;
+            var regex = new RegExp(expression);
 
             if (!url.match(regex)) {
                 return $filter('translate')('INVALID_URL');
-            }*/
+            }
 
             return true;
         }
 
         function saveQAS() {
+            vm.showLoader = true;
             if (parseInt(vm.qas.type) === 1) {
+                var lastChar = vm.qas.url[vm.qas.url.length -1];
+                if(lastChar === '/'){
+                    vm.qas.url =vm.qas.url.substring(0, vm.qas.url.length-1);
+                }
                 qualityServerService.isInstanceValid({
                     'url': vm.qas.url,
                     'username': vm.qas.username,
@@ -82,11 +83,13 @@ n);
                         postAddQAS(true);
                     }
                 } else {
+                    vm.showLoader = false;
                     logger.error($filter('translate')('INVALID_URL'));
                 }
             }
 
             function failIsValid(error) {
+                vm.showLoader = false;
                 logger.error($filter('translate')('INVALID_URL'));
                 console.log(error);
             }
@@ -96,24 +99,26 @@ n);
                     quality_system_id: vm.qas.systemIid,
                     type: vm.qas.type,
                     url: vm.qas.url,
-                    component_id: vm.croot,
+                    component_id: croot.id,
                     username: vm.qas.username,
                     password: vm.qas.password,
                     verified: verified
 
                 };
 
+                qualityServerService.attachInstance(qaData)
+                    .then(successAttachInstance)
+                    .catch(failAttachInstance);
+
                 function successAttachInstance() {
+                    vm.showLoader = false;
                     checkServerInstances();
                 }
 
                 function failAttachInstance() {
+                    vm.showLoader = false;
                     logger.error($filter('translate')('CREATE_SERVER_ERROR'));
                 }
-
-                qualityServerService.attachInstance(qaData)
-                        .then(successAttachInstance)
-                        .catch(failAttachInstance);
             }
 
             function putEditQAS(verified) {
@@ -133,6 +138,7 @@ n);
                 };
 
                 function successUpdateInstance() {
+                    vm.showLoader = false;
                     vm.mustShowEdit = false;
                     checkServerInstances();
                 }
@@ -142,17 +148,18 @@ n);
                 }
 
                 qualityServerService.updateInstance(qaData)
-                        .then(successUpdateInstance)
-                        .catch(failUpdateInstance);
+                    .then(successUpdateInstance)
+                    .catch(failUpdateInstance);
 
             }
         }
 
         function checkServerInstances() {
-            qualityServerService.getInstances({component_id: vm.croot})
+            qualityServerService.getInstances({component_id: croot.id})
                 .then(successServerInstances);
 
             function successServerInstances(data) {
+                vm.renderServerForm = true;
                 vm.serverInstances = data;
                 if (data.length > 0) {
                     vm.hasQAS = true;
@@ -168,7 +175,7 @@ n);
             vm.qas.type = vm.serverInstances[0].type;
             vm.qas.url = vm.serverInstances[0].url;
             vm.qas.username = vm.serverInstances[0].username;
-            if (vm.qas.username !== '' && vm.qas.username !== undefined) {
+            if (vm.qas.username !== '' && vm.qas.username !== undefined && vm.qas.username !== null) {
                 vm.qas.boRequiresAuthentication = true;
             }
         }
@@ -177,7 +184,7 @@ n);
             if (vm.qas.boRequiresAuthentication !== true) {
                 return true;
             } else {
-                if (vm.qas.username !== '' && vm.qas.username !== undefined) {
+                if (vm.qas.username !== '' && vm.qas.username !== undefined && vm.qas.username !== null) {
                     return true;
                 }
             }
@@ -188,7 +195,7 @@ n);
             if (vm.qas.boRequiresAuthentication !== true) {
                 return true;
             } else {
-                if (vm.qas.password !== '' && vm.qas.password !== undefined) {
+                if (vm.qas.password !== '' && vm.qas.password !== undefined && vm.qas.password !== null) {
                     return true;
                 }
             }
