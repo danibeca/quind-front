@@ -27,6 +27,7 @@
   "SUBMIT_UPDATE_PASS": "Update",
   "REGISTRATION_PAGE_TITLE": "Sign up to Quind",
   "SUBMIT_NEW_ACCOUNT": "Sign Up",
-  "LOGIN": "Login"
+  "LOGIN": "Login",
+  "BACK_TO_LOGIN": "Back to Login"
 
 }
