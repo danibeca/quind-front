@@ -8,18 +8,19 @@
         .controller('ServersController', ServersController);
 
     /* @ngInject */
-    function ServersController(storageService, qualityServerService, logger, $filter) {
+    function ServersController(storageService, qualityServerService, logger, environmentConfig, $filter) {
         var vm = this;
 
-        var croot = storageService.getJsonObject('croot');
+        vm.qalogAPI = environmentConfig.qalogAPI;
         vm.hasQAS = false;
         vm.qas = [];
-
         vm.saveQAS = saveQAS;
         vm.urlValidator = urlValidator;
         vm.showEdit = showEdit;
         vm.userNameValidator = userNameValidator;
         vm.passwordValidator = passwordValidator;
+
+        var croot = storageService.getJsonObject('croot');
 
         activate();
 

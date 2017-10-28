@@ -10,7 +10,7 @@
   "URL": "Dirección",
   "VERIFIED": "Verificado?",
   "EDIT": "Editar",
-  "DOCKERFILES": "Archivos DockerCompose",
+  "DOCKER_FILES_TITLE": "Archivos DockerCompose",
   "NAME": "Nombre",
   "SYSTEM": "Sistema",
   "APPLICATION": "Aplicación",

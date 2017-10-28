@@ -6,7 +6,7 @@
       <th class="align-center">URL</th>
       <th class="align-center">{{ 'VERIFIED_TITLE' | translate }}</th>
       <th class="align-center">{{ 'EDIT_TITLE' | translate }}</th>
-      <th class="align-center">{{ 'DELETE_TITLE' | translate }}</th>
+      <th class="align-center">{{ 'DOCKER_FILES_TITLE' | translate }}</th>
     </tr>
     </thead>
     <tbody>
@@ -18,7 +18,12 @@
         <span style="color:red;font-size: 20px" ng-show="!item.verified"><i class="ion-android-cancel"></i></span>
       </td>
       <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.showEdit()"><i class="ion-edit"></i></a></td>
-      <td class="align-right"></td>
+      <td class="align-center" ng-show="item.type == 2">
+        <span style="color:blue;font-size: 20px" ><a href="{{vm.qalogAPI}}/components/{{item.component_owner_id}}/docker"><i class="ion-android-download"></i></a></span>
+
+      </td>
+      <td class="align-right" ng-show="item.type != 2"></td>
+
     </tr>
     </tbody>
   </table>
