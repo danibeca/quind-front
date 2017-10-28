@@ -66,11 +66,6 @@
 
         function getUser() {
             auth.getAuthUser()
-                .then(successGetUser);
-
-            function successGetUser() {
-                //$state.go('servers');
-            }
         }
 
         function createAccount() {
@@ -80,7 +75,6 @@
 
             return componentService.createAccount(accountData)
                 .then(successCreateAccount)
-                .catch(failCreateAccount);
 
             function successCreateAccount(resp) {
                 storageService.setJsonObject('croot', resp);
@@ -88,10 +82,6 @@
                 associateAccountToUser();
                 vm.showLoader = false;
                 $state.go('servers');
-            }
-
-            function failCreateAccount() {
-                logger.error('Error Creando cuenta');
             }
         }
 

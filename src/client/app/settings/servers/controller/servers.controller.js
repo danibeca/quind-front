@@ -73,20 +73,28 @@
                 })
                     .then(successIsValid)
                     .catch(failIsValid);
+            }else{
+                sendRequestQAS(false);
             }
 
             function successIsValid(data) {
                 if (data) {
-                    if (vm.mustShowEdit) {
-                        putEditQAS(true);
-                    } else {
-                        postAddQAS(true);
-                    }
+                    sendRequestQAS(true);
                 } else {
                     vm.showLoader = false;
                     logger.error($filter('translate')('INVALID_URL'));
                 }
             }
+
+            function sendRequestQAS(verified){
+                if (vm.mustShowEdit) {
+                    putEditQAS(verified);
+                } else {
+                    postAddQAS(verified);
+                }
+            }
+
+
 
             function failIsValid(error) {
                 vm.showLoader = false;
