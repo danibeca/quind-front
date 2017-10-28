@@ -18,6 +18,7 @@
         vm.allComponents = [];
         vm.componentsCodes = [];
         vm.components = [];
+        vm.codes = [];
 
         vm.smartAllComponentsPageSize = 5;
         vm.smartTablePageSize = 5;
@@ -39,6 +40,7 @@
         vm.showEdit = showEdit;
         vm.deleteComponent = deleteComponent;
         vm.cancelEdit = cancelEdit;
+        vm.updateName = updateName;
 
         activate();
 
@@ -94,18 +96,21 @@
         }
 
         function isInfoReady() {
-            if (vm.allComponents.length > 0 && vm.componentsCodes.length > 0) {
+            if (vm.allComponents.length > 0 && vm.componentsCodes.length > 0 && vm.codes.length > 0) {
                 return true;
             }
         }
 
         function updateComponentsCodes() {
-            /*vm.allComponents.forEach(function(x) {
+            vm.allComponents.forEach(function(x) {
                 if (x.tag_id === 3) {
                     var code = $.grep(vm.componentsCodes, function(e){ return e.id === x.id; })[0];
-                    x.code = code.app_code;
+                    if (code !== null && code!== undefined) {
+                        x.code = code.app_code;
+                        x.code_name = $.grep(vm.codes, function(e){ return e.key === x.code; })[0].name;
+                    }
                 }
-            });*/
+            });
         }
 
         function loadComponents() {
@@ -129,8 +134,13 @@
                 .then(successGetResources)
                 .catch(failGetResources);
 
+            $scope.$watch('vm.codes', function () {
+                if (isInfoReady()) {
+                    updateComponentsCodes();
+                }
+            });
+
             function successGetResources(instances) {
-                vm.codes = [];
                 instances.forEach(function (instance) {
                     //TODO Change for multiple instances
                     vm.component.quality_system_instance_id = instance.id;
@@ -187,6 +197,9 @@
         }
 
         function putComponent() {
+            if(vm.component.tag_id != 3) {
+                vm.component.parent_id = null;
+            }
             componentService.update(vm.component)
                 .then(successUpdateComponent)
                 .catch(failUpdateComponent);
@@ -228,12 +241,19 @@
         function showAddComponent() {
             var qsiId =  vm.component.quality_system_instance_id;
             vm.component = {};
+            vm.component.parent_id = vm.components[0].id;
             vm.component.quality_system_instance_id = qsiId;
             vm.showCreateForm = true;
         }
 
         function showEdit(componentId) {
             vm.component = $.grep(vm.allComponents, function(e){ return e.id === componentId; })[0];
+            vm.components = vm.components.filter(function(obj) {
+                return vm.component.id !== obj.id;
+            });
+            if(vm.component.parent_id === null || vm.component.parent_id === undefined) {
+                vm.component.parent_id = vm.components[0].id;
+            }
             vm.showEditForm = true;
         }
         
@@ -258,6 +278,12 @@
         function cancelEdit() {
             vm.showEditForm = false;
             vm.showCreateForm = false;
+        }
+
+        function updateName() {
+            if (!vm.showEditForm && vm.component.code !== null && vm.component.code !== undefined) {
+                vm.component.name = $.grep(vm.codes, function(e){ return e.key === vm.component.code; })[0].name;
+            }
         }
     }
 })();

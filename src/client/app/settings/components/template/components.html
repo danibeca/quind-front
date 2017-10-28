@@ -20,23 +20,8 @@
                               angular-validator-submit="vm.componentRegistration()" novalidate angular-validator
                               ng-if="!vm.hasComponents || vm.showCreateForm || vm.showEditForm">
                             <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="col-sm-1">{{ 'COMPONENT_NAME' | translate }}</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="name" autocorrect="off" autocapitalize="none"
-                                               class="form-control" placeholder="{{ 'COMPONENT_NAME' | translate }}"
-                                               ng-model="vm.component.name"
-                                               required
-                                               validate-on="dirty"
-                                               required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
                                 <div class="form-group row clearfix">
                                     <label class="col-sm-1">{{ 'TYPE_TITLE' | translate }}</label>
-
                                     <div class="col-sm-4">
                                         <select class="form-control" name="component_tag" ng-model="vm.component.tag_id"
                                                 selectpicker
@@ -59,8 +44,23 @@
                                                 validator="vm.componentCodeValidator(vm.component.code) === true"
                                                 invalid-message="vm.componentCodeValidator(vm.component.code)"
                                                 validate-on="dirty"
+                                                ng-change="vm.updateName()"
                                                 ng-options="i.key as (i.name) for i in vm.codes">
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-1">{{ 'COMPONENT_NAME' | translate }}</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="name" autocorrect="off" autocapitalize="none"
+                                               class="form-control" placeholder="{{ 'COMPONENT_NAME' | translate }}"
+                                               ng-model="vm.component.name"
+                                               required
+                                               validate-on="dirty"
+                                               required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
+                                        />
                                     </div>
                                 </div>
                             </div>

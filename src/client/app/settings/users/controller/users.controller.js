@@ -62,7 +62,8 @@
 
         function loadUsers() {
             userRemoteService.getList()
-                .then(userSuccessInfo);
+                .then(userSuccessInfo)
+                .catch(userFailInfo);
 
             $scope.$watch('vm.usersList', function () {
                 if (isInfoReady()) {
@@ -76,8 +77,15 @@
                     vm.hasUsers = true;
                     vm.renderServerForm = true;
                 } else {
+                    vm.showCreateForm = true;
                     vm.renderServerForm = true;
                 }
+            }
+
+            function userFailInfo(error) {
+                vm.showCreateForm = true;
+                vm.renderServerForm = true;
+                console.log(error);
             }
         }
 
