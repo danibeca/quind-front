@@ -9,14 +9,15 @@
             <div ba-panel ba-panel-class="profile-page">
                 <div class="panel-content">
                     <h3 class="with-line">{{ 'USERS_TITLE' | translate }}</h3>
-                    <div class="row" ng-if="vm.hasUsers">
-                        <div class="col-lg-6 col-md-12">
+                    <div class="row" ng-if="vm.hasUsers && !vm.showCreateForm && !vm.showEditForm">
+                        <div class="col-lg-8 col-md-12">
                             <div include-with-scope="app/settings/users/tables/user.instance.table.html"></div>
                         </div>
                     </div>
                     <br>
-                    <div class="row">
-                        <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.userRegistration()" novalidate angular-validator ng-if="!vm.hasUsers">
+                    <div class="row" ng-if="vm.renderServerForm">
+                        <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.userRegistration()"
+                              novalidate angular-validator ng-if="!vm.hasUsers || vm.showCreateForm || vm.showEditForm">
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'NAME_TITLE' | translate }}</label>
@@ -44,7 +45,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" ng-if="vm.showEditForm">
+                                <div class="form-group row clearfix">
+                                    <label for="changePassword" class="col-sm-2">{{ 'CHANGE_PASSWORD_TITLE' | translate }}</label>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox"
+                                               positivetext="{{ 'YES_TEXT' | translate }}"
+                                               offtext="{{ 'NO_TEXT' | translate }}"
+                                               first="{{vm.changePassword}}"
+                                               id="changePassword"
+                                               name="changePassword"
+                                               ng-model="vm.changePassword"
+                                               bootstrap-switch />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" ng-show="vm.showCreateForm || vm.changePassword">
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'PASS_TITLE' | translate }}</label>
                                     <div class="col-sm-3">
@@ -61,24 +77,27 @@
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'ROL_TITLE' | translate }}</label>
                                     <div class="col-sm-1">
-                                        <select class="form-control" name="role" ng-model="vm.user.role_id"
+                                        <select class="form-control" name="publicprivate" ng-model="vm.user.role_id"
                                                 selectpicker
                                                 required
                                                 validate-on="dirty"
                                                 validator = "vm.role.id != 0"
                                                 required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
                                                 invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                        >
-                                            <option ng-repeat="role in vm.roles" value="{{role.id}}">{{role.name}}</option>
+                                                ng-options="i.id as (i.name) for i in vm.roles">
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="col-sm-12">
-                                        <button name="login" type="submit" class="btn btn-sm btn-default">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}</button>
-                                    </div>
+                            <div class="form-group row clearfix" >
+                                <br>
+                                <div class="col-sm-2">
+                                    <button name="create" type="submit" class="btn btn-sm btn-default" ng-show="!vm.showEdit">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}</button>
+                                    <button name="edit" type="submit" class="btn btn-sm btn-default" ng-show="vm.showEdit">{{ 'SUBMIT_EDIT_ACCOUNT' | translate }}</button>
+                                    <button name="cancel" type="button" class="btn btn-sm btn-default" ng-click="vm.cancelEdit()">{{ 'CANCEL' | translate }}</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="loader" ng-show="vm.showLoader"></div>
                                 </div>
                             </div>
                         </form>

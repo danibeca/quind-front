@@ -9,22 +9,23 @@
             <div ba-panel ba-panel-class="profile-page">
                 <div class="panel-content">
                     <h3 class="with-line">{{ 'COMPONENTS_TITLE' | translate }}</h3>
-                    <div class="row" ng-if="vm.hasQAS">
+                    <div class="row" ng-if="vm.hasComponents && !vm.showCreateForm && !vm.showEditForm">
                         <div class="col-lg-6 col-md-12">
                             <div include-with-scope="app/settings/components/tables/component.instance.table.html"></div>
                         </div>
                     </div>
                     <br>
-                    <div class="row">
+                    <div class="row" ng-if="vm.renderServerForm">
                         <form class="form-horizontal" name="vm.form.componentRegistration" method="POST"
-                              angular-validator-submit="vm.componentRegistration()" novalidate angular-validator>
+                              angular-validator-submit="vm.componentRegistration()" novalidate angular-validator
+                              ng-if="!vm.hasComponents || vm.showCreateForm || vm.showEditForm">
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'COMPONENT_NAME' | translate }}</label>
                                     <div class="col-sm-4">
                                         <input type="text" name="name" autocorrect="off" autocapitalize="none"
                                                class="form-control" placeholder="{{ 'COMPONENT_NAME' | translate }}"
-                                               ng-model="vm.new_component.name"
+                                               ng-model="vm.component.name"
                                                required
                                                validate-on="dirty"
                                                required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
@@ -37,39 +38,33 @@
                                     <label class="col-sm-1">{{ 'TYPE_TITLE' | translate }}</label>
 
                                     <div class="col-sm-4">
-                                        <select class="form-control" name="component_tag"
-                                                ng-model="vm.new_component.tag_id"
+                                        <select class="form-control" name="component_tag" ng-model="vm.component.tag_id"
                                                 selectpicker
                                                 required
                                                 validate-on="dirty"
-                                                validator="vm.new_component.type != 0"
+                                                validator="vm.component.type != 0"
                                                 required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
                                                 invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
-                                        >
-                                            <option value="2">{{ 'SYSTEM' | translate }}</option>
-                                            <option value="3">{{ 'APPLICATION' | translate }}</option>
+                                                ng-options="i.id as (i.name) for i in vm.typesArray">
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group row clearfix" ng-if="vm.resourcesLoaded" ng-show="vm.new_component.tag_id == 3">
+                                <div class="form-group row clearfix" ng-if="vm.resourcesLoaded" ng-show="vm.component.tag_id == 3">
                                     <label class="col-sm-1">{{ 'CODE_TITLE' | translate }}</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" name="code" ng-model="vm.new_component.code"
+                                        <select class="form-control" name="code" ng-model="vm.component.code"
                                                 selectpicker
-                                                validator="vm.componentCodeValidator(vm.new_component.code) === true"
-                                                invalid-message="vm.componentCodeValidator(vm.new_component.code)"
+                                                validator="vm.componentCodeValidator(vm.component.code) === true"
+                                                invalid-message="vm.componentCodeValidator(vm.component.code)"
                                                 validate-on="dirty"
-                                        >
-                                            <option ng-repeat="item in vm.codes" value="{{item.key}}">
-                                                {{item.name}}
-                                            </option>
+                                                ng-options="i.key as (i.name) for i in vm.codes">
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12" ng-if="vm.componentsLoaded" ng-show="vm.new_component.tag_id == 3">
+                            <div class="col-md-12" ng-if="vm.componentsLoaded" ng-show="vm.component.tag_id == 3">
                                 <div class="col-sm-1">
                                     <div class="row">
                                         <label>{{ 'ASSIGN_COMPONENT_TITLE' | translate }}</label>
@@ -95,7 +90,7 @@
                                             <tbody>
                                             <tr ng-repeat="item in vm.components track by item.id">
                                                 <td><input name="component" type="radio" ng-value="item.id"
-                                                           ng-model="vm.new_component.parent_id"/></td>
+                                                           ng-model="vm.component.parent_id"/></td>
                                                 <td class="table-id"><span class="hide">{{item.id}}</span></td>
                                                 <td>{{item.name}}</td>
                                             </tr>
@@ -112,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12" ng-if="vm.componentsLoaded" ng-show="vm.new_component.tag_id == 3">
+                            <div class="col-md-12" ng-if="vm.componentsLoaded" ng-show="vm.component.tag_id == 3">
                                 <br>
                                 <div class="col-sm-1">
                                     <div class="row">
@@ -127,15 +122,19 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-12">
-                                <br>
-                                <div class="form-group row">
-                                    <div class="col-sm-12">
-                                        <button name="login" type="submit" class="btn btn-sm btn-default">{{
-                                            'SUBMIT_NEW_COMPONENT' | translate }}
-                                        </button>
-                                    </div>
+                                <div class="row">
+                                    <label>&nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="form-group row clearfix" >
+                                <div class="col-sm-2">
+                                    <button name="login" type="submit" class="btn btn-sm btn-default" ng-show="!vm.showEdit">{{'SUBMIT_NEW_COMPONENT' | translate }}</button>
+                                    <button name="edit" type="submit" class="btn btn-sm btn-default" ng-show="vm.showEdit">{{ 'SUBMIT_EDIT_COMPONENT' | translate }}</button>
+                                    <button name="cancel" type="button" class="btn btn-sm btn-default" ng-click="vm.cancelEdit()">{{ 'CANCEL' | translate }}</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="loader" ng-show="vm.showLoader"></div>
                                 </div>
                             </div>
                         </form>

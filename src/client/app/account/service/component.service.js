@@ -12,6 +12,8 @@
         var service = {
             createAccount: createAccount,
             create: create,
+            update: update,
+            deleteComponent: deleteComponent,
             getRoot: getRoot,
             getRemoteRoot: getRemoteRoot,
             hasLeaves: hasLeaves,
@@ -21,6 +23,7 @@
             getQAAttributes: getQAAttributes,
             add: add,
             getList: getList,
+            getQalogList: getQalogList,
             associateToUser: associateToUser
         };
         return service;
@@ -31,6 +34,46 @@
 
         function create(data) {
             return createGeneral('components',data);
+        }
+
+        function update(data) {
+            return accountAPI.one('components', data.id).customPUT(data)
+                .then(successUpdate)
+                .catch(failUpdate);
+
+            function successUpdate(response) {
+                var componentData = {
+                    id: response.id,
+                    type_id: response.type_id,
+                    parent_id: response.parent_id
+                };
+                qastaAPI.one('components', componentData.id).customPUT(componentData);
+                if(response.type_id === 3){
+                    componentData.quality_system_instance_id = data.quality_system_instance_id;
+                    componentData.app_code = data.code;
+                }
+
+                qalogAPI.one('components', componentData.id).customPUT(componentData);
+                return response;
+            }
+
+            function failUpdate(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function deleteComponent(data){
+            return accountAPI.one('components', data.id).remove()
+                .then(successDelete)
+                .catch(failDelete);
+
+            function successDelete(response) {
+                return response.data;
+            }
+
+            function failDelete(error) {
+                return $q.reject(error);
+            }
         }
 
         function createGeneral(resource,dataCreateGeneral) {
@@ -92,7 +135,6 @@
 
         }
 
-
         function hasLeaves(componentId) {
             return accountAPI.one('components', componentId)
                 .get({hasLeaves: true})
@@ -108,6 +150,19 @@
             }
         }
 
+        function getQalogList(data) {
+            return qalogAPI.all('components').getList(data)
+                .then(successGetList)
+                .catch(failGetList);
+
+            function successGetList(response) {
+                return response.plain();
+            }
+
+            function failGetList(error) {
+                return $q.reject(error);
+            }
+        }
 
         function getList(data) {
             return accountAPI.all('components').getList(data)
@@ -123,9 +178,7 @@
             }
         }
 
-
         function associateToUser(data) {
-
             return accountAPI.one('components', data.component_id).all('users').post(data)
                 .then(successAssociate)
                 .catch(failAssociate);
@@ -138,7 +191,6 @@
                 return $q.reject(error);
             }
         }
-
 
         function getInfo(componentId) {
             return qastaAPI.one('components', componentId)
@@ -154,7 +206,6 @@
                 return $q.reject(error);
             }
         }
-
 
         function getIndicators(componentId, indicatorIds) {
             if (indicatorIds !== null) {
@@ -187,7 +238,6 @@
                 function fail(error) {
                     return $q.reject(error);
                 }
-
             }
 
             function failName(error) {
@@ -225,7 +275,6 @@
                 return $q.reject(error);
             }
         }
-
 
         function getQAAttributes(componentId) {
             return qastaAPI.one('components', componentId).getList('attributeissues2')

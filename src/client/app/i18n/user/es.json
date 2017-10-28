@@ -4,7 +4,7 @@
   "PASS_REQUIRED": "La contraseña es requerida",
   "PASS_REQUIRED_SIX": "La contraseña debe tener al menos 6 digitos",
   "EMAIL_FORMAT": "Formato de email incorrecto",
-  "NAME_TITLE": "Nombre Completo",
+  "NAME_TITLE": "Nombre",
   "COMPANY_TITLE": "Empresa",
   "EMAIL_TITLE": "Email",
   "PASS_TITLE": "Contraseña",

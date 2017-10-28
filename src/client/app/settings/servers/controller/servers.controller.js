@@ -11,12 +11,8 @@
     function ServersController(storageService, qualityServerService, logger, $filter) {
         var vm = this;
 
-
         var croot = storageService.getJsonObject('croot');
-
-
         vm.hasQAS = false;
-
         vm.qas = [];
 
         vm.saveQAS = saveQAS;
@@ -175,7 +171,7 @@
             vm.qas.type = vm.serverInstances[0].type;
             vm.qas.url = vm.serverInstances[0].url;
             vm.qas.username = vm.serverInstances[0].username;
-            if (vm.qas.username !== null && vm.qas.username !== '' && vm.qas.username !== undefined && vm.qas.username !== null) {
+            if (vm.qas.username !== '' && vm.qas.username !== undefined && vm.qas.username !== null) {
                 vm.qas.boRequiresAuthentication = true;
             }
         }
@@ -184,7 +180,7 @@
             if (vm.qas.boRequiresAuthentication !== true) {
                 return true;
             } else {
-                if (vm.qas.username !== null && vm.qas.username !== '' && vm.qas.username !== undefined && vm.qas.username !== null) {
+                if (vm.qas.username !== '' && vm.qas.username !== undefined && vm.qas.username !== null) {
                     return true;
                 }
             }

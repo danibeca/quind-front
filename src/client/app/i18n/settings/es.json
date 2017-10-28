@@ -16,5 +16,9 @@
   "SERVER_TITLE": "Servidor",
   "VERIFIED_TITLE": "¿Verificado?",
   "EDIT_TITLE": "Editar",
-  "DELETE_TITLE": "Eliminar"
+  "DELETE_TITLE": "Eliminar",
+  "ADD_NEW_ACCOUNT": "Agregar usuario",
+  "CHANGE_PASSWORD_TITLE": "Cambiar contraseña",
+  "ADD_NEW_COMPONENT": "Agregar componente",
+  "FIELD_REQUIRED": "Campo requerido"
 }
