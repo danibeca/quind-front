@@ -82,6 +82,7 @@
                 .catch(failCreateGeneral);
 
             function successCreateGeneral(response) {
+                console.log(dataCreateGeneral);
                 var componentData = {
                     id: response.id,
                     type_id: response.type_id,

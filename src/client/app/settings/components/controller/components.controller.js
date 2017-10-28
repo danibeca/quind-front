@@ -100,12 +100,12 @@
         }
 
         function updateComponentsCodes() {
-            vm.allComponents.forEach(function(x) {
+            /*vm.allComponents.forEach(function(x) {
                 if (x.tag_id === 3) {
                     var code = $.grep(vm.componentsCodes, function(e){ return e.id === x.id; })[0];
                     x.code = code.app_code;
                 }
-            });
+            });*/
         }
 
         function loadComponents() {
@@ -226,7 +226,9 @@
         }
 
         function showAddComponent() {
+            var qsiId =  vm.component.quality_system_instance_id;
             vm.component = {};
+            vm.component.quality_system_instance_id = qsiId;
             vm.showCreateForm = true;
         }
 
