@@ -2,7 +2,7 @@
   "PAGE_TITLE": "Ingresa a tu cuenta",
   "EMAIL_REQUIRED": "El email es requerido",
   "PASS_REQUIRED": "La contraseña es requerida",
-  "PASS_REQUIRED_SIX": "La contraseña debe tener al menos 6 digitos",
+  "PASS_REQUIRED_SIX": "La contraseña debe tener al menos 6 dígitos",
   "EMAIL_FORMAT": "Formato de email incorrecto",
   "NAME_TITLE": "Nombre",
   "COMPANY_TITLE": "Empresa",
@@ -27,6 +27,7 @@
   "SUBMIT_UPDATE_PASS": "Actualizar",
   "REGISTRATION_PAGE_TITLE": "Fomulario de Registro",
   "SUBMIT_NEW_ACCOUNT": "Registrarme",
-  "LOGIN": "Login"
+  "LOGIN": "Iniciar sesión",
+  "BACK_TO_LOGIN": "Regresar a iniciar sesión"
 
 }

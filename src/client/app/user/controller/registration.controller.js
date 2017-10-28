@@ -25,24 +25,18 @@
                 return $filter('translate')('PASS_REQUIRED_SIX');
             }
 
-            /*if (!password.match(/[A-Z]/)) {
-                return "Password must have at least one capital letter";
-            }
-            if (!password.match(/[0-9]/)) {
-                return "Password must have at least one number";
-            }*/
-
             return true;
         }
 
         function registration() {
-            userRemoteService.create(vm.user)
+            vm.showLoader = true;
+            return userRemoteService.create(vm.user)
                 .then(successCreateUser)
                 .catch(failCreateUser);
 
             function successCreateUser(data) {
                 vm.userComponentData.user_id = data.id;
-                return createAccount();
+                return login();
             }
 
             function failCreateUser(response) {
@@ -52,12 +46,39 @@
             }
         }
 
+        function login() {
+
+            return auth.getLogin(vm.user)
+                .then(success)
+                .catch(fail);
+
+            function success() {
+                logger.success($filter('translate')('LOGIN_SUCCESS'));
+                getUser();
+                return createAccount();
+            }
+
+            function fail(error) {
+                logger.error(error);
+            }
+
+        }
+
+        function getUser() {
+            auth.getAuthUser()
+                .then(successGetUser);
+
+            function successGetUser() {
+                //$state.go('servers');
+            }
+        }
+
         function createAccount() {
             var accountData = {
                 name: vm.user.company
             };
 
-            componentService.createAccount(accountData)
+            return componentService.createAccount(accountData)
                 .then(successCreateAccount)
                 .catch(failCreateAccount);
 
@@ -65,55 +86,19 @@
                 storageService.setJsonObject('croot', resp);
                 vm.userComponentData.component_id = resp.id;
                 associateAccountToUser();
+                vm.showLoader = false;
+                $state.go('servers');
             }
 
             function failCreateAccount() {
-                logger.error($filter('translate')('LOGIN_FAILED'));
+                logger.error('Error Creando cuenta');
             }
         }
 
         function associateAccountToUser() {
-            componentService.associateToUser(vm.userComponentData)
-                .then(success)
-                .catch(fail);
-
-            function success() {
-                login();
-            }
-
-            function fail() {
-                logger.error($filter('translate')('LOGIN_FAILED'));
-            }
+            componentService.associateToUser(vm.userComponentData);
         }
 
-        function login() {
-            auth.getLogin(vm.user)
-                .then(success)
-                .catch(fail);
 
-            function success() {
-                logger.success($filter('translate')('LOGIN_SUCCESS'));
-                getUser();
-            }
-
-            function fail(error) {
-                //logger.error($filter('translate')('LOGIN_FAILED'));
-                logger.error(error);
-            }
-
-        }
-
-        function getUser() {
-
-            auth.getAuthUser()
-                .then(successGetUser);
-
-
-            function successGetUser() {
-                $state.go('servers');
-            }
-
-
-        }
     }
 })();
