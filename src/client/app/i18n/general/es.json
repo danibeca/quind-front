@@ -40,5 +40,8 @@
   "NO_TEXT": "NO",
   "SERVERS_TITLE": "Servidores",
   "USERS_TITLE": "Usuarios",
-  "COMPONENTS_TITLE": "Componentes"
+  "COMPONENTS_TITLE": "Componentes",
+  "SUBMIT_EDIT_ACCOUNT": "Guardar usuario",
+  "CANCEL": "Cancelar",
+  "SUBMIT_EDIT_COMPONENT": "Guardar componente"
 }

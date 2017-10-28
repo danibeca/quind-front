@@ -11,12 +11,8 @@
     function ServersController(storageService, qualityServerService, logger, $filter) {
         var vm = this;
 
-
         var croot = storageService.getJsonObject('croot');
-
-
         vm.hasQAS = false;
-
         vm.qas = [];
 
         vm.saveQAS = saveQAS;

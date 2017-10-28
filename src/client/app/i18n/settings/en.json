@@ -17,5 +17,13 @@
   "AUTH_REQUIRED_TITLE": "Authentication required?",
   "UPDATE_SERVER": "Update Server",
   "CREATE_SERVER_ERROR": "An error ocurred creating server",
-  "UPDATE_SERVER_ERROR": "An error ocurred updating server"
+  "UPDATE_SERVER_ERROR": "An error ocurred updating server",
+  "SERVER_TITLE": "Server",
+  "VERIFIED_TITLE": "Verified?",
+  "EDIT_TITLE": "Edit",
+  "DELETE_TITLE": "Delete",
+  "ADD_NEW_ACCOUNT": "Add user",
+  "CHANGE_PASSWORD_TITLE": "Change password",
+  "ADD_NEW_COMPONENT": "Add component",
+  "FIELD_REQUIRED": "Field required"
 }

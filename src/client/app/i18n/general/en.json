@@ -40,5 +40,8 @@
   "NO_TEXT": "NO",
   "SERVERS_TITLE": "Servers",
   "USERS_TITLE": "Users",
-  "COMPONENTS_TITLE": "Components"
+  "COMPONENTS_TITLE": "Components",
+  "SUBMIT_EDIT_ACCOUNT": "Save user",
+  "CANCEL": "Cancel",
+  "SUBMIT_NEW_COMPONENT": "Save component",
 }

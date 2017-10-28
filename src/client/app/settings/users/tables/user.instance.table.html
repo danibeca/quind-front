@@ -1,22 +1,67 @@
 <div class="horizontal-scroll">
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th>Server</th>
-      <th class="align-right">URL</th>
-      <th class="align-right">Verified?</th>
-      <th class="align-right">Edit</th>
-      <th class="align-right">Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="item in vm.serverInstances">
-      <td>{{item.name}}</td>
-      <td class="align-right">{{item.url}}</td>
-      <td class="align-center" style="color:green;font-size: 20px"><span ng-show="item.verified"><i class="ion-android-checkmark-circle"></i></span></td>
-      <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.showEdit()"><i class="ion-edit"></i></a></td>
-      <td class="align-right"></td>
-    </tr>
-    </tbody>
-  </table>
+    <div class="col-lg-12">
+        <div class="row">
+            <table class="table" st-table="vm.usersList">
+                <thead>
+                <tr class="sortable">
+                    <th class="align-left" st-sort="name" st-sort-default="true">{{ 'NAME_TITLE' | translate }}</th>
+                    <th class="align-left" st-sort="email" st-sort-default="false">{{ 'EMAIL_TITLE' | translate }}</th>
+                    <th class="align-left" st-sort="email" st-sort-default="false">{{ 'ROL_TITLE' | translate }}</th>
+                    <th class="align-left">{{ 'EDIT_TITLE' | translate }}</th>
+                    <th class="align-left">{{ 'DELETE_TITLE' | translate }}</th>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="col-sm-10">
+                            <input st-search="" name="filter-name" placeholder="Search"
+                               class="input-sm form-control search-input" type="search"/>
+                        </div>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in vm.usersList track by item.id">
+                    <td class="align-left" >{{item.name}}</td>
+                    <td class="align-left" >{{item.email}}</td>
+                    <td class="align-left" >{{item.role_name}}</td>
+                    <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link"
+                        ng-click="vm.showEdit(item.id)"><i class="ion-edit"></i></a></td>
+                    <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link"
+                                               ng-click="vm.deleteUser(item.id)"><i class="ion-trash-b"></i></a></td></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="8" class="text-center">
+                        <div st-pagination="" st-items-by-page="vm.smartTablePageSize"
+                             st-displayed-pages="10"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <br>
+        <div class="col-sm-2">
+            <div class="row">
+                <label>{{ 'ROWS_ON_PAGE' | translate }}</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="row">
+                <select class="form-control" name="pagination" ng-model="vm.smartTablePageSize"
+                        ng-options="i.id as (i.name) for i in vm.paginationArray">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <br>
+        <button name="addUser" class="btn btn-sm btn-default" ng-click="vm.showAddUser()">{{ 'ADD_NEW_ACCOUNT' | translate }}</button>
+    </div>
 </div>

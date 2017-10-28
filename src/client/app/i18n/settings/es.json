@@ -17,5 +17,13 @@
   "AUTH_REQUIRED_TITLE": "¿Requiere Autenticación?",
   "UPDATE_SERVER": "Actualizar servidor",
   "CREATE_SERVER_ERROR": "Error creando servidor",
-  "UPDATE_SERVER_ERROR": "Error actualizando servidor"
+  "UPDATE_SERVER_ERROR": "Error actualizando servidor",
+  "SERVER_TITLE": "Servidor",
+  "VERIFIED_TITLE": "¿Verificado?",
+  "EDIT_TITLE": "Editar",
+  "DELETE_TITLE": "Eliminar",
+  "ADD_NEW_ACCOUNT": "Agregar usuario",
+  "CHANGE_PASSWORD_TITLE": "Cambiar contraseña",
+  "ADD_NEW_COMPONENT": "Agregar componente",
+  "FIELD_REQUIRED": "Campo requerido"
 }
