@@ -4,7 +4,14 @@
     </div>
     <div class="modal-body text-center">{{ 'DELETE_WARNING_TEXT' | translate }}</div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-warning" ng-click="ok()">{{ 'YES_TEXT' | translate }}</button>
-        <button type="button" class="btn btn-warning" ng-click="cancel()">{{ 'NO_TEXT' | translate }}</button>
+        <div class="col-sm-2">
+            <button type="button" class="btn bg-success" ng-click="ok()">{{ 'YES_TEXT' | translate }}</button>
+        </div>
+        <div class="col-sm-8">
+            &nbsp;
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn bg-danger" ng-click="cancel()">{{ 'NO_TEXT' | translate }}</button>
+        </div>
     </div>
 </div>
