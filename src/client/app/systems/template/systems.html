@@ -15,7 +15,30 @@
     <div class="al-main">
         <div class="al-content" ng-if="!vm.viewComponentDashboard">
             <content-top></content-top>
-            <div ng-repeat="system in vm.systems">
+            <div class="col-sm-12" ba-panel
+                 ba-panel-title-ext="{{system.name}}"
+                 ba-panel-class="small-panel">
+                <br>
+                <div>
+                    <div>
+                        <label class="col-sm-1">Ordenar por:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" name="component_tag" ng-model="vm.orderOne"
+                                    ng-change="vm.orderSystemsByCriticals()"
+                                    ng-options="i.id as (i.name) for i in vm.orderOptionsCriticals">
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select class="form-control" name="component_tag" ng-model="vm.orderTwo"
+                                    ng-change="vm.orderSystemsByOutstanding()"
+                                    ng-options="i.id as (i.name) for i in vm.orderOptionsOutstanding">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div ng-repeat="system in vm.systems|limitTo:3 track by system.name">
 
                 <div class="col-lg-4 col-md-12 col-sm-12"
                      ba-panel
@@ -30,28 +53,11 @@
                     </gauge-chart>
                     <span class="error-dashboard" ng-show="system.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
                 </div>
-
-                <div class="col-lg-8 col-md-12 col-sm-12"
-                     ba-panel
-                     ba-panel-title="{{ 'SYSTEM_RUN_CHART' | translate }}"
-                     ba-panel-title-ext="{{system.name}}"
-                     ba-panel-class="medium-panel">
-                    <stock-multiple-chart ids="{{ system.ids}}"
-                                          series="{{ system.series}}"
-                                          labels="{{ system.labels}}"
-                                          vars="{{ vm.vars}}"
-                                          lang="{{ vm.lang}}"
-                                          error="{{system.seriesError}}"
-                                          loading="{{ 'LOADING' | translate }}"
-                    >
-                    </stock-multiple-chart>
-                    <span class="error-dashboard" ng-show="system.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}"</span>
-                </div>
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel
                  ba-panel-class="profile-page">
-                    <h3 class="with-line">{{ 'SYSTEMS_LOW_TITLE' | translate }}</h3>
+                    <h3 class="with-line">{{ 'SYSTEMS_TITLE' | translate }}</h3>
                     <components-table components="{{ vm.allSystems }}"
                                       croot-id="{{ vm.croot.id }}"
                                       show-code-health="true"
@@ -62,6 +68,7 @@
             </div>
         </div>
         <div class="al-content" ng-if="vm.viewComponentDashboard">
+            <content-top></content-top>
             <component-dashboard go-back-function="vm.backToList()"
                                  component="{{ vm.componentForDashboard }}"></component-dashboard>
         </div>

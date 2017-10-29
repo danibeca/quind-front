@@ -45,8 +45,6 @@
   "CANCEL": "Cancel",
   "SUBMIT_NEW_COMPONENT": "Save component",
   "VIEW_MORE_TITLE": "View details",
-  "SYSTEMS_LOW_TITLE": "Systems",
-  "APPS_LOW_TITLE": "Applications",
   "CODE_HEALTH_TITLE": "Code healt",
   "RELIABILITY_TITLE": "Reliability",
   "ACCOUNT_INDICATORS": "INDICATORS",
@@ -60,5 +58,8 @@
   "LOW_TEXT": "Low",
   "MEDIUM_TEXT": "Medium",
   "HIGH_TEXT": "High",
-  "TOO_HIGH_TEXT": "Too high"
+  "TOO_HIGH_TEXT": "Too high",
+  "TECHNICAL_DEBT_TITLE": "Technical debt",
+  "INFORMATION_TITLE": "Information",
+  "FILTERS_TITLE": "Filters"
 }

@@ -45,8 +45,6 @@
   "CANCEL": "Cancelar",
   "SUBMIT_EDIT_COMPONENT": "Guardar componente",
   "VIEW_MORE_TITLE": "Ver detalles",
-  "SYSTEMS_LOW_TITLE": "Sistemas",
-  "APPS_LOW_TITLE": "Aplicaciones",
   "CODE_HEALTH_TITLE": "Salud Código",
   "RELIABILITY_TITLE": "Confiabilidad",
   "ACCOUNT_INDICATORS": "INDICADORES GENERALES",
@@ -60,5 +58,8 @@
   "LOW_TEXT": "Bajo",
   "MEDIUM_TEXT": "Medio",
   "HIGH_TEXT": "Alto",
-  "TOO_HIGH_TEXT": "Muy alto"
+  "TOO_HIGH_TEXT": "Muy alto",
+  "TECHNICAL_DEBT_TITLE": "Deuda técnica",
+  "INFORMATION_TITLE": "Información",
+  "FILTERS_TITLE": "Filtros"
 }

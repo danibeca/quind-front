@@ -16,6 +16,14 @@
             0: 'value',
             1: 'date'
         };
+        vm.orderOptionsCriticals = [{id: 1, name: 'Críticos en Salud código'},
+                                    {id: 2, name: 'Críticos en Confiabilidad'},
+                                    {id: 3, name: 'Críticos en Potencial de eficiencia'}];
+        vm.orderOptionsOutstanding = [{id: 1, name: 'Destacados en Salud código'},
+                                      {id: 2, name: 'Destacados en Confiabilidad'},
+                                      {id: 3, name: 'Destacados en Potencial de eficiencia'}];
+        vm.orderOne = 0;
+        vm.orderTwo = 0;
         vm.indIds = '44,52,57';
         vm.systems = [];
         vm.allSystems = [];
@@ -24,6 +32,8 @@
 
         vm.viewMore = viewMore;
         vm.backToList = backToList;
+        vm.orderSystemsByCriticals = orderSystemsByCriticals;
+        vm.orderSystemsByOutstanding = orderSystemsByOutstanding;
 
         activate();
 
@@ -55,50 +65,9 @@
                         auxSystem.name = system.name;
                         auxSystem.chartId = 'gaugeChart' + remainingSystems;
                         auxSystem.data = indicators;
-
-                        var remainingIndicators = indicators.length;
-                        var missing = indicators.length;
-                        var ids = [];
-                        var labels = [];
-                        var dSeries = [];
-
-                        componentService.getIndicatorSeries(system.id, vm.indIds)
-                            .then(successSeries)
-                            .catch(failSeries);
-
-                        function successSeries(series) {
-                            indicators.forEach(function (name) {
-                                series.forEach(function (indicator) {
-                                    if (indicator[name.id] !== undefined) {
-                                        missing--;
-                                        ids.push(name.id);
-                                        labels[name.id] = {
-                                            'title': name.name
-                                        };
-                                        dSeries[name.id] = indicator[name.id];
-
-                                        if (missing === 0) {
-                                            createSystemCharts();
-                                            remainingSystems--;
-                                        }
-                                    }
-                                });
-                            });
-                        }
-
-                        function failSeries(error) {
-                            auxSystem.seriesError = true;
-                            vm.msgError = error['msgCode'];
-                        }
-
-
-                        function createSystemCharts() {
-                            auxSystem.ids = ids;
-                            auxSystem.labels = labels;
-                            auxSystem.series = dSeries;
-                            vm.systems.push(auxSystem);
-                            spinnerService.hide('systemsSpinner');
-                        }
+                        vm.systems.push(auxSystem);
+                        spinnerService.hide('systemsSpinner');
+                        remainingSystems--;
                     }
 
                     function failIndicators(error) {
@@ -106,7 +75,6 @@
                         auxSystem.name = system.name;
                         auxSystem.chartId = 'gCError' + remainingSystems;
                         auxSystem.error = true;
-                        auxSystem.seriesError = true;
                         vm.systems.push(auxSystem);
                         vm.msgError = error['msgCode'];
                     }
@@ -126,6 +94,46 @@
 
         function backToList() {
             vm.viewComponentDashboard = false;
+        }
+
+        function orderSystemsByCriticals() {
+            vm.orderTwo = 0;
+            switch (vm.orderOne) {
+                case 1:
+                    vm.systems.sort(function(a, b) {return compare(false, 44, a, b);});
+                    break;
+                case 2:
+                    vm.systems.sort(function(a, b) {return compare(false, 52, a, b);});
+                    break;
+                case 3:
+                    vm.systems.sort(function(a, b) {return compare(false, 57, a, b);});
+                    break;
+            }
+        }
+
+        function orderSystemsByOutstanding() {
+            vm.orderOne = 0;
+            switch (vm.orderTwo) {
+                case 1:
+                    vm.systems.sort(function(a, b) {return compare(true, 44, a, b);});
+                    break;
+                case 2:
+                    vm.systems.sort(function(a, b) {return compare(true, 52, a, b);});
+                    break;
+                case 3:
+                    vm.systems.sort(function(a, b) {return compare(true, 57, a, b);});
+                    break;
+            }
+        }
+
+        function compare(inverse, id, a, b) {
+            var valueA = $.grep(a.data, function(e) { return e.id === id; })[0].value;
+            var valueB = $.grep(b.data, function(e) { return e.id === id; })[0].value;
+            if (inverse) {
+                return parseFloat(valueB) - parseFloat(valueA);
+            } else {
+                return parseFloat(valueA) - parseFloat(valueB);
+            }
         }
     }
 })();

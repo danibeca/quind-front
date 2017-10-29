@@ -1,32 +1,26 @@
-<div class="popular-app-img-container">
-  <div class="popular-app-img">
-    <img ng-src="{{::( 'app/info.png' | appImage )}}"/>
-    <span class="logo-text hidden-xs">Información</span>
-  </div>
-</div>
-
 <div class="popular-app-cost row">
-  <div class="col-xs-4">
-    Sistemas
-  </div>
-  <div class="col-xs-8 text-right">
-    {{ vm.details.systems }}
-  </div>
+    <div class="col-xs-4">
+        <h5>{{ 'SYSTEMS_TITLE' | translate }}</h5>
+    </div>
+    <div class="col-xs-8 text-right">
+        <p>{{ vm.details.systems }}</p>
+    </div>
 </div>
-
+<br>
 <div class="popular-app-cost row">
-  <div class="col-xs-4">
-    Aplicaciones
-  </div>
-  <div class="col-xs-8 text-right">
-    {{ vm.details.applications }}
-  </div>
+    <div class="col-xs-4">
+        <h5>{{ 'APPLICATION_TITLE' | translate }}</h5>
+    </div>
+    <div class="col-xs-8 text-right">
+        <p>{{ vm.details.applications }}</p>
+    </div>
 </div>
+<br>
 <div class="popular-app-cost row">
-  <div class="col-xs-4">
-    Deuda Técnica
-  </div>
-  <div class="col-xs-8 text-right">
-    {{vm.details.debt}}
-  </div>
+    <div class="col-xs-4">
+        <h5>{{ 'TECHNICAL_DEBT_TITLE' | translate }}</h5>
+    </div>
+    <div class="col-xs-8 text-right">
+        <p>{{vm.details.debt}}</p>
+    </div>
 </div>
