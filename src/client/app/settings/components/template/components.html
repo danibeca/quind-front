@@ -28,7 +28,8 @@
                               angular-validator-submit="vm.componentRegistration()" novalidate angular-validator
                               ng-if="!vm.hasComponents || vm.showCreateForm || vm.showEditForm">
                             <div class="col-md-12">
-                                <div class="form-group row clearfix">
+                                {{vm.componentsLoaded}}{{vm.typesArray}}
+                                <div class="form-group row clearfix" ng-if="vm.componentsLoaded">
                                     <label class="col-sm-1">{{ 'TYPE_TITLE' | translate }}</label>
                                     <div class="col-sm-4">
                                         <select class="form-control" name="component_tag" ng-model="vm.component.tag_id"

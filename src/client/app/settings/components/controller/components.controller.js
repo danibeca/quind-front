@@ -58,7 +58,7 @@
 
             function successGetAllComponents(info) {
                 vm.allComponents = info;
-                if (vm.allComponents.length > 0){
+                if (vm.allComponents.length > 0) {
                     vm.hasComponents = true;
                     vm.renderServerForm = true;
                 } else {
@@ -78,7 +78,11 @@
             function successGetComponents(info) {
                 vm.components = info;
                 vm.smartTablePageSize = 5;
-                vm.component.parent_id = info[0].id;
+                if (info.length < 1) {
+                    vm.typesArray = [{id: 2, name: $filter('translate')('SYSTEM')}];
+                } else {
+                    vm.component.parent_id = info[0].id;
+                }
                 vm.componentsLoaded = true;
             }
         }
@@ -103,11 +107,11 @@
         }
 
         function componentCodeValidator(code) {
-            if (vm.component.tag_id !== 3){
+            if (vm.component.tag_id !== 3) {
                 return true;
             }
 
-            if (code === 0 || code === undefined ){
+            if (code === 0 || code === undefined) {
                 return $filter('translate')('FIELD_REQUIRED');
             }
             return true;
@@ -115,7 +119,7 @@
 
         function componentRegistration() {
             vm.showLoader = true;
-            if(vm.showEditForm) {
+            if (vm.showEditForm) {
                 putComponent();
             } else {
                 postComponent();
@@ -145,7 +149,7 @@
         }
 
         function putComponent() {
-            if(vm.component.tag_id != 3) {
+            if (vm.component.tag_id != 3) {
                 vm.component.parent_id = null;
             }
             componentService.update(vm.component)
@@ -187,7 +191,7 @@
         }
 
         function showAddComponent() {
-            var qsiId =  vm.component.quality_system_instance_id;
+            var qsiId = vm.component.quality_system_instance_id;
             vm.component = {};
             vm.component.parent_id = vm.components[0].id;
             vm.component.quality_system_instance_id = qsiId;
@@ -195,27 +199,30 @@
         }
 
         function showEdit(component) {
-            vm.component = $.grep(vm.allComponents, function(e){ return e.id === component.id; })[0];
+            vm.component = $.grep(vm.allComponents, function (e) {
+                return e.id === component.id;
+            })[0];
             vm.component.code = component.code
-            vm.components = vm.components.filter(function(obj) {
+            vm.components = vm.components.filter(function (obj) {
                 return vm.component.id !== obj.id;
             });
-            if(vm.component.parent_id === null || vm.component.parent_id === undefined) {
+            if (vm.component.parent_id === null || vm.component.parent_id === undefined) {
                 vm.component.parent_id = vm.components[0].id;
             }
             vm.showEditForm = true;
         }
 
         function deleteComponent(component) {
-            vm.component = $.grep(vm.allComponents, function(e){ return e.id === component.id; })[0];
+            vm.component = $.grep(vm.allComponents, function (e) {
+                return e.id === component.id;
+            })[0];
             if (vm.component.tag_id === 2) {
                 var modalInstance = $uibModal.open({
                     scope: $scope,
                     animation: true,
                     templateUrl: 'app/settings/components/modalTemplates/deleteWarningModal.html',
                     size: '',
-                    resolve: {
-                    }
+                    resolve: {}
                 });
 
                 $scope.ok = function () {
@@ -260,7 +267,9 @@
 
         function updateName() {
             if (!vm.showEditForm && vm.component.code !== null && vm.component.code !== undefined) {
-                vm.component.name = $.grep(vm.codes, function(e){ return e.key === vm.component.code; })[0].name;
+                vm.component.name = $.grep(vm.codes, function (e) {
+                    return e.key === vm.component.code;
+                })[0].name;
             }
         }
     }
