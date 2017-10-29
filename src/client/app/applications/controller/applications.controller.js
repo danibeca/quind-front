@@ -6,10 +6,17 @@
         .controller('ApplicationsController', ApplicationsController);
 
     /* @ngInject */
-    function ApplicationsController(componentService, spinnerService, storageService) {
+    function ApplicationsController(componentService, spinnerService, storageService, $state) {
         var vm = this;
         vm.applications = [];
+        vm.allApplications = [];
+        vm.componentForDashboard = {};
+        vm.viewComponentDashboard = false;
         vm.indIds = '44,52,57';
+
+        vm.viewMore = viewMore;
+        vm.backToList = backToList;
+
         activate();
 
         function activate() {
@@ -31,6 +38,11 @@
 
                     function successIndicators(indicators) {
                         spinnerService.hide('appSpinner');
+                        var applicationForTable = JSON.parse(JSON.stringify(application));
+                        applicationForTable.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
+                        applicationForTable.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
+                        applicationForTable.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
+                        vm.allApplications.push(applicationForTable);
                         var auxApplication = [];
                         auxApplication.name = application.name;
                         auxApplication.chartId = 'gaugeChart' + remainingApplications;
@@ -55,6 +67,15 @@
             function fail(error) {
                 vm.msgError = error['msgCode'];
             }
+        }
+
+        function viewMore(component) {
+            vm.componentForDashboard = component;
+            vm.viewComponentDashboard = true;
+        }
+
+        function backToList() {
+            vm.viewComponentDashboard = false;
         }
     }
 }());

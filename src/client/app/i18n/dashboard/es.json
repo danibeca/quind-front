@@ -1,12 +1,3 @@
 {
-  "ACCOUNT_INDICATORS": "INDICADORES GENERALES",
-  "ACCOUNT_RUN CHART": "HISTÓRICO",
-  "QUALITY_ATTRIBUTES_ISSUES": "ATRIBUTOS DE CALIDAD EN RIESGO",
-  "EFFORT_TEXT": "Esfuerzo",
-  "CRITICITY_TEXT": "Criticidad",
-  "TOO_LOW_TEXT": "Muy bajo",
-  "LOW_TEXT": "Bajo",
-  "MEDIUM_TEXT": "Medio",
-  "HIGH_TEXT": "Alto",
-  "TOO_HIGH_TEXT": "Muy alto"
+
 }

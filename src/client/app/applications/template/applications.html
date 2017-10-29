@@ -13,7 +13,7 @@
 
     </spinner>
     <div class="al-main">
-        <div class="al-content">
+        <div class="al-content" ng-if="!vm.viewComponentDashboard">
             <content-top></content-top>
             <div ng-repeat="application in vm.applications">
                 <div class="col-lg-4 col-md-12 col-sm-12"
@@ -30,7 +30,22 @@
                     <span class="error-dashboard" ng-show="application.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
                 </div>
             </div>
-
+            <div class="col-lg-8 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-class="profile-page">
+                <h3 class="with-line">{{ 'APPS_LOW_TITLE' | translate }}</h3>
+                <components-table components="{{ vm.allApplications }}"
+                                  croot-id="{{ vm.croot.id }}"
+                                  show-code-health="true"
+                                  show-reliability="true"
+                                  show-efficiency-potential="true"
+                                  allow-view-more="true"
+                                  view-more-function="vm.viewMore(component)"></components-table>
+            </div>
+        </div>
+        <div class="al-content" ng-if="vm.viewComponentDashboard">
+            <component-dashboard go-back-function="vm.backToList()"
+                                 component="{{ vm.componentForDashboard }}"></component-dashboard>
         </div>
     </div>
 

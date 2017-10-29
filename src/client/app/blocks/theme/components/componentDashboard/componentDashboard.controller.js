@@ -1,33 +1,46 @@
-/* jshint -W117 */
+/**
+ * @author jmruiz6
+ * created on 10.28.2017
+ */
+/* jshint -W101,-W106, -W117 */
+// jscs:disable
 (function () {
     'use strict';
 
-    angular
-        .module('app.dashboard')
-        .controller('DashboardController', DashboardController);
+    angular.module('blocks.theme.components')
+        .controller('ComponentDashboardCtrl', ComponentDashboardCtrl);
 
     /* @ngInject */
-    function DashboardController(userService, componentService, $filter, storageService, $timeout) {
+    function ComponentDashboardCtrl(componentService, storageService, $timeout, $filter) {
         var vm = this;
-        var croot = storageService.getJsonObject('croot');
 
-        vm.user = userService.getUser();
-        vm.chartId = 'dashChart1';
-        vm.lang = storageService.get('lang');
+        vm.component = {};
         vm.indIds = '44,52,57';
         vm.vars = {
             0: 'value',
             1: 'date'
         };
-
+        vm.lang = storageService.get('lang');
+        vm.dashChartId = 'dashChart1';
         var ids = [];
         var labels = [];
         var dSeries = [];
 
-        activate();
+        vm.setComponent = setComponent;
 
+        /*************************************
+            Methods to set data from directive
+         *************************************/
+        function setComponent(component) {
+            vm.component = component;
+            activate();
+        }
+
+        /*********************************************
+         Methods to load data from remote services
+         ********************************************/
         function activate() {
-            componentService.getInfo(croot.id)
+            componentService.getInfo(vm.component.id)
                 .then(successInfo)
                 .catch(failInfo);
 
@@ -40,19 +53,31 @@
                 vm.errorInfo = error;
             }
 
-            componentService.getQAAttributes(croot.id)
+            componentService.getQAAttributes(vm.component.id)
                 .then(successQAAttributes)
                 .catch(failQAAttributes);
 
-            componentService.getIndicators(croot.id, vm.indIds)
+            function successQAAttributes(qa) {
+                vm.qaData = qa;
+                var delay = 1;
+                $timeout(function () {
+                    bubblesQA(vm.qaData);
+                }, delay);
+            }
+
+            function failQAAttributes(error) {
+                console.log(error)
+                vm.errorQAAttributes = error;
+            }
+
+            componentService.getIndicators(vm.component.id, vm.indIds)
                 .then(success)
                 .catch(fail);
-
 
             function success(indicators) {
                 vm.data = indicators;
                 var missing = indicators.length;
-                componentService.getIndicatorSeries(croot.id, vm.indIds)
+                componentService.getIndicatorSeries(vm.component.id, vm.indIds)
                     .then(successSeries);
 
                 function successSeries(indi) {
@@ -81,22 +106,10 @@
                 }
             }
 
-            function successQAAttributes(qa) {
-                vm.qaData = qa;
-                var delay = 1;
-                $timeout(function () {
-                    bubblesQA(vm.qaData);
-                }, delay);
-            }
-
             function fail(error) {
                 vm.error = true;
                 vm.seriesError = true;
                 vm.msgError = error.msgCode;
-            }
-
-            function failQAAttributes(error) {
-                vm.errorQAAttributes = error;
             }
 
             function buildAxe(title) {

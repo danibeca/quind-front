@@ -43,5 +43,22 @@
   "COMPONENTS_TITLE": "Componentes",
   "SUBMIT_EDIT_ACCOUNT": "Guardar usuario",
   "CANCEL": "Cancelar",
-  "SUBMIT_EDIT_COMPONENT": "Guardar componente"
+  "SUBMIT_EDIT_COMPONENT": "Guardar componente",
+  "VIEW_MORE_TITLE": "Ver detalles",
+  "SYSTEMS_LOW_TITLE": "Sistemas",
+  "APPS_LOW_TITLE": "Aplicaciones",
+  "CODE_HEALTH_TITLE": "Salud Código",
+  "RELIABILITY_TITLE": "Confiabilidad",
+  "ACCOUNT_INDICATORS": "INDICADORES GENERALES",
+  "ACCOUNT_RUN CHART": "HISTÓRICO",
+  "QUALITY_ATTRIBUTES_ISSUES": "ATRIBUTOS DE CALIDAD EN RIESGO",
+  "EFFICIENCY_POTENTIAL_TITLE": "Potencial de eficiencia",
+  "GO_BACK_TITLE": "Regresar",
+  "EFFORT_TEXT": "Esfuerzo",
+  "CRITICITY_TEXT": "Criticidad",
+  "TOO_LOW_TEXT": "Muy bajo",
+  "LOW_TEXT": "Bajo",
+  "MEDIUM_TEXT": "Medio",
+  "HIGH_TEXT": "Alto",
+  "TOO_HIGH_TEXT": "Muy alto"
 }

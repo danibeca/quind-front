@@ -11,7 +11,17 @@
                     <h3 class="with-line">{{ 'COMPONENTS_TITLE' | translate }}</h3>
                     <div class="row" ng-if="vm.hasComponents && !vm.showCreateForm && !vm.showEditForm">
                         <div class="col-lg-6 col-md-12">
-                            <div include-with-scope="app/settings/components/tables/component.instance.table.html"></div>
+                            <components-table components="{{ vm.allComponents }}"
+                                              croot-id="{{ vm.croot.id }}"
+                                              allow-add="true"
+                                              allow-edit="true"
+                                              allow-delete="true"
+                                              show-codes="true"
+                                              show-types="true"
+                                              add-component-function="vm.showAddComponent()"
+                                              edit-component-function="vm.showEdit(component)"
+                                              delete-component-function="vm.deleteComponent(component)"
+                                              showCodes="true"></components-table>
                         </div>
                     </div>
                     <br>

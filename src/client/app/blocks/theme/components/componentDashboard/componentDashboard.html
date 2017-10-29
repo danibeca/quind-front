@@ -1,0 +1,47 @@
+<div class="col-sm-12">
+    <br>
+    <div>
+        <go-back go-back-function="goBackFunction()"></go-back>
+    </div>
+    <br>
+</div>
+<div class="col-lg-4 col-md-12 col-sm-12"
+     ba-panel
+     ba-panel-title="{{ 'ACCOUNT_INDICATORS' | translate }}"
+     ba-panel-class="medium-panel">
+
+    <gauge-chart data="{{vm.data}}"
+                 chartid="{{vm.dashChartId}}"
+                 loading="{{ 'LOADING' | translate }}"
+                 error="{{vm.error}}">
+    </gauge-chart>
+    <span class="error-dashboard" ng-show="vm.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
+</div>
+<div class="col-lg-8 col-md-12 col-sm-12"
+     ba-panel
+     ba-panel-title="{{ 'ACCOUNT_RUN CHART' | translate }}"
+     ba-panel-class="medium-panel">
+    <stock-multiple-chart ids="{{ vm.ids}}"
+                          series="{{ vm.series}}"
+                          labels="{{ vm.labels}}"
+                          vars="{{ vm.vars}}"
+                          lang="{{ vm.lang}}"
+                          error="{{vm.seriesError}}"
+                          loading="{{ 'LOADING' | translate }}"
+    >
+    </stock-multiple-chart>
+    <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}</span>
+</div>
+<div class="col-lg-8 col-md-12 col-sm-12"
+     ba-panel
+     ba-panel-title="{{ 'QUALITY_ATTRIBUTES_ISSUES' | translate }}"
+     ba-panel-class="medium-panel">
+    <bubble-chart chartid="qabubblegraph"
+                  data="{{ vm.qaData }}"
+                  config="{{ vm.qaConfig }}"
+                  error="{{vm.errorQAAttributes}}"
+                  loading="{{ 'LOADING' | translate }}"
+    >
+    </bubble-chart>
+    <span class="error-dashboard" ng-show="vm.errorQAAttributes">{{ 'INTERNAL_SERVER_ERROR' | translate }}</span>
+</div>

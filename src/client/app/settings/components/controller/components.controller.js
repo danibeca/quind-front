@@ -10,17 +10,15 @@
     /* @ngInject */
     function ComponentsController(userService, storageService, componentService, qualityServerService, logger, $filter, $state, $scope) {
         var vm = this;
-        var croot = storageService.getJsonObject('croot');
+        vm.croot = storageService.getJsonObject('croot');
 
         vm.component = {};
         vm.hasComponents = false;
         vm.renderServerForm = false;
         vm.allComponents = [];
-        vm.componentsCodes = [];
         vm.components = [];
         vm.codes = [];
 
-        vm.smartAllComponentsPageSize = 5;
         vm.smartTablePageSize = 5;
         vm.componentsLoaded = false;
         vm.userComponentData = {};
@@ -47,22 +45,15 @@
         function activate() {
             loadInstanceResources();
             loadAllComponents();
-            loadComponentsCodes();
             loadComponents();
         }
 
         function loadAllComponents() {
             var requestData = {
-                parent_id: croot.id
+                parent_id: vm.croot.id
             };
             componentService.getList(requestData)
                 .then(successGetAllComponents);
-
-            $scope.$watch('vm.allComponents', function () {
-                if (isInfoReady()) {
-                    updateComponentsCodes();
-                }
-            });
 
             function successGetAllComponents(info) {
                 vm.allComponents = info;
@@ -72,50 +63,12 @@
                 } else {
                     vm.renderServerForm = true;
                 }
-                vm.smartAllComponentsPageSize = 5;
             }
-        }
-
-        function loadComponentsCodes() {
-            var requestData = {
-                parent_id: croot.id,
-                only_leaves: true
-            };
-            componentService.getQalogList(requestData)
-                .then(successGetComponentsCodes);
-
-            $scope.$watch('vm.componentsCodes', function () {
-                if (isInfoReady()) {
-                    updateComponentsCodes();
-                }
-            });
-
-            function successGetComponentsCodes(info) {
-                vm.componentsCodes = info;
-            }
-        }
-
-        function isInfoReady() {
-            if (vm.allComponents.length > 0 && vm.componentsCodes.length > 0 && vm.codes.length > 0) {
-                return true;
-            }
-        }
-
-        function updateComponentsCodes() {
-            vm.allComponents.forEach(function(x) {
-                if (x.tag_id === 3) {
-                    var code = $.grep(vm.componentsCodes, function(e){ return e.id === x.id; })[0];
-                    if (code !== null && code!== undefined) {
-                        x.code = code.app_code;
-                        x.code_name = $.grep(vm.codes, function(e){ return e.key === x.code; })[0].name;
-                    }
-                }
-            });
         }
 
         function loadComponents() {
             var requestData = {
-                parent_id: croot.id,
+                parent_id: vm.croot.id,
                 no_leaves: true
             };
             componentService.getList(requestData)
@@ -130,15 +83,9 @@
         }
 
         function loadInstanceResources() {
-            qualityServerService.getInstances({component_id: croot.id, with_resources: true})
+            qualityServerService.getInstances({component_id: vm.croot.id, with_resources: true})
                 .then(successGetResources)
                 .catch(failGetResources);
-
-            $scope.$watch('vm.codes', function () {
-                if (isInfoReady()) {
-                    updateComponentsCodes();
-                }
-            });
 
             function successGetResources(instances) {
                 instances.forEach(function (instance) {
@@ -176,7 +123,7 @@
 
         function postComponent() {
             if (vm.component.tag_id == 2) {
-                vm.component.parent_id = croot.id;
+                vm.component.parent_id = vm.croot.id;
             }
             componentService.create(vm.component)
                 .then(successCreateComponent)
@@ -230,7 +177,7 @@
         }
 
         function showMenu() {
-            componentService.hasLeaves(croot.id)
+            componentService.hasLeaves(vm.croot.id)
                 .then(successHasLeaves);
 
             function successHasLeaves(hasLeaves) {
@@ -246,8 +193,9 @@
             vm.showCreateForm = true;
         }
 
-        function showEdit(componentId) {
-            vm.component = $.grep(vm.allComponents, function(e){ return e.id === componentId; })[0];
+        function showEdit(component) {
+            vm.component = $.grep(vm.allComponents, function(e){ return e.id === component.id; })[0];
+            vm.component.code = component.code
             vm.components = vm.components.filter(function(obj) {
                 return vm.component.id !== obj.id;
             });
@@ -257,8 +205,8 @@
             vm.showEditForm = true;
         }
         
-        function deleteComponent(componentId) {
-            vm.component = $.grep(vm.allComponents, function(e){ return e.id === componentId; })[0];
+        function deleteComponent(component) {
+            vm.component = $.grep(vm.allComponents, function(e){ return e.id === component.id; })[0];
             componentService.deleteComponent(vm.component)
                 .then(successDeleteComponent)
                 .catch(failDeleteComponent);
