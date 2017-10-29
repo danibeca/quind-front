@@ -61,5 +61,6 @@
   "TOO_HIGH_TEXT": "Muy alto",
   "TECHNICAL_DEBT_TITLE": "Deuda técnica",
   "INFORMATION_TITLE": "Información",
-  "FILTERS_TITLE": "Filtros"
+  "WARNING_TITLE": "¡Advertencia!",
+  "DELETE_WARNING_TEXT": "Eliminar un sistema causará que todas las aplicaciones asociadas a éste sean eliminadas. ¿Está seguro que desea continuar?"
 }

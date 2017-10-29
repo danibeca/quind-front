@@ -15,45 +15,8 @@
     <div class="al-main">
         <div class="al-content" ng-if="!vm.viewComponentDashboard">
             <content-top></content-top>
-            <div class="col-sm-12" ba-panel
-                 ba-panel-title-ext="{{system.name}}"
-                 ba-panel-class="small-panel">
-                <br>
-                <div>
-                    <div>
-                        <label class="col-sm-1">Ordenar por:</label>
-                        <div class="col-sm-2">
-                            <select class="form-control" name="component_tag" ng-model="vm.orderOne"
-                                    ng-change="vm.orderSystemsByCriticals()"
-                                    ng-options="i.id as (i.name) for i in vm.orderOptionsCriticals">
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            <select class="form-control" name="component_tag" ng-model="vm.orderTwo"
-                                    ng-change="vm.orderSystemsByOutstanding()"
-                                    ng-options="i.id as (i.name) for i in vm.orderOptionsOutstanding">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </div>
-            <div ng-repeat="system in vm.systems|limitTo:3 track by system.name">
-
-                <div class="col-lg-4 col-md-12 col-sm-12"
-                     ba-panel
-                     ba-panel-title="{{ 'SYSTEM_INDICATORS' | translate }}"
-                     ba-panel-title-ext="{{system.name}}"
-                     ba-panel-class="medium-panel">
-
-                    <gauge-chart data="{{system.data}}"
-                                 chartid="{{system.chartId}}"
-                                 loading="{{ 'LOADING' | translate }}"
-                                 error="{{system.error}}">
-                    </gauge-chart>
-                    <span class="error-dashboard" ng-show="system.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
-                </div>
-            </div>
+            <top-components components="{{ vm.systems }}"
+                            indicators="{{ vm.arrayIndIds }}"></top-components>
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel
                  ba-panel-class="profile-page">

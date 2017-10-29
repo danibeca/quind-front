@@ -68,6 +68,9 @@
                 .catch(failDelete);
 
             function successDelete(response) {
+                qastaAPI.one('components', data.id).remove();
+
+                qalogAPI.one('components', data.id).remove();
                 return response.data;
             }
 

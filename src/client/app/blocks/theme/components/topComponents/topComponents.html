@@ -1,0 +1,37 @@
+<div class="col-sm-12" ba-panel
+     ba-panel-class="small-panel">
+    <br>
+    <div>
+        <div>
+            <label class="col-sm-1">Ordenar por:</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="component_tag" ng-model="vm.orderOne"
+                        ng-change="vm.orderComponents(false)"
+                        ng-options="i.id as (i.name) for i in vm.orderOptionsCriticals">
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-control" name="component_tag" ng-model="vm.orderTwo"
+                        ng-change="vm.orderComponents(true)"
+                        ng-options="i.id as (i.name) for i in vm.orderOptionsOutstanding">
+                </select>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+<div ng-repeat="component in vm.components|limitTo:3 track by component.name" ng-if="vm.hasComponents">
+    <div class="col-lg-4 col-md-12 col-sm-12"
+         ba-panel
+         ba-panel-title="{{ 'SYSTEM_INDICATORS' | translate }}"
+         ba-panel-title-ext="{{component.name}}"
+         ba-panel-class="medium-panel">
+
+        <gauge-chart data="{{component.data}}"
+                     chartid="{{component.chartId}}"
+                     loading="{{ 'LOADING' | translate }}"
+                     error="{{component.error}}">
+        </gauge-chart>
+        <span class="error-dashboard" ng-show="component.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
+    </div>
+</div>

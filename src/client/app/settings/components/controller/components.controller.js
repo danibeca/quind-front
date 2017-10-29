@@ -5,10 +5,11 @@
 
     angular
         .module('app.settings')
-        .controller('ComponentsController', ComponentsController);
+        .controller('ComponentsController', ComponentsController)
+        .controller('ModalInstanceCtrl', ModalInstanceCtrl);
 
     /* @ngInject */
-    function ComponentsController(userService, storageService, componentService, qualityServerService, logger, $filter, $state, $scope) {
+    function ComponentsController(userService, storageService, componentService, qualityServerService, logger, $filter, $state, $uibModal, $scope) {
         var vm = this;
         vm.croot = storageService.getJsonObject('croot');
 
@@ -204,9 +205,38 @@
             }
             vm.showEditForm = true;
         }
-        
+
         function deleteComponent(component) {
             vm.component = $.grep(vm.allComponents, function(e){ return e.id === component.id; })[0];
+            if (vm.component.tag_id === 2) {
+                var modalInstance = $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    templateUrl: 'app/settings/components/modalTemplates/deleteWarningModal.html',
+                    size: '',
+                    resolve: {
+                    }
+                });
+
+                $scope.ok = function () {
+                    modalInstance.close();
+                };
+
+                $scope.cancel = function () {
+                    modalInstance.dismiss('cancel');
+                };
+
+                modalInstance.result.then(function (accepted) {
+                    callDelete();
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
+            } else {
+                callDelete();
+            }
+        }
+
+        function callDelete() {
             componentService.deleteComponent(vm.component)
                 .then(successDeleteComponent)
                 .catch(failDeleteComponent);
@@ -233,5 +263,16 @@
                 vm.component.name = $.grep(vm.codes, function(e){ return e.key === vm.component.code; })[0].name;
             }
         }
+    }
+
+    /* @ngInject */
+    function ModalInstanceCtrl($scope, $modalInstance) {
+        $scope.ok = function () {
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     }
 })();

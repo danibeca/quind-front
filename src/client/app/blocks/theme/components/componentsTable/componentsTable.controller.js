@@ -72,6 +72,10 @@
 
         function setShowCodes(showCodes) {
             vm.showCodes = showCodes;
+            if (vm.showCodes && vm.crootId !== null && vm.crootId !== undefined){
+                loadComponentsCodes();
+                loadInstanceResources();
+            }
         }
 
         function setShowCodeHealth(showCodeHealth) {

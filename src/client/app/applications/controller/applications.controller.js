@@ -15,6 +15,9 @@
         vm.componentForDashboard = {};
         vm.viewComponentDashboard = false;
         vm.indIds = '44,52,57';
+        vm.arrayIndIds = [{id: 44, name: 'Salud Código'},
+                          {id: 52, name: 'Confiabilidad'},
+                          {id: 57, name: 'Potencial de eficiencia'}];
 
         vm.viewMore = viewMore;
         vm.backToList = backToList;
@@ -45,7 +48,7 @@
                         applicationForTable.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
                         applicationForTable.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
                         vm.allApplications.push(applicationForTable);
-                        var auxApplication = [];
+                        var auxApplication = {};
                         auxApplication.name = application.name;
                         auxApplication.chartId = 'gaugeChart' + remainingApplications;
                         auxApplication.data = indicators;

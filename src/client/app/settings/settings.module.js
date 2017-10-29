@@ -5,4 +5,3 @@
         .module('app.settings', ['app.core']);
 
 })();
-

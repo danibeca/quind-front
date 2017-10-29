@@ -61,5 +61,6 @@
   "TOO_HIGH_TEXT": "Too high",
   "TECHNICAL_DEBT_TITLE": "Technical debt",
   "INFORMATION_TITLE": "Information",
-  "FILTERS_TITLE": "Filters"
+  "WARNING_TITLE": "Warning!",
+  "DELETE_WARNING_TEXT": "If you delete a system, all applications associated to it will also be deleted. ¿Are you sure?"
 }
