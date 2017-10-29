@@ -10,6 +10,7 @@
         var vm = this;
 
         vm.user = userService.getUser();
+        vm.croot = storageService.getJsonObject('croot');
         vm.lang = storageService.get('lang');
         vm.vars = {
             0: 'value',

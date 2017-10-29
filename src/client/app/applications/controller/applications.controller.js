@@ -8,6 +8,8 @@
     /* @ngInject */
     function ApplicationsController(componentService, spinnerService, storageService, $state) {
         var vm = this;
+
+        vm.croot = storageService.getJsonObject('croot');
         vm.applications = [];
         vm.allApplications = [];
         vm.componentForDashboard = {};

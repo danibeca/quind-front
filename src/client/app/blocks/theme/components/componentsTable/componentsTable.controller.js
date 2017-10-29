@@ -11,7 +11,7 @@
         .controller('ComponentsTableCtrl', ComponentsTableCtrl);
 
     /* @ngInject */
-    function ComponentsTableCtrl(componentService, qualityServerService, $scope) {
+    function ComponentsTableCtrl(componentService, qualityServerService, $scope, $timeout) {
         var vm = this;
 
         vm.listHasComponents = false;
@@ -27,7 +27,8 @@
         vm.crootId = '';
         vm.smartAllComponentsPageSize = 5;
         vm.componentsList = [];
-        vm.component = {}
+        vm.componentsListSafe = [];
+        vm.component = {};
         vm.componentsCodes = [];
         vm.codes = [];
         vm.paginationArray = [{id: 5, name: 5},
@@ -47,14 +48,18 @@
         vm.setAllowDelete = setAllowDelete;
         vm.setAllowViewMore = setAllowViewMore;
         vm.setCrootId = setCrootId;
+        vm.updateComponentsCodes = updateComponentsCodes;
         /*************************************
             Methods to set data from directive
          *************************************/
         function setComponents(components) {
             vm.componentsList = components;
+            vm.componentsListSafe = JSON.parse(JSON.stringify(vm.componentsList));
             if (vm.componentsList.length > 0){
-                vm.listHasComponents = true;
                 vm.smartAllComponentsPageSize = 5;
+                if (!vm.showCodes){
+                    vm.listHasComponents = true;
+                }
                 if (isInfoReady()) {
                     updateComponentsCodes();
                 }
@@ -83,8 +88,10 @@
 
         function setCrootId(crootId) {
             vm.crootId = crootId;
-            loadComponentsCodes();
-            loadInstanceResources();
+            if (vm.showCodes){
+                loadComponentsCodes();
+                loadInstanceResources();
+            }
         }
 
         function setAllowAdd(allowAdd) {
@@ -165,6 +172,10 @@
                     }
                 }
             });
+            var delay = 0;
+            $timeout(function () {
+                vm.listHasComponents = true;
+            }, delay);
         }
     }
 })();

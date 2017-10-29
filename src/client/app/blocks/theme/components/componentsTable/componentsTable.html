@@ -1,15 +1,15 @@
 <div class="horizontal-scroll" ng-if="vm.listHasComponents">
     <div class="col-lg-12">
         <div class="row">
-            <table class="table" st-table="vm.componentsList">
+            <table class="table" st-table="vm.componentsList" st-safe-src="vm.componentsListSafe">
                 <thead>
                 <tr class="sortable">
                     <th class="align-left" st-sort="name" st-sort-default="true">{{ 'NAME_TITLE' | translate }}</th>
-                    <th class="align-left" st-sort="type" st-sort-default="false" ng-if="vm.showTypes">{{ 'TYPE_TITLE' | translate }}</th>
-                    <th class="align-left" st-sort="code" st-sort-default="false" ng-if="vm.showCodes">{{ 'CODE_TITLE' | translate }}</th>
-                    <th class="align-left" ng-if="vm.showCodeHealth">{{ 'CODE_HEALTH_TITLE' | translate }}</th>
-                    <th class="align-left" ng-if="vm.showReliability">{{ 'RELIABILITY_TITLE' | translate }}</th>
-                    <th class="align-left" ng-if="vm.showEfficiencyPotential">{{ 'EFFICIENCY_POTENTIAL_TITLE' | translate }}</th>
+                    <th class="align-left" ng-if="vm.showTypes">{{ 'TYPE_TITLE' | translate }}</th>
+                    <th class="align-left" ng-if="vm.showCodes">{{ 'CODE_TITLE' | translate }}</th>
+                    <th class="align-left" st-sort="codeHealth.value" st-sort-default="true" ng-if="vm.showCodeHealth">{{ 'CODE_HEALTH_TITLE' | translate }}</th>
+                    <th class="align-left" st-sort="reliability.value" st-sort-default="true" ng-if="vm.showReliability">{{ 'RELIABILITY_TITLE' | translate }}</th>
+                    <th class="align-left" st-sort="efficiencyPotential.value" st-sort-default="true" ng-if="vm.showEfficiencyPotential">{{ 'EFFICIENCY_POTENTIAL_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.allowEdit">{{ 'EDIT_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.allowDelete">{{ 'DELETE_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.allowViewMore">{{ 'VIEW_MORE_TITLE' | translate }}</th>
@@ -41,7 +41,7 @@
                     <td class="align-center" ng-if="vm.showEfficiencyPotential">{{item.efficiencyPotential.value}}</td>
                     <td class="align-center" style="color:green;font-size: 20px" ng-if="vm.allowEdit"><a class="profile-toggle-link"
                         ng-click="editComponentFunction({component : item})"><i class="ion-edit"></i></a></td>
-                    <td class="align-center" style="color:green;font-size: 20px" ng-if="vm.allowEdit"><a class="profile-toggle-link"
+                    <td class="align-center" style="color:green;font-size: 20px" ng-if="vm.allowDelete"><a class="profile-toggle-link"
                         ng-click="deleteComponentFunction({component : item})"><i class="ion-trash-b"></i></a></td></td>
                     <td class="align-center" style="color:green;font-size: 20px" ng-if="vm.allowViewMore"><a class="profile-toggle-link"
                         ng-click="viewMoreFunction({component : item})"><i class="ion-more"></i></a></td></td>
