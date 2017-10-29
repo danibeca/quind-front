@@ -15,6 +15,7 @@
         var vm = this;
 
         vm.hasComponents = false;
+        vm.numberOfItems = 3;
         vm.components = [];
         vm.indicators = [];
         vm.orderOne = 0;
@@ -26,6 +27,7 @@
         vm.setComponents = setComponents;
         vm.setIndicators = setIndicators;
         vm.orderComponents = orderComponents;
+        vm.setNumberOfItems = setNumberOfItems;
 
         /*************************************
             Methods to set data from directive
@@ -45,6 +47,10 @@
                 vm.orderOptionsOutstanding.push({id: x.id, name: 'Destacados en ' + x.name});
                 i++;
             });
+        }
+
+        function setNumberOfItems(numberOfItems) {
+            vm.numberOfItems = numberOfItems;
         }
 
         /*********************************************

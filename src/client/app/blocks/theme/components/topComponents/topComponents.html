@@ -20,7 +20,7 @@
     </div>
     <br>
 </div>
-<div ng-repeat="component in vm.components|limitTo:3 track by component.name" ng-if="vm.hasComponents">
+<div ng-repeat="component in vm.components|limitTo:vm.numberOfItems track by component.name" ng-if="vm.hasComponents">
     <div class="col-lg-4 col-md-12 col-sm-12"
          ba-panel
          ba-panel-title="{{ 'SYSTEM_INDICATORS' | translate }}"

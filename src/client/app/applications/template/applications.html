@@ -16,6 +16,7 @@
         <div class="al-content" ng-if="!vm.viewComponentDashboard">
             <content-top></content-top>
             <top-components components="{{ vm.applications }}"
+                            number-of-items="3"
                             indicators="{{ vm.arrayIndIds }}"></top-components>
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel

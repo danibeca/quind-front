@@ -19,7 +19,8 @@
             templateUrl: 'app/blocks/theme/components/topComponents/topComponents.html',
             scope: {
                 components: '@',
-                indicators: '@'
+                indicators: '@',
+                numberOfItems: '@'
             },
             link: function(scope, element, attrs, controller) {
                 scope.$watch('components', function () {
@@ -31,6 +32,12 @@
                 scope.$watch('indicators', function () {
                     if (scope.indicators !== undefined && scope.indicators !== '') {
                         controller.setIndicators(JSON.parse(scope.indicators));
+                    }
+                });
+
+                scope.$watch('numberOfItems', function () {
+                    if (scope.numberOfItems !== undefined && scope.numberOfItems !== '') {
+                        controller.setNumberOfItems(scope.numberOfItems);
                     }
                 });
             }
