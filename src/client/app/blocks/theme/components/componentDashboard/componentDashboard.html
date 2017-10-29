@@ -19,6 +19,14 @@
 </div>
 <div class="col-lg-8 col-md-12 col-sm-12"
      ba-panel
+     ba-panel-title="Lleve su cilindro"
+     ba-panel-class="medium-panel">
+
+    <cylinder-chart chart-id="esemalditoid" data="{{ vm.cylinderChartData }}"></cylinder-chart>
+    <span class="error-dashboard" ng-show="component.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
+</div>
+<div class="col-lg-8 col-md-12 col-sm-12"
+     ba-panel
      ba-panel-title="{{ 'ACCOUNT_RUN CHART' | translate }}"
      ba-panel-class="medium-panel">
     <stock-multiple-chart ids="{{ vm.ids}}"

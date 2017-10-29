@@ -26,6 +26,8 @@
         var labels = [];
         var dSeries = [];
 
+        vm.cylinderChartData = [];
+
         vm.setComponent = setComponent;
 
         /*************************************
@@ -71,11 +73,22 @@
             }
 
             componentService.getIndicators(vm.component.id, vm.indIds)
-                .then(success)
-                .catch(fail);
+                .then(successIndicators)
+                .catch(failIndicators);
 
-            function success(indicators) {
+            function successIndicators(indicators) {
                 vm.data = indicators;
+                prepareCylinderData(indicators);
+                prepareRunChart(indicators);
+            }
+
+            function failIndicators(error) {
+                vm.error = true;
+                vm.seriesError = true;
+                vm.msgError = error.msgCode;
+            }
+
+            function prepareRunChart(indicators) {
                 var missing = indicators.length;
                 componentService.getIndicatorSeries(vm.component.id, vm.indIds)
                     .then(successSeries);
@@ -106,10 +119,14 @@
                 }
             }
 
-            function fail(error) {
-                vm.error = true;
-                vm.seriesError = true;
-                vm.msgError = error.msgCode;
+            function prepareCylinderData(indicators) {
+                indicators.forEach(function(x) {
+                    var cylinderDataAux = {};
+                    cylinderDataAux.name = x.name;
+                    cylinderDataAux.values = [];
+                    cylinderDataAux.values.push(x.value);
+                    vm.cylinderChartData.push(cylinderDataAux);
+                });
             }
 
             function buildAxe(title) {
