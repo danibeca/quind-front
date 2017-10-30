@@ -6,6 +6,7 @@
       "accountAPI": "//account.quind.io/api/v1",
       "qastaAPI": "//qasta.quind.io/api/v1",
       "qalogAPI": "//qalog.quind.io/api/v1",
+      "cilogAPI": "//cilog.quind.io/api/v1",
       "env": "pdn"
     }
   },
@@ -16,6 +17,7 @@
       "accountAPI": "//account.quind.io/api/v1",
       "qastaAPI": "//qasta.quind.io/api/v1",
       "qalogAPI": "//qalog.quind.io/api/v1",
+      "cilogAPI": "//cilog.quind.io/api/v1",
       "env": "pdn"
     }
   },
@@ -26,6 +28,7 @@
       "accountAPI": "//localhost/quind/account/public/api/v1",
       "qastaAPI": "//localhost/quind/qasta/public/api/v1",
       "qalogAPI": "//localhost/quind/qalog/public/api/v1",
+      "cilogAPI": "//localhost/quind/cilog/public/api/v1",
       "env": "dev"
     }
   }

@@ -1,0 +1,143 @@
+<form class="form-horizontal" method="POST" name="saveCIS" angular-validator-submit="vm.saveCIS()"
+      novalidate angular-validator
+      ng-if="!vm.hasCIS || vm.mustShowCIEdit">
+    <div class="col-md-12">
+        <div class="form-group row clearfix">
+            <label class="col-sm-2">{{ 'CI_SYSTEM_SERVICE' | translate }}</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="quality" ng-model="vm.ciServer.ci_system_id"
+                        required
+                        validate-on="dirty"
+                        validator="vm.ciServer.ci_system_id != 0"
+                        required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                        invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                        ng-options="i.id as (i.name) for i in vm.ciServers">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+        <!--div class="form-group row clearfix">
+            <label class="col-sm-2">{{ 'PUBLIC_PRIVATE' | translate }}</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="publicprivate" ng-model="vm.ciServer.type"
+                        selectpicker
+                        required
+                        validate-on="dirty"
+                        validator="vm.ciServer.type != 0"
+                        required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                        invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                        ng-options="i.id as (i.name) for i in vm.typeOptions">
+                    <option></option>
+                </select>
+            </div>
+        </div-->
+        <div class="form-group row clearfix">
+            <label for="url_build_server" class="col-sm-2">{{ 'BUILD_URL_TITLE' | translate }}</label>
+            <div class="col-sm-4">
+                <input type="text" name="url_build_server" class="form-control" ng-model="vm.ciServer.url_build_server"
+                       id="url_build_server" placeholder="" value=""
+                       validate-on="dirty"
+                       validator="vm.urlValidator(vm.ciServer.url_build_server) === true"
+                       invalid-message="vm.urlValidator(vm.ciServer.url_build_server)">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="requiresBSAuthentication" class="col-sm-2">{{ 'AUTH_REQUIRED_TITLE' | translate }}</label>
+            <div class="col-sm-2">
+                <input type="checkbox"
+                       positivetext="{{ 'YES_TEXT' | translate }}"
+                       offtext="{{ 'NO_TEXT' | translate }}"
+                       first="{{vm.ciServer.boRequiresBSAuthentication}}"
+                       id="requiresBSAuthentication"
+                       name="requiresBSAuthentication"
+                       ng-model="vm.ciServer.boRequiresBSAuthentication"
+                       bootstrap-switch />
+            </div>
+        </div>
+        <div class="form-group row clearfix" ng-show="vm.ciServer.boRequiresBSAuthentication">
+            <label for="inputUserNameBS" class="col-sm-2">{{ 'USERNAME_TITLE' | translate }}</label>
+            <div class="col-sm-2">
+                <input type="text" name="username_build_server" class="form-control" ng-model="vm.ciServer.username_build_server"
+                       id="inputUserNameBS" placeholder="" value=""
+                       validate-on="dirty"
+                       validator = "vm.userNameValidator(vm.ciServer.boRequiresBSAuthentication, vm.ciServer.username_build_server) === true"
+                       required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                       invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
+            </div>
+        </div>
+        <div class="form-group row clearfix" ng-show="vm.ciServer.boRequiresBSAuthentication">
+            <label for="inputPasswordBS" class="col-sm-2">{{ 'PASSWORD_TITLE' | translate }}</label>
+            <div class="col-sm-2">
+                <input type="password" name="password" class="form-control" ng-model="vm.ciServer.password_build_server"
+                       id="inputPasswordBS" placeholder="" value=""
+                       validate-on="dirty"
+                       validator = "vm.passwordValidator(vm.ciServer.boRequiresBSAuthentication, vm.ciServer.password_build_server) === true"
+                       required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                       invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="url_release_manager" class="col-sm-2">{{ 'RELEASE_URL_TITLE' | translate }}</label>
+            <div class="col-sm-4">
+                <input type="text" name="url" class="form-control" ng-model="vm.ciServer.url_release_manager"
+                       id="url_release_manager" placeholder="" value=""
+                       validate-on="dirty"
+                       validator="vm.urlValidator(vm.ciServer.url_release_manager) === true"
+                       invalid-message="vm.urlValidator(vm.ciServer.url_release_manager)">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="requiresRMAuthentication" class="col-sm-2">{{ 'AUTH_REQUIRED_TITLE' | translate }}</label>
+            <div class="col-sm-2">
+                <input type="checkbox"
+                       positivetext="{{ 'YES_TEXT' | translate }}"
+                       offtext="{{ 'NO_TEXT' | translate }}"
+                       first="{{vm.ciServer.boRequiresRMAuthentication}}"
+                       id="requiresRMAuthentication"
+                       name="requiresRMAuthentication"
+                       ng-model="vm.ciServer.boRequiresRMAuthentication"
+                       bootstrap-switch />
+            </div>
+        </div>
+        <div class="form-group row clearfix" ng-show="vm.ciServer.boRequiresRMAuthentication">
+            <label for="inputUserNameRM" class="col-sm-2">{{ 'USERNAME_TITLE' | translate }}</label>
+            <div class="col-sm-2">
+                <input type="text" name="username" class="form-control" ng-model="vm.ciServer.username_release_manager"
+                       id="inputUserNameRM" placeholder="" value=""
+                       validate-on="dirty"
+                       validator = "vm.userNameValidator(vm.ciServer.requiresRMAuthentication, vm.ciServer.username_release_manager) === true"
+                       required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                       invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
+            </div>
+        </div>
+        <div class="form-group row clearfix" ng-show="vm.ciServer.boRequiresRMAuthentication">
+            <label for="inputPasswordRM" class="col-sm-2">{{ 'PASSWORD_TITLE' | translate }}</label>
+            <div class="col-sm-2">
+                <input type="password" name="password" class="form-control" ng-model="vm.ciServer.password_release_manager"
+                       id="inputPasswordRM" placeholder="" value=""
+                       validate-on="dirty"
+                       validator = "vm.passwordValidator(vm.ciServer.requiresRMAuthentication, vm.ciServer.password_release_manager) === true"
+                       required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                       invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
+            </div>
+        </div>
+        <div class="form-group row clearfix" >
+            <br>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowCIEdit">
+                    <i class="ion-android-checkmark-circle"></i>{{ 'ADD_SERVER' | translate }}
+                </button>
+
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.mustShowCIEdit">
+                    <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_SERVER' | translate }}
+                </button>
+            </div>
+            <div class="col-sm-2">
+                <button name="cancel" type="button" class="btn btn-with-icon" ng-click="vm.cancelCIEdit()" ng-show="vm.mustShowCIEdit">{{ 'CANCEL' | translate }}</button>
+            </div>
+            <div class="col-sm-2">
+                <div class="loader" ng-show="vm.showLoader"></div>
+            </div>
+        </div>
+    </div>
+</form>

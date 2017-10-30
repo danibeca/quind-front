@@ -1,0 +1,34 @@
+<div class="horizontal-scroll">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th class="align-center">{{ 'SERVER_TITLE' | translate }}</th>
+            <th class="align-center">URL</th>
+            <th class="align-center">{{ 'VERIFIED_TITLE' | translate }}</th>
+            <th class="align-center">{{ 'EDIT_TITLE' | translate }}</th>
+            <th class="align-center">{{ 'DOCKER_FILES_TITLE' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vm.qaServerInstances">
+            <td>{{item.name}}</td>
+            <td class="align-right">{{item.url}}</td>
+            <td class="align-center">
+                <span style="color:green;font-size: 20px" ng-show="item.verified"><i
+                        class="ion-android-checkmark-circle"></i></span>
+                <span style="color:red;font-size: 20px" ng-show="!item.verified"><i
+                        class="ion-android-cancel"></i></span>
+            </td>
+            <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link"
+                ng-click="vm.showQAEdit()"><i
+                    class="ion-edit"></i></a></td>
+            <td class="align-center" ng-show="item.type == 2">
+                <span style="color:blue;font-size: 20px"><a
+                    href="{{vm.qalogAPI}}/components/{{item.component_owner_id}}/docker"><i
+                    class="ion-android-download"></i></a></span>
+            </td>
+            <td class="align-right" ng-show="item.type != 2"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

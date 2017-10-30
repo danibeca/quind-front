@@ -1,0 +1,28 @@
+<div class="horizontal-scroll">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th class="align-center">{{ 'SERVER_TITLE' | translate }}</th>
+            <th class="align-center">{{ 'BUILD_URL_TITLE' | translate }}</th>
+            <th class="align-center">{{ 'RELEASE_URL_TITLE' | translate }}</th>
+            <th class="align-center">{{ 'VERIFIED_TITLE' | translate }}</th>
+            <th class="align-center">{{ 'EDIT_TITLE' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vm.ciServerInstances">
+            <td>{{item.name}}</td>
+            <td class="align-right">{{item.url_build_server}}</td>
+            <td class="align-right">{{item.url_release_manager}}</td>
+            <td class="align-center">
+                <span style="color:green;font-size: 20px" ng-show="item.verified"><i
+                        class="ion-android-checkmark-circle"></i></span>
+                <span style="color:red;font-size: 20px" ng-show="!item.verified"><i
+                        class="ion-android-cancel"></i></span>
+            </td>
+            <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.showCIEdit()"><i
+                    class="ion-edit"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

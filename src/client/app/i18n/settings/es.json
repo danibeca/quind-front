@@ -1,10 +1,12 @@
 {
   "QUALITY_SYSTEM_CONFIG_TITLE": "CONFIGURACIÓN DE SISTEMA DE CALIDAD",
+  "CI_SYSTEM_CONFIG_TITLE": "CONFIGURACIÓN DE SISTEMA DE INTEGRACIÓN CONTINUA",
   "INVALID_URL": "URL inválida",
   "PUBLIC_PRIVATE": "Público/Privado",
   "PUBLIC": "Público",
   "PRIVATE": "Privado",
   "QUALITY_SYSTEM_SERVICE": "Servidor de sistema de calidad",
+  "CI_SYSTEM_SERVICE": "Servidor de integración continua",
   "ADD_SERVER": "Agregar servidor",
   "SERVER": "Servidor",
   "URL": "Dirección",
@@ -25,5 +27,7 @@
   "ADD_NEW_ACCOUNT": "Agregar usuario",
   "CHANGE_PASSWORD_TITLE": "Cambiar contraseña",
   "ADD_NEW_COMPONENT": "Agregar componente",
-  "FIELD_REQUIRED": "Campo requerido"
+  "FIELD_REQUIRED": "Campo requerido",
+  "BUILD_URL_TITLE": "URL del servidor de Build",
+  "RELEASE_URL_TITLE": "URL del servidor de Release"
 }
