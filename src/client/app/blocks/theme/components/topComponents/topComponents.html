@@ -1,5 +1,5 @@
 <div class="col-sm-12" ba-panel
-     ba-panel-class="small-panel">
+     ba-panel-class="small-panel" ng-if="vm.hasComponents">
     <br>
     <div>
         <div>
@@ -23,12 +23,12 @@
 <div ng-repeat="component in vm.components|limitTo:vm.numberOfItems track by component.name" ng-if="vm.hasComponents">
     <div class="col-lg-4 col-md-12 col-sm-12"
          ba-panel
-         ba-panel-title="{{ 'SYSTEM_INDICATORS' | translate }}"
+         ba-panel-title="{{vm.title}}"
          ba-panel-title-ext="{{component.name}}"
          ba-panel-class="medium-panel">
 
         <gauge-chart data="{{component.data}}"
-                     chartid="{{component.chartId}}"
+                     chartid="{{vm.chartName}} + {{component.chartId}}"
                      loading="{{ 'LOADING' | translate }}"
                      error="{{component.error}}">
         </gauge-chart>

@@ -16,8 +16,14 @@
         <div class="al-content" ng-if="!vm.viewComponentDashboard">
             <content-top></content-top>
             <top-components components="{{ vm.systems }}"
+                            title="{{ 'SOFTWARE_MATURITY_TITLE' | translate }}"
                             number-of-items="3"
-                            indicators="{{ vm.arrayIndIds }}"></top-components>
+                            chart-name="qa"></top-components>
+            <top-components components="{{ vm.systemsForCI }}"
+                            title="{{ 'PROCESS_MATURITY_TITLE' | translate }}"
+                            number-of-items="3"
+                            chart-name="ci"
+                            ng-if="vm.hasCIS"></top-components>
             <div class="col-lg-8 col-md-12 col-sm-12"
                  ba-panel
                  ba-panel-class="profile-page">

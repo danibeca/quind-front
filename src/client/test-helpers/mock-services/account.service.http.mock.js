@@ -6,8 +6,8 @@
 var accountServiceHtttpMock = (function () {
     return {
         getIndicator: getIndicator,
-        getIndicators: getIndicators,
-        getIndicatorSeries: getIndicatorSeries,
+        getQAIndicators: getQAIndicators,
+        getQAIndicatorSeries: getQAIndicatorSeries,
         getError: getError,
     };
 
@@ -22,7 +22,7 @@ var accountServiceHtttpMock = (function () {
         };
     }
 
-    function getIndicators() {
+    function getQAIndicators() {
         return {
             "data": [{
                 'id': 1,
@@ -43,7 +43,7 @@ var accountServiceHtttpMock = (function () {
         };
     }
 
-    function getIndicatorSeries() {
+    function getQAIndicatorSeries() {
         return {
             data: [{
                 "date": "16-03-2017",

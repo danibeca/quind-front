@@ -90,8 +90,8 @@
                 "angle": 30,
                 "autoMargins": false,
                 "marginBottom": 100,
-                "marginLeft": 100,
-                "marginRight": 100,
+                "marginLeft": 30,
+                "marginRight": 10,
                 "dataProvider": chartProviders.data,
                 "valueAxes": [ {
                     "stackType": "100%",

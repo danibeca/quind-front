@@ -18,9 +18,12 @@
             getRemoteRoot: getRemoteRoot,
             hasLeaves: hasLeaves,
             getInfo: getInfo,
-            getIndicators: getIndicators,
-            getIndicatorSeries: getIndicatorSeries,
+            getQAIndicators: getQAIndicators,
+            getCIIndicators: getCIIndicators,
+            getQAIndicatorSeries: getQAIndicatorSeries,
+            getCIIndicatorSeries: getCIIndicatorSeries,
             getQAAttributes: getQAAttributes,
+            getCIAutomationPhases: getCIAutomationPhases,
             add: add,
             getList: getList,
             getQalogList: getQalogList,
@@ -210,7 +213,7 @@
             }
         }
 
-        function getIndicators(componentId, indicatorIds) {
+        function getQAIndicators(componentId, indicatorIds) {
             if (indicatorIds !== null) {
                 return qalogAPI.all('indicators').getList({ids: indicatorIds})
                     .then(successName)
@@ -248,9 +251,40 @@
             }
         }
 
-        function getIndicatorSeries(componentId, indicatorIds) {
+        function getCIIndicators(componentId, indicatorIds) {
+            return qastaAPI.one('components', componentId).getList('ci-indicators', {ids: indicatorIds})
+                .then(successCIIndicators)
+                .catch(failCIIndicators);
+
+            function successCIIndicators(indicators) {
+                return indicators.plain();
+            }
+
+            function failCIIndicators(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function getQAIndicatorSeries(componentId, indicatorIds) {
             if (indicatorIds !== null) {
                 return qastaAPI.one('components', componentId).getList('indicators', {ids: indicatorIds, series: true})
+                    .then(successSerie)
+                    .catch(failSerie);
+            }
+
+            function successSerie(series) {
+                return series;
+            }
+
+            function failSerie(error) {
+                return $q.reject(error);
+            }
+
+        }
+
+        function getCIIndicatorSeries(componentId, indicatorIds) {
+            if (indicatorIds !== null) {
+                return qastaAPI.one('components', componentId).getList('ci-indicators', {ids: indicatorIds, series: true})
                     .then(successSerie)
                     .catch(failSerie);
             }
@@ -293,6 +327,19 @@
             }
         }
 
+        function getCIAutomationPhases(componentId) {
+            return qastaAPI.one('components', componentId).getList('ci-automation-phases')
+                .then(success)
+                .catch(fail);
+
+            function success(indicators) {
+                return indicators.plain();
+            }
+
+            function fail(error) {
+                return $q.reject(error);
+            }
+        }
     }
 
 })();

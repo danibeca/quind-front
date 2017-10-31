@@ -17,17 +17,18 @@
         vm.hasComponents = false;
         vm.numberOfItems = 3;
         vm.components = [];
-        vm.indicators = [];
         vm.orderOne = 0;
         vm.orderTwo = 0;
         vm.orderOptionsCriticals = [];
         vm.orderOptionsOutstanding = [];
-        vm.dashChartId = 'dashChart1';
+        vm.chartName = '';
+        vm.title = '';
 
         vm.setComponents = setComponents;
-        vm.setIndicators = setIndicators;
         vm.orderComponents = orderComponents;
         vm.setNumberOfItems = setNumberOfItems;
+        vm.setChartName = setChartName;
+        vm.setTitle = setTitle;
 
         /*************************************
             Methods to set data from directive
@@ -36,21 +37,29 @@
             vm.components = components;
             if(vm.components.length > 0) {
                 vm.hasComponents = true;
+                var orderOptionsCriticals = [];
+                var orderOptionsOutstanding = [];
+                vm.components[0].data.forEach(function(x) {
+                    var newOptionCritical = {id: x.id, name: 'Críticos en ' + x.name};
+                    orderOptionsCriticals.push(newOptionCritical);
+                    var newOptionOutstanding = {id: x.id, name: 'Destacados en ' + x.name};
+                    orderOptionsOutstanding.push(newOptionOutstanding);
+                });
+                vm.orderOptionsCriticals = orderOptionsCriticals;
+                vm.orderOptionsOutstanding = orderOptionsOutstanding;
             }
-        }
-
-        function setIndicators(indicators) {
-            var i = 1;
-            vm.indicators = indicators;
-            indicators.forEach(function(x) {
-                vm.orderOptionsCriticals.push({id: x.id, name: 'Críticos en ' + x.name});
-                vm.orderOptionsOutstanding.push({id: x.id, name: 'Destacados en ' + x.name});
-                i++;
-            });
         }
 
         function setNumberOfItems(numberOfItems) {
             vm.numberOfItems = numberOfItems;
+        }
+
+        function setChartName(chartName) {
+            vm.chartName = chartName;
+        }
+
+        function setTitle(title) {
+            vm.title = title;
         }
 
         /*********************************************

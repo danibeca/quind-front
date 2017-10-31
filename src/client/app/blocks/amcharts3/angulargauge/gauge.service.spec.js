@@ -18,7 +18,7 @@ describe('Gauge Service', function () {
 
     describe(' Method transformData', function () {
         beforeEach(function () {
-            data = accountServiceDataMock.getIndicators();
+            data = accountServiceDataMock.getQAIndicators();
             transformedData = gaugeService.transformData(data);
         });
 
@@ -46,7 +46,7 @@ describe('Gauge Service', function () {
         });
 
         it('should return the maximum of items allowed when the limit is exceeded', function () {
-            limitedResult = gaugeService.transformData(accountServiceDataMock.getIndicatorsExceeded());
+            limitedResult = gaugeService.transformData(accountServiceDataMock.getQAIndicatorsExceeded());
             expect(limitedResult.bands.length).to.equal(10);
             expect(limitedResult.labels.length).to.equal(5);
         });

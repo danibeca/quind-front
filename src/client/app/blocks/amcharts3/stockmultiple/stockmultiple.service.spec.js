@@ -17,7 +17,7 @@ describe('Multiple Data Set Chart Service', function () {
 
     describe('Method getDataSets', function () {
         beforeEach(function () {
-            data = stockMultipleDirDataMock.getAll(accountServiceDataMock.getIndicatorSeries());
+            data = stockMultipleDirDataMock.getAll(accountServiceDataMock.getQAIndicatorSeries());
             transformedData = stockMultipleService.getDataSets(data.ids, data.vars, data.labels, data.series);
         });
 
@@ -32,7 +32,7 @@ describe('Multiple Data Set Chart Service', function () {
 
     describe('Method getPanels', function () {
         it('should return an array with right values', function () {
-            data = stockMultipleDirDataMock.getAll(accountServiceDataMock.getIndicatorSeries());
+            data = stockMultipleDirDataMock.getAll(accountServiceDataMock.getQAIndicatorSeries());
             panels = stockMultipleService.getPanels(data.vars);
             expect(panels).to.be.instanceof(Array);
             expect(panels[0].stockGraphs[0].valueField).to.equal(data.vars[0]);
@@ -75,7 +75,7 @@ describe('Multiple Data Set Chart Service', function () {
 
     describe('Method transformData', function () {
         beforeEach(function () {
-            data = stockMultipleDirDataMock.getAll(accountServiceDataMock.getIndicatorSeries());
+            data = stockMultipleDirDataMock.getAll(accountServiceDataMock.getQAIndicatorSeries());
             transformedData = stockMultipleService.transformData(data.ids, data.vars, data.labels, data.series, 'es');
         });
 
