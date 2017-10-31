@@ -8,7 +8,7 @@
         .factory('componentService', componentService);
 
     /* @ngInject */
-    function componentService(accountAPI, qastaAPI, qalogAPI, $q, storageService) {
+    function componentService(accountAPI, qastaAPI, qalogAPI, cilogAPI, $q, storageService) {
         var service = {
             createAccount: createAccount,
             create: create,
@@ -48,6 +48,7 @@
                     parent_id: response.parent_id
                 };
                 qastaAPI.one('components', componentData.id).customPUT(componentData);
+                cilogAPI.one('components', componentData.id).customPUT(componentData);
                 if(response.type_id === 3){
                     componentData.quality_system_instance_id = data.quality_system_instance_id;
                     componentData.app_code = data.code;
@@ -69,7 +70,7 @@
 
             function successDelete(response) {
                 qastaAPI.one('components', data.id).remove();
-
+                cilogAPI.one('components', data.id).remove();
                 qalogAPI.one('components', data.id).remove();
                 return response.data;
             }
@@ -91,6 +92,7 @@
                     parent_id: response.parent_id
                 };
                 qastaAPI.all('components').post(componentData);
+                cilogAPI.all('components').post(componentData);
                 if(response.type_id === 3){
                     componentData.quality_system_instance_id = dataCreateGeneral.quality_system_instance_id;
                     componentData.app_code = dataCreateGeneral.code;
