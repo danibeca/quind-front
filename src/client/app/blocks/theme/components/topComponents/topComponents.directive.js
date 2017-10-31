@@ -19,8 +19,9 @@
             templateUrl: 'app/blocks/theme/components/topComponents/topComponents.html',
             scope: {
                 components: '@',
-                indicators: '@',
-                numberOfItems: '@'
+                numberOfItems: '@',
+                chartName: '@',
+                title: '@'
             },
             link: function(scope, element, attrs, controller) {
                 scope.$watch('components', function () {
@@ -29,15 +30,21 @@
                     }
                 });
 
-                scope.$watch('indicators', function () {
-                    if (scope.indicators !== undefined && scope.indicators !== '') {
-                        controller.setIndicators(JSON.parse(scope.indicators));
-                    }
-                });
-
                 scope.$watch('numberOfItems', function () {
                     if (scope.numberOfItems !== undefined && scope.numberOfItems !== '') {
                         controller.setNumberOfItems(scope.numberOfItems);
+                    }
+                });
+
+                scope.$watch('chartName', function () {
+                    if (scope.chartName !== undefined && scope.chartName !== '') {
+                        controller.setChartName(scope.chartName);
+                    }
+                });
+
+                scope.$watch('title', function () {
+                    if (scope.title !== undefined && scope.title !== '') {
+                        controller.setTitle(scope.title);
                     }
                 });
             }

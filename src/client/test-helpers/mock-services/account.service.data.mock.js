@@ -6,16 +6,16 @@
 var accountServiceDataMock = (function () {
     return {
         getIndicator: getIndicator,
-        getIndicators: getIndicators,
-        getIndicatorsExceeded: getIndicatorsExceeded,
-        getIndicatorSeries: getIndicatorSeries
+        getQAIndicator: getQAIndicator,
+        getQAIndicatorExceeded: getQAIndicatorExceeded,
+        getQAIndicatorSeries: getQAIndicatorSeries
     };
 
     function getIndicator() {
         return {"id": 1, "name": "Indicador de Calidad en el codigo", "code": "acc_general_code_health", "value": 73};
     }
 
-    function getIndicators() {
+    function getQAIndicator() {
         return [{
             "id": 1,
             "name": "Salud del Codigo",
@@ -35,7 +35,7 @@ var accountServiceDataMock = (function () {
 
     }
 
-    function getIndicatorsExceeded() {
+    function getQAIndicatorExceeded() {
         return [{
             "id": 1,
             "name": "Salud del Codigo",
@@ -76,7 +76,7 @@ var accountServiceDataMock = (function () {
         ];
     }
 
-    function getIndicatorSeries() {
+    function getQAIndicatorSeries() {
         return [{
             "date": "16-03-2017",
             "value": 86.366

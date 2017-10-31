@@ -9,31 +9,31 @@ describe('DashboardController', function () {
 
     afterEach(function () {
         accountService.getIndicators.restore();
-        accountService.getIndicatorSeries.restore();
+        accountService.getQAIndicatorSeries.restore();
         user.getUser.restore();
     });
 
     describe('on activate', function () {
 
         beforeEach(function () {
-            sinon.stub(accountService, 'getIndicatorSeries')
-                .returns($q.when(accountServiceDataMock.getIndicatorSeries()));
-            sinon.stub(accountService, 'getIndicators')
-                .returns($q.when(accountServiceDataMock.getIndicators()));
+            sinon.stub(accountService, 'getQAIndicatorSeries')
+                .returns($q.when(accountServiceDataMock.getQAIndicatorSeries()));
+            sinon.stub(accountService, 'getQAIndicators')
+                .returns($q.when(accountServiceDataMock.getQAIndicators()));
             sinon.stub(user, 'getUser').returns(mockData.getMockLogin());
             controller = $controller('DashboardController');
             $rootScope.$apply();
         });
 
 
-        it('should call accountServices getIndicators once', function () {
-            expect(accountService.getIndicators.calledOnce);
-            expect(accountService.getIndicators.calledWithExactly([1]));
+        it('should call accountServices getQAIndicator once', function () {
+            expect(accountService.getQAIndicators.calledOnce);
+            expect(accountService.getQAIndicators.calledWithExactly([1]));
         });
 
-        it('should call accountServices getIndicatorSeries three times', function () {
-            expect(accountService.getIndicatorSeries.calledThrice);
-            expect(accountService.getIndicators.calledWithExactly([1, 1]));
+        it('should call accountServices getQAIndicatorSeries three times', function () {
+            expect(accountService.getQAIndicatorSeries.calledThrice);
+            expect(accountService.getQAIndicators.calledWithExactly([1, 1]));
         });
 
         it('should fill data in the controller', function () {
@@ -57,12 +57,12 @@ describe('DashboardController', function () {
     });
 
 
-    it('should fail when getIndicators fails', function () {
-        sinon.stub(accountService, 'getIndicatorSeries')
-            .returns($q.when(accountServiceDataMock.getIndicatorSeries()));
+    it('should fail when getQAIndicators fails', function () {
+        sinon.stub(accountService, 'getQAIndicatorSeries')
+            .returns($q.when(accountServiceDataMock.getQAIndicatorSeries()));
 
         var deferred = $q.defer();
-        sinon.stub(accountService, 'getIndicators')
+        sinon.stub(accountService, 'getQAIndicators')
             .returns(deferred.promise);
         sinon.stub(user, 'getUser').returns(mockData.getMockLogin());
 
@@ -76,13 +76,13 @@ describe('DashboardController', function () {
         expect(error['msgCode']).to.equal(controller.msgError);
     });
 
-    it('should fail when getIndicatorSeries fails', function () {
+    it('should fail when getQAIndicatorSeries fails', function () {
         var deferred = $q.defer();
-        sinon.stub(accountService, 'getIndicatorSeries')
+        sinon.stub(accountService, 'getQAIndicatorSeries')
             .returns(deferred.promise);
         sinon.stub(user, 'getUser').returns(mockData.getMockLogin());
-        sinon.stub(accountService, 'getIndicators')
-            .returns($q.when(accountServiceDataMock.getIndicators()));
+        sinon.stub(accountService, 'getQAIndicators')
+            .returns($q.when(accountServiceDataMock.getQAIndicators()));
 
         var error = [];
         error['msgCode'] = 'HOUSTON_WE_GOT_A_PROBLEM2';
