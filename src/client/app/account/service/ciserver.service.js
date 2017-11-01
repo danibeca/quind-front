@@ -147,14 +147,24 @@
 
         function deletePhase(data) {
             return qastaAPI.one('components', data.component_owner_id).one('process-phases', data.id).remove()
-                .then(successDelete)
-                .catch(failDelete);
+                .then(successDeleteQasta)
+                .catch(failDeleteQasta);
 
-            function successDelete(response) {
-                return response.data;
+            function successDeleteQasta() {
+                cilogAPI.one('components', data.component_owner_id).one('process-phases', data.id).remove()
+                    .then(successDeleteCilog)
+                    .catch(failDeleteCilog);
+
+                function successDeleteCilog(cilogResponse) {
+                    return cilogResponse;
+                }
+
+                function failDeleteCilog(error) {
+                    return $q.reject(error);
+                }
             }
 
-            function failDelete(error) {
+            function failDeleteQasta(error) {
                 return $q.reject(error);
             }
         }
