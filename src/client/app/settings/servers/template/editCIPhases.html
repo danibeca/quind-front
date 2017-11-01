@@ -1,0 +1,42 @@
+<div ba-panel ba-panel-class="profile-page" ng-if="vm.renderCIServerForm && vm.mustShowCIPhasesPage">
+    <div class="panel-content">
+        <h3 class="with-line">{{ 'CI_PHASES_CONFIG_TITLE' | translate }}</h3>
+        <div class="row">
+            <form class="form-horizontal" method="POST" name="savePhase" angular-validator-submit="vm.savePhase()"
+                novalidate angular-validator>
+                <div class="col-md-12">
+                    <div class="form-group row clearfix">
+                        <label class="col-sm-2">{{ 'PHASE_NAME_TITLE' | translate }}</label>
+                        <div for="phaseName" class="col-sm-2">
+                            <input type="text" name="phaseName" class="form-control" ng-model="vm.ciPhase.name"
+                                   id="phaseName" placeholder="" value=""
+                                   validate-on="dirty"
+                                   validator="vm.phaseNameValidator(vm.ciPhase.name) === true"
+                                   invalid-message="vm.phaseNameValidator(vm.ciPhase.name)">
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowCIEditPhase">
+                                <i class="ion-android-checkmark-circle"></i>{{ 'ADD_PHASE' | translate }}
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.mustShowCIEditPhase">
+                                <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_PHASE' | translate }}
+                            </button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button name="cancel" type="button" class="btn btn-with-icon" ng-click="vm.cancelCIPhaseEdit()" ng-show="vm.mustShowCIEditPhase">{{ 'CANCEL' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div ba-panel ba-panel-class="profile-page" ng-if="vm.renderCIServerForm && vm.mustShowCIPhasesPage && vm.hasCIPhases">
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <div include-with-scope="app/settings/servers/tables/CIPhases.instance.table.html"></div>
+            </div>
+        </div>
+    </div>
+</div>

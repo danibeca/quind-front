@@ -7,6 +7,7 @@
             <th class="align-center">{{ 'RELEASE_URL_TITLE' | translate }}</th>
             <th class="align-center">{{ 'VERIFIED_TITLE' | translate }}</th>
             <th class="align-center">{{ 'EDIT_TITLE' | translate }}</th>
+            <th class="align-center">{{ 'PHASES_TITLE' | translate }}</th>
         </tr>
         </thead>
         <tbody>
@@ -22,6 +23,8 @@
             </td>
             <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.showCIEdit()"><i
                     class="ion-edit"></i></a></td>
+            <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.showCIPhasesPage()"><i
+                    class="ion-ios-settings-strong"></i></a></td>
         </tr>
         </tbody>
     </table>

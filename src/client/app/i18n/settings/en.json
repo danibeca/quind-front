@@ -18,8 +18,8 @@
   "APPLICATION": "Application",
   "AUTH_REQUIRED_TITLE": "Authentication required?",
   "UPDATE_SERVER": "Update Server",
-  "CREATE_SERVER_ERROR": "An error ocurred creating server",
-  "UPDATE_SERVER_ERROR": "An error ocurred updating server",
+  "CREATE_SERVER_ERROR": "An error occurred creating server",
+  "UPDATE_SERVER_ERROR": "An error occurred updating server",
   "SERVER_TITLE": "Server",
   "VERIFIED_TITLE": "Verified?",
   "EDIT_TITLE": "Edit",
@@ -29,5 +29,13 @@
   "ADD_NEW_COMPONENT": "Add component",
   "FIELD_REQUIRED": "Field required",
   "BUILD_URL_TITLE": "Build server URL",
-  "RELEASE_URL_TITLE": "Release manager server URL"
+  "RELEASE_URL_TITLE": "Release manager server URL",
+  "CI_PHASES_CONFIG_TITLE": "CI Phases configuration",
+  "PHASE_NAME_TITLE": "Phase name",
+  "ADD_PHASE": "Add phase",
+  "UPDATE_PHASE": "Update phase",
+  "CREATE_PHASE_ERROR": "An error occurred creating phase",
+  "UPDATE_PHASE_ERROR": "An error occurred updating phase",
+  "DELETE_PHASE_ERROR": "An error occurred deleting phase",
+  "CONFIG_JOBS_TITLE": "Configure Jobs"
 }

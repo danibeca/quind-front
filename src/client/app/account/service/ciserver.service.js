@@ -6,14 +6,18 @@
         .factory('ciServerService', ciServerService);
 
     /* @ngInject */
-    function ciServerService(cilogAPI, $q) {
+    function ciServerService(cilogAPI, qastaAPI, $q) {
         var service = {
             getList: getList,
             getInstances: getInstances,
             getInstanceResources: getInstanceResources,
             attachInstance: attachInstance,
             isInstanceValid: isInstanceValid,
-            updateInstance: updateInstance
+            updateInstance: updateInstance,
+            createPhase: createPhase,
+            updatePhase: updatePhase,
+            deletePhase: deletePhase,
+            getPhases: getPhases
         };
         return service;
 
@@ -59,7 +63,6 @@
             }
         }
 
-
         function attachInstance(data) {
             return cilogAPI.all('ci-system-instances').post(data)
                 .then(success)
@@ -101,6 +104,72 @@
 
             function failInstanceValid() {
                 return false;
+            }
+        }
+
+        function createPhase(data) {
+            return qastaAPI.one('components', data.component_owner_id).all('process-phases').post(data)
+                .then(successAddPhase)
+                .catch(failAddPhase);
+
+            function successAddPhase(element) {
+                return cilogAPI.one('components', data.component_owner_id).all('process-phases').post(element)
+                    .then(successCreatePhase)
+                    .catch(failCreatePhase);
+
+                function successCreatePhase(data) {
+                    return data;
+                }
+
+                function failCreatePhase(error) {
+                    return $q.reject(error);
+                }
+            }
+
+            function failAddPhase(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function updatePhase(data) {
+            return qastaAPI.one('components', data.component_owner_id).one('process-phases', data.id).customPUT(data)
+                .then(successUpdatePhase)
+                .catch(failUpdatePhase);
+
+            function successUpdatePhase(data) {
+                return data;
+            }
+
+            function failUpdatePhase(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function deletePhase(data) {
+            return qastaAPI.one('components', data.component_owner_id).one('process-phases', data.id).remove()
+                .then(successDelete)
+                .catch(failDelete);
+
+            function successDelete(response) {
+                return response.data;
+            }
+
+            function failDelete(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function getPhases(data) {
+            return qastaAPI.one('components', data.component_owner_id).all('process-phases').getList()
+                .then(successPhases)
+                .catch(failPhases);
+
+            function successPhases(phases) {
+                return phases.plain();
+            }
+
+            function failPhases(error) {
+                return $q.reject(error);
             }
         }
     }

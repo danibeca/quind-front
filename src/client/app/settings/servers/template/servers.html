@@ -7,7 +7,7 @@
     <div class="al-main">
         <div class="al-content">
             <content-top></content-top>
-            <div ba-panel ba-panel-class="profile-page">
+            <div ba-panel ba-panel-class="profile-page" ng-if="!vm.mustShowCIPhasesPage">
                 <div class="panel-content">
 
                     <h3 class="with-line">{{ 'QUALITY_SYSTEM_CONFIG_TITLE' | translate }}</h3>
@@ -22,9 +22,8 @@
                     </div>
                 </div>
             </div>
-            <div ba-panel ba-panel-class="profile-page">
+            <div ba-panel ba-panel-class="profile-page" ng-if="!vm.mustShowCIPhasesPage">
                 <div class="panel-content">
-
                     <h3 class="with-line">{{ 'CI_SYSTEM_CONFIG_TITLE' | translate }}</h3>
                     <div class="row" ng-if="vm.hasCIS">
                         <div class="col-lg-8 col-md-12">
@@ -37,6 +36,7 @@
                     </div>
                 </div>
             </div>
+            <div include-with-scope="app/settings/servers/template/editCIPhases.html"></div>
         </div>
     </div>
 </main>

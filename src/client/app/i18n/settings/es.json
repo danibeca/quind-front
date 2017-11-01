@@ -29,5 +29,14 @@
   "ADD_NEW_COMPONENT": "Agregar componente",
   "FIELD_REQUIRED": "Campo requerido",
   "BUILD_URL_TITLE": "URL del servidor de Build",
-  "RELEASE_URL_TITLE": "URL del servidor de Release"
+  "RELEASE_URL_TITLE": "URL del servidor de Release",
+  "PHASES_TITLE": "Etapas",
+  "CI_PHASES_CONFIG_TITLE": "Configuración de las etapas de CI",
+  "PHASE_NAME_TITLE": "Nombre de la etapa",
+  "ADD_PHASE": "Agregar etapa",
+  "UPDATE_PHASE": "Actualizar etapa",
+  "CREATE_PHASE_ERROR": "Error creando Etapa",
+  "UPDATE_PHASE_ERROR": "Error actualizando Etapa",
+  "DELETE_PHASE_ERROR": "Error eliminando Etapa",
+  "CONFIG_JOBS_TITLE": "Configurar Jobs"
 }

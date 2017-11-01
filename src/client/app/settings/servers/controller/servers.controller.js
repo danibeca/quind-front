@@ -22,20 +22,31 @@
         vm.qaServerInstances = [];
         vm.ciServerInstances = [];
         vm.qaServer = {};
+        vm.ciPhase = {};
+        vm.ciPhases = [];
+        vm.hasCIPhases = false;
         vm.ciServer = {type: 1}; //TODO: Je!
 
         vm.mustShowQAEdit = false;
         vm.mustShowCIEdit = false;
+        vm.mustShowCIPhasesPage = false;
+        vm.mustShowCIEditPhase = false;
+
         vm.saveQAS = saveQAS;
         vm.saveCIS = saveCIS;
+        vm.savePhase = savePhase;
+        vm.deletePhase = deletePhase;
         vm.showQAEdit = showQAEdit;
         vm.showCIEdit = showCIEdit;
+        vm.showCIPhasesPage = showCIPhasesPage;
+        vm.showEditCIPhase = showEditCIPhase;
         vm.cancelQAEdit = cancelQAEdit;
         vm.cancelCIEdit = cancelCIEdit;
+        vm.cancelCIPhaseEdit = cancelCIPhaseEdit;
         vm.userNameValidator = userNameValidator;
         vm.passwordValidator = passwordValidator;
         vm.urlValidator = urlValidator;
-
+        vm.phaseNameValidator = phaseNameValidator;
 
         var croot = storageService.getJsonObject('croot');
 
@@ -88,6 +99,21 @@
                 vm.ciServerInstances = data;
                 if (data.length > 0) {
                     vm.hasCIS = true;
+                    loadCIPhases();
+                }
+            }
+        }
+
+        function loadCIPhases() {
+            ciServerService.getPhases({component_owner_id: croot.id})
+                .then(successCIPhases);
+
+            function successCIPhases(data) {
+                console.log(data)
+                vm.renderCIServerForm = true;
+                vm.ciPhases = data;
+                if (data.length > 0) {
+                    vm.hasCIPhases = true;
                 }
             }
         }
@@ -288,6 +314,77 @@
             }
         }
 
+        function savePhase() {
+            console.log(vm.mustShowCIEditPhase)
+            if(vm.mustShowCIEditPhase) {
+                updatePhase();
+            } else {
+                addPhase();
+            }
+        }
+
+        function updatePhase() {
+            var phase = {
+                component_owner_id: croot.id,
+                id: vm.ciPhase.id,
+                name: vm.ciPhase.name
+            };
+
+            ciServerService.updatePhase(phase)
+                .then(successUpdatePhase)
+                .catch(failUpdatePhase);
+
+            function successUpdatePhase() {
+                vm.showLoader = false;
+                vm.ciPhase = {};
+                loadCIPhases();
+            }
+
+            function failUpdatePhase() {
+                vm.showLoader = false;
+                logger.error($filter('translate')('UPDATE_PHASE_ERROR'));
+            }
+        }
+
+        function addPhase() {
+            var phase = {
+                component_owner_id: croot.id,
+                name: vm.ciPhase.name
+            };
+
+            ciServerService.createPhase(phase)
+                .then(successAddPhase)
+                .catch(failAddPhase);
+
+            function successAddPhase() {
+                vm.showLoader = false;
+                vm.ciPhase = {};
+                loadCIPhases();
+            }
+
+            function failAddPhase() {
+                vm.showLoader = false;
+                logger.error($filter('translate')('CREATE_PHASE_ERROR'));
+            }
+        }
+
+        function deletePhase(phase) {
+            ciServerService.deletePhase(phase)
+                .then(successDeletePhase)
+                .catch(failDeletePhase);
+
+            function successDeletePhase() {
+                vm.showLoader = false;
+                vm.ciPhase = {};
+                loadCIPhases();
+            }
+
+            function failDeletePhase() {
+                vm.showLoader = false;
+                logger.error($filter('translate')('DELETE_PHASE_ERROR'));
+            }
+        }
+
         function showQAEdit() {
             vm.mustShowQAEdit = true;
             vm.qaServer.id = vm.qaServerInstances[0].id;
@@ -317,12 +414,26 @@
             }
         }
 
+        function showCIPhasesPage() {
+            vm.mustShowCIPhasesPage = true;
+        }
+
+        function showEditCIPhase(phase) {
+            vm.ciPhase = phase;
+            vm.mustShowCIEditPhase = true;
+        }
+
         function cancelQAEdit() {
             vm.mustShowQAEdit = false;
         }
 
         function cancelCIEdit() {
             vm.mustShowCIEdit = false;
+        }
+
+        function cancelCIPhaseEdit() {
+            vm.ciPhase = {};
+            vm.mustShowCIEditPhase = false;
         }
 
         function userNameValidator(requiresAuthentication, username) {
@@ -357,6 +468,13 @@
                 return $filter('translate')('INVALID_URL');
             }
             return true;
+        }
+
+        function phaseNameValidator(phaseName) {
+            if (phaseName !== '' && phaseName !== undefined && phaseName !== null) {
+                return true;
+            }
+            return false;
         }
     }
 })();
