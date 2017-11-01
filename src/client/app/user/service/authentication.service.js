@@ -47,7 +47,6 @@
         function isTokenValid() {
             var last = new Date(storageService.get('lastTimeCheck'));
             var now = new Date();
-            console.log(now.getMinutes() - last.getMinutes());
             if (Math.abs(now.getMinutes() - last.getMinutes()) > 5) {
                 return getAuthUser()
                     .then(success)
