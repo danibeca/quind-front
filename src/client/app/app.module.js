@@ -20,8 +20,17 @@
                 var loginState = 'login';
                 var stateName = trans.$to().name;
 
-
                 if (isSecureRoute(stateName)) {
+                    return auth.isTokenValid()
+                        .then(successToken);
+                }
+                else if (stateName === loginState) {
+                    if (isUserLogged()) {
+                        return redirect('dashboard');
+                    }
+                }
+
+                function successToken(response) {
                     if (isUserLogged()) {
                         if (!isAdminRoute(stateName)) {
                             return hasLeaves().then(successEvalLeaves);
@@ -29,11 +38,6 @@
 
                     } else {
                         return redirect(loginState);
-                    }
-                }
-                else if (stateName === loginState) {
-                    if (isUserLogged()) {
-                        return redirect('dashboard');
                     }
                 }
 
@@ -73,24 +77,11 @@
                 function isUserLogged() {
                     if (!userService.isLoggedIn()) {
                         return false;
-                    };
+                    }
+                    ;
                     return true
                 }
 
-                function isTokenValid() {
-
-                    return auth.isTokenValid()
-                        .then(successToken)
-                        .fail(failToken);
-
-                    function successToken(response) {
-                        return response;
-                    }
-
-                    function failToken() {
-                        return false;
-                    }
-                }
 
                 function hasLeaves() {
                     var user = userService.getUser();

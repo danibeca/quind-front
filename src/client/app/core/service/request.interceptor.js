@@ -46,6 +46,7 @@
                         securityRedirect();
                     }
                 }
+
                 if (rejection.data.error.statusCode === 401) {
                     if (msg.includes('not be verified')) {
                         var deferred = $q.defer();
@@ -81,9 +82,13 @@
 
         function getErrorMessage(rejection) {
             var result = null;
+            if(rejection.data === null){
+                securityRedirect();
+            }
             if (rejection.data !== undefined && rejection.data.error !== undefined) {
                 result = JSON.stringify(rejection.data.error.message);
             }
+
             return result;
         }
     }
