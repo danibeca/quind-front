@@ -20,9 +20,12 @@
                 var loginState = 'login';
                 var stateName = trans.$to().name;
 
+
                 if (isSecureRoute(stateName)) {
                     return auth.isTokenValid()
                         .then(successToken);
+
+
                 }
                 else if (stateName === loginState) {
                     if (isUserLogged()) {

@@ -54,7 +54,6 @@
 
             function success() {
                 logger.success($filter('translate')('LOGIN_SUCCESS'));
-                getUser();
                 return createAccount();
             }
 
@@ -62,10 +61,6 @@
                 logger.error(error);
             }
 
-        }
-
-        function getUser() {
-            auth.getAuthUser()
         }
 
         function createAccount() {
@@ -88,7 +83,5 @@
         function associateAccountToUser() {
             componentService.associateToUser(vm.userComponentData);
         }
-
-
     }
 })();
