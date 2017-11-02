@@ -38,5 +38,8 @@
   "CREATE_PHASE_ERROR": "Error creando Etapa",
   "UPDATE_PHASE_ERROR": "Error actualizando Etapa",
   "DELETE_PHASE_ERROR": "Error eliminando Etapa",
-  "CONFIG_JOBS_TITLE": "Configurar Jobs"
+  "CONFIG_JOBS_TITLE": "Configurar Jobs",
+  "JOB_NAME_TITLE": "Nombre del Job",
+  "JOB_ACTION_TITLE": "Acciones",
+  "JOB_REGULAR_EXPRESION_TITLE": "Expresiones regulares"
 }

@@ -27,6 +27,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12" ng-show="vm.mustShowCIEditPhase">
+                    <div include-with-scope="app/settings/servers/tables/CIPhaseJobs.instance.table.html"></div>
+                </div>
             </form>
         </div>
     </div>

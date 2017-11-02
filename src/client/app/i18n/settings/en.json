@@ -37,5 +37,8 @@
   "CREATE_PHASE_ERROR": "An error occurred creating phase",
   "UPDATE_PHASE_ERROR": "An error occurred updating phase",
   "DELETE_PHASE_ERROR": "An error occurred deleting phase",
-  "CONFIG_JOBS_TITLE": "Configure Jobs"
+  "CONFIG_JOBS_TITLE": "Configure Jobs",
+  "JOB_NAME_TITLE": "Job name",
+  "JOB_ACTION_TITLE": "Actions",
+  "JOB_REGULAR_EXPRESION_TITLE": "Regular expressions"
 }

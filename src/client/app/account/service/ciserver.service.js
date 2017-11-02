@@ -17,6 +17,8 @@
             createPhase: createPhase,
             updatePhase: updatePhase,
             deletePhase: deletePhase,
+            addJobToPhase: addJobToPhase,
+            removeJobFromPhase: removeJobFromPhase,
             getPhases: getPhases
         };
         return service;
@@ -151,7 +153,7 @@
                 .catch(failDeleteQasta);
 
             function successDeleteQasta() {
-                cilogAPI.one('components', data.component_owner_id).one('process-phases', data.id).remove()
+                return cilogAPI.one('components', data.component_owner_id).one('process-phases', data.id).remove()
                     .then(successDeleteCilog)
                     .catch(failDeleteCilog);
 
@@ -169,13 +171,60 @@
             }
         }
 
+        function addJobToPhase(phaseId, data) {
+            return cilogAPI.one('process-phases', phaseId).all('jobs').post(data)
+                .then(successAddJob)
+                .catch(failAddJob);
+
+            function successAddJob(response) {
+                return response;
+            }
+
+            function failAddJob() {
+                return false;
+            }
+        }
+
+        function removeJobFromPhase(phaseId, data) {
+            return cilogAPI.one('process-phases', phaseId).one('jobs', data.id).remove()
+                .then(successAddJob)
+                .catch(failAddJob);
+
+            function successAddJob(response) {
+                return response;
+            }
+
+            function failAddJob() {
+                return false;
+            }
+        }
+
         function getPhases(data) {
             return qastaAPI.one('components', data.component_owner_id).all('process-phases').getList()
                 .then(successPhases)
                 .catch(failPhases);
 
-            function successPhases(phases) {
-                return phases.plain();
+            function successPhases(phasesQasta) {
+                var phasesQastaList = phasesQasta.plain();
+                return cilogAPI.one('components', data.component_owner_id).all('process-phases').getList()
+                    .then(successPhasesCilog)
+                    .catch(failPhasesCilog);
+
+                function successPhasesCilog(phasesCilog) {
+                    var phasesCilogList = phasesCilog.plain();
+                    phasesQastaList.forEach(function (x) {
+                        phasesCilogList.forEach(function (y) {
+                            if (y.id === x.id) {
+                                x.jobs = y.jobs;
+                            }
+                        });
+                    });
+                    return phasesQastaList;
+                }
+
+                function failPhasesCilog(error) {
+                    return $q.reject(error);
+                }
             }
 
             function failPhases(error) {

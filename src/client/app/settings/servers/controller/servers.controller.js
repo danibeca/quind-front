@@ -24,8 +24,10 @@
         vm.qaServer = {};
         vm.ciPhase = {};
         vm.ciPhases = [];
+        vm.job = {};
         vm.hasCIPhases = false;
         vm.ciServer = {type: 1}; //TODO: Je!
+        vm.jobsDataCollapse = [true];
 
         vm.mustShowQAEdit = false;
         vm.mustShowCIEdit = false;
@@ -35,6 +37,8 @@
         vm.saveQAS = saveQAS;
         vm.saveCIS = saveCIS;
         vm.savePhase = savePhase;
+        vm.addJobToPhase = addJobToPhase;
+        vm.removeJobFromPhase = removeJobFromPhase;
         vm.deletePhase = deletePhase;
         vm.showQAEdit = showQAEdit;
         vm.showCIEdit = showCIEdit;
@@ -47,6 +51,7 @@
         vm.passwordValidator = passwordValidator;
         vm.urlValidator = urlValidator;
         vm.phaseNameValidator = phaseNameValidator;
+        vm.selectTableRow = selectTableRow;
 
         var croot = storageService.getJsonObject('croot');
 
@@ -105,14 +110,15 @@
         }
 
         function loadCIPhases() {
+            vm.hasCIPhases = false;
             ciServerService.getPhases({component_owner_id: croot.id})
                 .then(successCIPhases);
 
             function successCIPhases(data) {
-                console.log(data)
+                console.log(data);
                 vm.renderCIServerForm = true;
                 vm.ciPhases = data;
-                if (data.length > 0) {
+                if (vm.ciPhases.length > 0) {
                     vm.hasCIPhases = true;
                 }
             }
@@ -368,6 +374,25 @@
             }
         }
 
+        function addJobToPhase() {
+            if(vm.job.name !== null && vm.job.name !== undefined && vm.job.name !== '') {
+                if(vm.ciPhase.jobs === undefined || vm.ciPhase.jobs === null || vm.ciPhase.jobs.length === 0) {
+                    vm.ciPhase.jobs = [];
+                }
+                vm.jobsDataCollapse.push(true);
+                vm.ciPhase.jobs.push(vm.job);
+                vm.job.regular_expression = 'd623tt2u;u23ye87h2diud;uahusihdaiudh;ajd8293h';
+                ciServerService.addJobToPhase(vm.ciPhase.id, vm.job);
+                vm.job = {};
+                //TODO: Call server
+            }
+        }
+
+        function removeJobFromPhase(job) {
+            ciServerService.removeJobFromPhase(vm.ciPhase.id, job);
+            vm.ciPhase.jobs.splice(vm.ciPhase.jobs.indexOf(job), 1);
+        }
+
         function deletePhase(phase) {
             ciServerService.deletePhase(phase)
                 .then(successDeletePhase)
@@ -420,7 +445,15 @@
 
         function showEditCIPhase(phase) {
             vm.ciPhase = phase;
+            vm.job.regularExps = [];
             vm.mustShowCIEditPhase = true;
+            if(vm.ciPhase.jobs !== undefined && vm.ciPhase.jobs.length > 0) {
+                vm.ciPhase.jobs.forEach(function (x) {
+                    vm.jobsDataCollapse.push(true);
+                });
+            } else {
+                vm.ciPhase.jobs = [];
+            }
         }
 
         function cancelQAEdit() {
@@ -476,5 +509,29 @@
             }
             return false;
         }
+
+        function selectTableRow(index, jobId) {
+            console.log('Called');
+            if (vm.tableRowExpanded === false && vm.tableRowIndexCurrExpanded === "" && vm.storeIdExpanded === "") {
+                vm.tableRowIndexPrevExpanded = "";
+                vm.tableRowExpanded = true;
+                vm.tableRowIndexCurrExpanded = index;
+                vm.storeIdExpanded = jobId;
+                vm.jobsDataCollapse[index] = false;
+            } else if (vm.tableRowExpanded === true) {
+                if (vm.tableRowIndexCurrExpanded === index && vm.storeIdExpanded === storeId) {
+                    vm.tableRowExpanded = false;
+                    vm.tableRowIndexCurrExpanded = "";
+                    vm.storeIdExpanded = "";
+                    vm.jobsDataCollapse[index] = true;
+                } else {
+                    vm.tableRowIndexPrevExpanded = vm.tableRowIndexCurrExpanded;
+                    vm.tableRowIndexCurrExpanded = index;
+                    vm.storeIdExpanded = jobId;
+                    vm.jobsDataCollapse[vm.tableRowIndexPrevExpanded] = true;
+                    vm.jobsDataCollapse[vm.tableRowIndexCurrExpanded] = false;
+                }
+            }
+        };
     }
 })();
