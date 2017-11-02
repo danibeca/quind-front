@@ -1,7 +1,7 @@
 <div class="body-bg"></div>
 <main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 
-    <ba-sidebar ng-show="hasLeaves"></ba-sidebar>
+    <ba-sidebar></ba-sidebar>
     <page-top></page-top>
     <div class="al-main">
         <div class="al-content">
@@ -68,6 +68,34 @@
                                                required
                                                validate-on="dirty"
                                                required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" ng-if="vm.resourcesLoaded" ng-show="vm.component.tag_id == 3 && vm.hasCIS">
+                                <div class="form-group row">
+                                    <label class="col-sm-1">{{ 'CLASSIFIER_EXP_NAME' | translate }}</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="classifierExpression" autocorrect="off" autocapitalize="none"
+                                               class="form-control" placeholder="{{ 'CLASSIFIER_EXP_DESC' | translate }}"
+                                               ng-model="vm.component.classifier_expression"
+                                               validate-on="dirty"
+                                               validator="vm.jobDataValidator(vm.component.classifier_expression) === true"
+                                               invalid-message="'{{ 'REQUIRED_FIELD' | translate }}'"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" ng-if="vm.resourcesLoaded" ng-show="vm.component.tag_id == 3 && vm.hasCIS">
+                                <div class="form-group row">
+                                    <label class="col-sm-1">{{ 'JOBS_PATH_NAME' | translate }}</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="jobs_path" autocorrect="off" autocapitalize="none"
+                                               class="form-control" placeholder="{{ 'JOBS_PATH_DESC' | translate }}"
+                                               ng-model="vm.component.jobs_path"
+                                               validate-on="dirty"
+                                               validator="vm.jobDataValidator(vm.component.classifier_expression) === true"
+                                               invalid-message="'{{ 'REQUIRED_FIELD' | translate }}'"
                                         />
                                     </div>
                                 </div>

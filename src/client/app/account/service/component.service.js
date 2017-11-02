@@ -45,19 +45,35 @@
                 .catch(failUpdate);
 
             function successUpdate(response) {
-                var componentData = {
+                var componentDataQasta = {
                     id: response.id,
                     type_id: response.type_id,
                     parent_id: response.parent_id
                 };
-                qastaAPI.one('components', componentData.id).customPUT(componentData);
-                cilogAPI.one('components', componentData.id).customPUT(componentData);
-                if(response.type_id === 3){
-                    componentData.quality_system_instance_id = data.quality_system_instance_id;
-                    componentData.app_code = data.code;
-                }
+                qastaAPI.one('components', componentDataQasta.id).customPUT(componentDataQasta);
 
-                qalogAPI.one('components', componentData.id).customPUT(componentData);
+                var componentDataCilog = {
+                    id: response.id,
+                    type_id: response.type_id,
+                    parent_id: response.parent_id
+                };
+                if(data.ci_system_instance_id !== null && data.ci_system_instance_id !== undefined) {
+                    componentDataCilog.ci_system_instance_id = data.ci_system_instance_id;
+                    componentDataCilog.classifier_expression = data.classifier_expression;
+                    componentDataCilog.jobs_path = data.jobs_path;
+                }
+                cilogAPI.one('components', componentDataCilog.id).customPUT(componentDataCilog);
+
+                var componentDataQalog = {
+                    id: response.id,
+                    type_id: response.type_id,
+                    parent_id: response.parent_id
+                };
+                if(response.type_id === 3){
+                    componentDataQalog.quality_system_instance_id = data.quality_system_instance_id;
+                    componentDataQalog.app_code = data.code;
+                }
+                qalogAPI.one('components', componentDataQalog.id).customPUT(componentDataQalog);
                 return response;
             }
 
@@ -89,19 +105,35 @@
                 .catch(failCreateGeneral);
 
             function successCreateGeneral(response) {
-                var componentData = {
+                var componentDataQasta = {
                     id: response.id,
                     type_id: response.type_id,
                     parent_id: response.parent_id
                 };
-                qastaAPI.all('components').post(componentData);
-                cilogAPI.all('components').post(componentData);
-                if(response.type_id === 3){
-                    componentData.quality_system_instance_id = dataCreateGeneral.quality_system_instance_id;
-                    componentData.app_code = dataCreateGeneral.code;
-                }
+                qastaAPI.all('components').post(componentDataQasta);
 
-                qalogAPI.all('components').post(componentData);
+                var componentDataCilog = {
+                    id: response.id,
+                    type_id: response.type_id,
+                    parent_id: response.parent_id
+                };
+                if(dataCreateGeneral.ci_system_instance_id !== null && dataCreateGeneral.ci_system_instance_id !== undefined) {
+                    componentDataCilog.ci_system_instance_id = dataCreateGeneral.ci_system_instance_id;
+                    componentDataCilog.classifier_expression = dataCreateGeneral.classifier_expression;
+                    componentDataCilog.jobs_path = dataCreateGeneral.jobs_path;
+                }
+                cilogAPI.all('components').post(componentDataCilog);
+
+                var componentDataQalog = {
+                    id: response.id,
+                    type_id: response.type_id,
+                    parent_id: response.parent_id
+                };
+                if(response.type_id === 3){
+                    componentDataQalog.quality_system_instance_id = dataCreateGeneral.quality_system_instance_id;
+                    componentDataQalog.app_code = dataCreateGeneral.code;
+                }
+                qalogAPI.all('components').post(componentDataQalog);
                 return response;
             }
 
@@ -177,8 +209,28 @@
                 .then(successGetList)
                 .catch(failGetList);
 
-            function successGetList(response) {
-                return response.plain();
+            function successGetList(accountComponents) {
+                var accountComponentsList = accountComponents.plain();
+                return cilogAPI.all('components').getList(data)
+                    .then(successGetListCilog)
+                    .catch(failGetListCilog);
+
+                function successGetListCilog(cilogComponents) {
+                    var cilogComponentsList = cilogComponents.plain();
+                    accountComponentsList.forEach(function (x) {
+                        cilogComponentsList.forEach(function (y) {
+                            if(x.id === y.id) {
+                                x.classifier_expression = y.classifier_expression;
+                                x.jobs_path = y.jobs_path;
+                            }
+                        });
+                    });
+                    return accountComponentsList;
+                }
+
+                function failGetListCilog() {
+
+                }
             }
 
             function failGetList(error) {

@@ -32,7 +32,6 @@
         }
 
         function getInstances(data) {
-
             return qalogAPI.all('quality-system-instances').getList(data)
                 .then(success)
                 .catch(fail);

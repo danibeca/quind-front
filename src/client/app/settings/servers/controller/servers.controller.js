@@ -25,9 +25,10 @@
         vm.ciPhase = {};
         vm.ciPhases = [];
         vm.job = {};
+        vm.job.regularExpressions = [];
         vm.hasCIPhases = false;
         vm.ciServer = {type: 1}; //TODO: Je!
-        vm.jobsDataCollapse = [true];
+        vm.activeJobPosition = null;
 
         vm.mustShowQAEdit = false;
         vm.mustShowCIEdit = false;
@@ -39,6 +40,8 @@
         vm.savePhase = savePhase;
         vm.addJobToPhase = addJobToPhase;
         vm.removeJobFromPhase = removeJobFromPhase;
+        vm.addRegexToJob = addRegexToJob;
+        vm.removeRegexFromJob = removeRegexFromJob;
         vm.deletePhase = deletePhase;
         vm.showQAEdit = showQAEdit;
         vm.showCIEdit = showCIEdit;
@@ -115,7 +118,6 @@
                 .then(successCIPhases);
 
             function successCIPhases(data) {
-                console.log(data);
                 vm.renderCIServerForm = true;
                 vm.ciPhases = data;
                 if (vm.ciPhases.length > 0) {
@@ -321,7 +323,6 @@
         }
 
         function savePhase() {
-            console.log(vm.mustShowCIEditPhase)
             if(vm.mustShowCIEditPhase) {
                 updatePhase();
             } else {
@@ -376,21 +377,91 @@
 
         function addJobToPhase() {
             if(vm.job.name !== null && vm.job.name !== undefined && vm.job.name !== '') {
+                var newJobData = {};
+                newJobData.name = vm.job.name;
+                newJobData.regular_expression = vm.job.regularExpressions.join(";");
+                if (newJobData.regular_expression !== undefined && newJobData.regular_expression !== null && newJobData.regular_expression !== '') {
+                    ciServerService.addJobToPhase(vm.ciPhase.id, newJobData)
+                        .then(successAddJobToPhase)
+                        .catch(failAddJobToPhase);
+                    vm.job = {};
+                }
+            }
+            function successAddJobToPhase(job) {
                 if(vm.ciPhase.jobs === undefined || vm.ciPhase.jobs === null || vm.ciPhase.jobs.length === 0) {
                     vm.ciPhase.jobs = [];
                 }
-                vm.jobsDataCollapse.push(true);
-                vm.ciPhase.jobs.push(vm.job);
-                vm.job.regular_expression = 'd623tt2u;u23ye87h2diud;uahusihdaiudh;ajd8293h';
-                ciServerService.addJobToPhase(vm.ciPhase.id, vm.job);
-                vm.job = {};
-                //TODO: Call server
+                if (job.regular_expression !== undefined && job.regular_expression !== null && job.regular_expression !== '') {
+                    job.regularExpressions = job.regular_expression.split(";");
+                } else {
+                    job.regularExpressions = [];
+                }
+                vm.ciPhase.jobs.push(job);
+            }
+
+            function failAddJobToPhase(error) {
+                logger.error($filter('translate')('CREATE_PHASE_ERROR'));
             }
         }
 
         function removeJobFromPhase(job) {
-            ciServerService.removeJobFromPhase(vm.ciPhase.id, job);
-            vm.ciPhase.jobs.splice(vm.ciPhase.jobs.indexOf(job), 1);
+            ciServerService.removeJobFromPhase(vm.ciPhase.id, job)
+                .then(successRemoveJobFromPhase)
+                .catch(failRemoveJobFromPhase);
+
+            function successRemoveJobFromPhase(removedJob) {
+                vm.ciPhase.jobs.splice(vm.ciPhase.jobs.indexOf(job), 1);
+            }
+
+            function failRemoveJobFromPhase(error) {
+                logger.error($filter('translate')('CREATE_PHASE_ERROR'));
+            }
+        }
+
+        function addRegexToJob(job) {
+            if(job.regularExpressions === undefined || job.regularExpressions === null) {
+                job.regularExpressions = [];
+            }
+            job.regularExpressions.push(vm.newRegExp);
+            vm.newRegExp = '';
+            if(job.id !== undefined && job.id !== null && job.id !== '') {
+                var newJobData = {};
+                newJobData.id = job.id;
+                newJobData.name = job.name;
+                newJobData.regular_expression = job.regularExpressions.join(";");
+                ciServerService.updateJobToPhase(vm.ciPhase.id, newJobData)
+                    .then(successUpdateJobToPhase)
+                    .catch(failUpdateJobToPhase);
+            }
+
+            function successUpdateJobToPhase(updatedJob) {
+                console.log('job updated');
+            }
+
+            function failUpdateJobToPhase(error) {
+                logger.error($filter('translate')('UPDATE_PHASE_ERROR'));
+            }
+        }
+
+        function removeRegexFromJob(job, regExp) {
+            job.regularExpressions.splice(job.regularExpressions.indexOf(regExp), 1);
+            if(job.id !== undefined && job.id !== null && job.id !== '') {
+                var newJobData = {};
+                newJobData.id = job.id;
+                newJobData.name = job.name;
+                newJobData.regular_expression = job.regularExpressions.join(";");
+                ciServerService.updateJobToPhase(vm.ciPhase.id, newJobData)
+                    .then(successUpdateJobToPhase)
+                    .catch(failUpdateJobToPhase);
+            }
+
+            function successUpdateJobToPhase(updatedJob) {
+                console.log('job updated');
+            }
+
+            function failUpdateJobToPhase(error) {
+                logger.error($filter('translate')('UPDATE_PHASE_ERROR'));
+            }
         }
 
         function deletePhase(phase) {
@@ -447,11 +518,7 @@
             vm.ciPhase = phase;
             vm.job.regularExps = [];
             vm.mustShowCIEditPhase = true;
-            if(vm.ciPhase.jobs !== undefined && vm.ciPhase.jobs.length > 0) {
-                vm.ciPhase.jobs.forEach(function (x) {
-                    vm.jobsDataCollapse.push(true);
-                });
-            } else {
+            if(vm.ciPhase.jobs === undefined || vm.ciPhase.jobs === null) {
                 vm.ciPhase.jobs = [];
             }
         }
@@ -510,28 +577,8 @@
             return false;
         }
 
-        function selectTableRow(index, jobId) {
-            console.log('Called');
-            if (vm.tableRowExpanded === false && vm.tableRowIndexCurrExpanded === "" && vm.storeIdExpanded === "") {
-                vm.tableRowIndexPrevExpanded = "";
-                vm.tableRowExpanded = true;
-                vm.tableRowIndexCurrExpanded = index;
-                vm.storeIdExpanded = jobId;
-                vm.jobsDataCollapse[index] = false;
-            } else if (vm.tableRowExpanded === true) {
-                if (vm.tableRowIndexCurrExpanded === index && vm.storeIdExpanded === storeId) {
-                    vm.tableRowExpanded = false;
-                    vm.tableRowIndexCurrExpanded = "";
-                    vm.storeIdExpanded = "";
-                    vm.jobsDataCollapse[index] = true;
-                } else {
-                    vm.tableRowIndexPrevExpanded = vm.tableRowIndexCurrExpanded;
-                    vm.tableRowIndexCurrExpanded = index;
-                    vm.storeIdExpanded = jobId;
-                    vm.jobsDataCollapse[vm.tableRowIndexPrevExpanded] = true;
-                    vm.jobsDataCollapse[vm.tableRowIndexCurrExpanded] = false;
-                }
-            }
-        };
+        function selectTableRow(index) {
+            vm.activeJobPosition = vm.activeJobPosition == index ? -1 : index;
+        }
     }
 })();

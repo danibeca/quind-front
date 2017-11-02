@@ -9,7 +9,7 @@
         .controller('ModalInstanceCtrl', ModalInstanceCtrl);
 
     /* @ngInject */
-    function ComponentsController(userService, storageService, componentService, qualityServerService, logger, $filter, $state, $uibModal, $scope) {
+    function ComponentsController(userService, storageService, componentService, qualityServerService, ciServerService, logger, $filter, $state, $uibModal, $scope) {
         var vm = this;
         vm.croot = storageService.getJsonObject('croot');
 
@@ -19,6 +19,9 @@
         vm.allComponents = [];
         vm.components = [];
         vm.codes = [];
+        vm.allCodes = [];
+        vm.componentsCodes = [];
+        vm.hasCIS = false;
 
         vm.smartTablePageSize = 5;
         vm.componentsLoaded = false;
@@ -40,6 +43,7 @@
         vm.deleteComponent = deleteComponent;
         vm.cancelEdit = cancelEdit;
         vm.updateName = updateName;
+        vm.jobDataValidator = jobDataValidator;
 
         activate();
 
@@ -47,22 +51,17 @@
             loadInstanceResources();
             loadAllComponents();
             loadComponents();
+            loadCIServerInstances();
         }
 
-        function loadAllComponents() {
-            var requestData = {
-                parent_id: vm.croot.id
-            };
-            componentService.getList(requestData)
-                .then(successGetAllComponents);
+        function loadCIServerInstances() {
+            ciServerService.getInstances({component_id: vm.croot.id})
+                .then(successCIServerInstances);
 
-            function successGetAllComponents(info) {
-                vm.allComponents = info;
-                if (vm.allComponents.length > 0) {
-                    vm.hasComponents = true;
-                    vm.renderServerForm = true;
-                } else {
-                    vm.renderServerForm = true;
+            function successCIServerInstances(data) {
+                vm.ciSystem = data[0];
+                if (data.length > 0) {
+                    vm.hasCIS = true;
                 }
             }
         }
@@ -87,8 +86,47 @@
             }
         }
 
+        function loadAllComponents() {
+            var requestData = {
+                parent_id: vm.croot.id
+            };
+            componentService.getList(requestData)
+                .then(successGetAllComponents);
+
+            function successGetAllComponents(info) {
+                vm.allComponents = info;
+                loadComponentsCodes();
+                loadallCodes();
+                if (vm.allComponents.length > 0) {
+                    vm.hasComponents = true;
+                    vm.renderServerForm = true;
+                } else {
+                    vm.renderServerForm = true;
+                }
+            }
+        }
+
+        function loadComponentsCodes() {
+            var requestData = {
+                parent_id: vm.croot.id,
+                only_leaves: true
+            };
+            componentService.getQalogList(requestData)
+                .then(successGetComponentsCodes);
+
+            $scope.$watch('vm.componentsCodes', function () {
+                if (isInfoReady()) {
+                    updateComponentsCodes();
+                }
+            });
+
+            function successGetComponentsCodes(info) {
+                vm.componentsCodes = info;
+            }
+        }
+
         function loadInstanceResources() {
-            qualityServerService.getInstances({component_id: vm.croot.id, with_resources: true})
+            qualityServerService.getInstances({component_id: vm.croot.id, with_no_used_resources: true})
                 .then(successGetResources)
                 .catch(failGetResources);
 
@@ -104,6 +142,39 @@
             function failGetResources() {
                 logger.error($filter('translate')('QUALITY_SYSTEM_ERROR'));
             }
+        }
+
+        function loadallCodes() {
+            qualityServerService.getInstances({component_id: vm.croot.id, with_resources: true})
+                .then(successGetResources)
+                .catch(failGetResources);
+
+            function successGetResources(instances) {
+                instances.forEach(function (instance) {
+                    vm.allCodes = instance.resources;
+                });
+            }
+
+            function failGetResources() {
+                logger.error($filter('translate')('QUALITY_SYSTEM_ERROR'));
+            }
+        }
+
+        function isInfoReady() {
+            if (vm.allComponents.length > 0 && vm.componentsCodes.length > 0) {
+                return true;
+            }
+        }
+
+        function updateComponentsCodes() {
+            vm.allComponents.forEach(function(x) {
+                if (x.tag_id === 3) {
+                    var code = $.grep(vm.componentsCodes, function(e){ return e.id === x.id; })[0];
+                    if (code !== null && code!== undefined) {
+                        x.code = code.app_code;
+                    }
+                }
+            });
         }
 
         function componentCodeValidator(code) {
@@ -127,8 +198,11 @@
         }
 
         function postComponent() {
-            if (vm.component.tag_id == 2) {
+            if (vm.component.tag_id === 2) {
                 vm.component.parent_id = vm.croot.id;
+            }
+            if(vm.component.tag_id === 3 && vm.hasCIS) {
+                vm.component.ci_system_instance_id = vm.ciSystem.id;
             }
             componentService.create(vm.component)
                 .then(successCreateComponent)
@@ -149,8 +223,11 @@
         }
 
         function putComponent() {
-            if (vm.component.tag_id != 3) {
+            if (vm.component.tag_id !== 3) {
                 vm.component.parent_id = null;
+            }
+            if(vm.component.tag_id === 3 && vm.hasCIS) {
+                vm.component.ci_system_instance_id = vm.ciSystem.id;
             }
             componentService.update(vm.component)
                 .then(successUpdateComponent)
@@ -174,19 +251,8 @@
                 .then(successAssociate());
 
             function successAssociate() {
-                showMenu();
-                loadComponents();
                 $state.reload();
                 logger.success($filter('translate')('CREATE_COMPONENT_SUCCESS'));
-            }
-        }
-
-        function showMenu() {
-            componentService.hasLeaves(vm.croot.id)
-                .then(successHasLeaves);
-
-            function successHasLeaves(hasLeaves) {
-                $rootScope.hasLeaves = hasLeaves;
             }
         }
 
@@ -210,6 +276,9 @@
                 vm.component.parent_id = vm.components[0].id;
             }
             vm.showEditForm = true;
+            vm.codes.push($.grep(vm.allCodes, function (e) {
+                return e.key === component.code;
+            })[0]);
         }
 
         function deleteComponent(component) {
@@ -263,6 +332,10 @@
         function cancelEdit() {
             vm.showEditForm = false;
             vm.showCreateForm = false;
+            var codeToDelete = $.grep(vm.allCodes, function (e) {
+                return e.key === vm.component.code;
+            })[0];
+            vm.codes.splice(vm.codes.indexOf(codeToDelete), 1);
         }
 
         function updateName() {
@@ -272,7 +345,19 @@
                 })[0].name;
             }
         }
+
+        function jobDataValidator(data) {
+            if(vm.component.tag_id === 3 && vm.hasCIS) {
+                if (data !== '' && data !== undefined && data !== null) {
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
     }
+
+
 
     /* @ngInject */
     function ModalInstanceCtrl($scope, $modalInstance) {

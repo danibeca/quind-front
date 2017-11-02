@@ -41,5 +41,6 @@
   "CONFIG_JOBS_TITLE": "Configurar Jobs",
   "JOB_NAME_TITLE": "Nombre del Job",
   "JOB_ACTION_TITLE": "Acciones",
-  "JOB_REGULAR_EXPRESION_TITLE": "Expresiones regulares"
+  "JOB_REGULAR_EXPRESIONS_TITLE": "Expresiones regulares",
+  "JOB_REGULAR_EXPRESION_TITLE": "Expresión regular"
 }

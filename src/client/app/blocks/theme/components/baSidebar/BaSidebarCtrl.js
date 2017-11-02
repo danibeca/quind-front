@@ -9,10 +9,12 @@
         .controller('BaSidebarCtrl', BaSidebarCtrl);
 
     /* @ngInject */
-    function BaSidebarCtrl($scope, baSidebarService) {
+    function BaSidebarCtrl($scope, baSidebarService, storageService, componentService) {
 
+        var croot = storageService.getJsonObject('croot');
         $scope.menuItems = baSidebarService.getMenuItems();
         $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
+        $scope.hasLeaves = false;
 
         $scope.hoverItem = function ($event) {
             $scope.showHoverElem = true;
@@ -26,5 +28,19 @@
                 baSidebarService.setMenuCollapsed(true);
             }
         });
+
+        activate();
+
+        function activate() {
+            showMenu();
+        }
+
+        function showMenu() {
+            componentService.hasLeaves(croot.id)
+                .then(successHasLeaves);
+            function successHasLeaves(hasLeaves) {
+                $scope.hasLeaves = hasLeaves;
+            }
+        }
     }
 })();

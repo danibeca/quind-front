@@ -65,5 +65,9 @@
   "DELETE_WARNING_TEXT": "If you delete a system, all applications associated to it will also be deleted. ¿Are you sure?",
   "SOFTWARE_MATURITY_TITLE": "Software maturity",
   "PROCESS_MATURITY_TITLE": " Process maturity",
-  "AUTOMATION_PERCENTAGE_TITLE": "Automation percentage"
+  "AUTOMATION_PERCENTAGE_TITLE": "Automation percentage",
+  "CLASSIFIER_EXP_NAME": "Regex",
+  "JOBS_PATH_NAME": "Path",
+  "CLASSIFIER_EXP_DESC": "Classifier Regex",
+  "JOBS_PATH_DESC": "Jobs path"
 }

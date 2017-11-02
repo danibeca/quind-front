@@ -4,12 +4,12 @@
             <table class="table" st-table="vm.componentsList" st-safe-src="vm.componentsListSafe">
                 <thead>
                 <tr class="sortable">
-                    <th class="align-left" st-sort="name" st-sort-default="true">{{ 'NAME_TITLE' | translate }}</th>
+                    <th class="align-left sort-header" st-sort="name" st-sort-default="true">{{ 'NAME_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.showTypes">{{ 'TYPE_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.showCodes">{{ 'CODE_TITLE' | translate }}</th>
-                    <th class="align-left" st-sort="codeHealth.value" st-sort-default="true" ng-if="vm.showCodeHealth">{{ 'CODE_HEALTH_TITLE' | translate }} (%)</th>
-                    <th class="align-left" st-sort="reliability.value" st-sort-default="true" ng-if="vm.showReliability">{{ 'RELIABILITY_TITLE' | translate }} (%)</th>
-                    <th class="align-left" st-sort="efficiencyPotential.value" st-sort-default="true" ng-if="vm.showEfficiencyPotential">{{ 'EFFICIENCY_POTENTIAL_TITLE' | translate }} (%)</th>
+                    <th class="align-left" st-sort="codeHealth.value" ng-if="vm.showCodeHealth">{{ 'CODE_HEALTH_TITLE' | translate }} (%)</th>
+                    <th class="align-left" st-sort="reliability.value" ng-if="vm.showReliability">{{ 'RELIABILITY_TITLE' | translate }} (%)</i></th>
+                    <th class="align-left" st-sort="efficiencyPotential.value" ng-if="vm.showEfficiencyPotential">{{ 'EFFICIENCY_POTENTIAL_TITLE' | translate }} (%)</th>
                     <th class="align-left" ng-if="vm.allowEdit">{{ 'EDIT_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.allowDelete">{{ 'DELETE_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.allowViewMore">{{ 'VIEW_MORE_TITLE' | translate }}</th>

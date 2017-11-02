@@ -1,54 +1,82 @@
 <div class="col-lg-8 col-md-12">
     <div class="horizontal-scroll">
-        <table class="table table-hover table-bordered">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>{{ 'JOB_NAME_TITLE' | translate }}</th>
-                    <th>{{ 'JOB_REGULAR_EXPRESION_TITLE' | translate }}</th>
-                    <th>{{ 'JOB_ACTION_TITLE' | translate }}</th>
+                    <th class="align-center">{{ 'JOB_NAME_TITLE' | translate }}</th>
+                    <th class="align-center">{{ 'JOB_REGULAR_EXPRESIONS_TITLE' | translate }}</th>
+                    <th class="align-center">{{ 'JOB_ACTION_TITLE' | translate }}</th>
                 </tr>
             </thead>
             <tbody ng-repeat="item in vm.ciPhase.jobs" >
-                <tr id="item.id" class="clickableRow" ng-click="vm.selectTableRow($index, item.id)">
+                <tr id="item.id">
                     <td>{{item.name}}</td>
-                    <td>{{item.regular_expression}}</td>
+                    <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.selectTableRow($index)">{{item.regularExpressions.length}} <i
+                            class="ion-arrow-down-b"></i></a></td>
                     <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.removeJobFromPhase(item)"><i
                             class="ion-minus-round"></i></a></td>
                 </tr>
-                <!--tr data-ng-show="!vm.jobsDataCollapse[$index]">
+                <tr ng-show="vm.activeJobPosition == $index">
                     <td>&nbsp;</td>
                     <td>
-                        <table class="table table-bordered">
+                        <table class="table">
                             <thead>
                             <tr>
-                                <th>Regular Expressions</th>
-                                <th>Action</th>
+                                <th>{{ 'JOB_REGULAR_EXPRESION_TITLE' | translate }}</th>
+                                <th>{{ 'JOB_ACTION_TITLE' | translate }}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="regExp in item.regularExps">
-                                <td>{{regExp.value}}</td>
-                                <td>Remove</td>
+                            <tr data-ng-repeat="regExp in item.regularExpressions">
+                                <td>{{regExp}}</td>
+                                <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.removeRegexFromJob(item, regExp)"><i
+                                        class="ion-minus-round"></i></a></td>
                             </tr>
                             <tr>
-                                <td><input type="text" ng-model="newRegExp.text"></td>
-                                <td>Add</td>
+                                <td><input type="text" ng-model="vm.newRegExp"></td>
+                                <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.addRegexToJob(item)"><i
+                                        class="ion-plus-round"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
                     </td>
-                </tr-->
+                    <td>&nbsp;</td>
+                </tr>
             </tbody>
             <tbody ng-repeat-end>
                 <tr>
                     <td><input type="text" name="jobName" class="form-control" ng-model="vm.job.name"
                                id="jobName" placeholder="Job name">
                     </td>
-                    <td><input type="text" name="jobRegex" class="form-control" ng-model="vm.job.regular_expression"
-                               id="jobRegex" placeholder="Regular expressions">
-                    </td>
+                    <td>&nbsp;</td>
                     <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.addJobToPhase()"><i
                             class="ion-plus-round"></i></a></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>{{ 'JOB_REGULAR_EXPRESION_TITLE' | translate }}</th>
+                                <th>{{ 'JOB_ACTION_TITLE' | translate }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="regExp in vm.job.regularExpressions">
+                                <td>{{regExp}}</td>
+                                <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.removeRegexFromJob(vm.job, regExp)"><i
+                                        class="ion-minus-round"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" ng-model="vm.newRegExp"></td>
+                                <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.addRegexToJob(vm.job)"><i
+                                        class="ion-plus-round"></i></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>&nbsp;</td>
                 </tr>
             </tbody>
         </table>

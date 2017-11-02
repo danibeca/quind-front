@@ -18,7 +18,6 @@
             templateUrl: 'app/blocks/theme/components/baSidebar/ba-sidebar.html',
             controller: 'BaSidebarCtrl',
             link: function (scope, el) {
-
                 scope.menuHeight = el[0].childNodes[0].clientHeight - 84;
                 jqWindow.on('click', _onWindowClick);
                 jqWindow.on('resize', _onWindowResize);

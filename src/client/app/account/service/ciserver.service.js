@@ -18,6 +18,7 @@
             updatePhase: updatePhase,
             deletePhase: deletePhase,
             addJobToPhase: addJobToPhase,
+            updateJobToPhase: updateJobToPhase,
             removeJobFromPhase: removeJobFromPhase,
             getPhases: getPhases
         };
@@ -185,6 +186,20 @@
             }
         }
 
+        function updateJobToPhase(phaseId, data) {
+            return cilogAPI.one('process-phases', phaseId).one('jobs', data.id).customPUT(data)
+                .then(successAddJob)
+                .catch(failAddJob);
+
+            function successAddJob(response) {
+                return response;
+            }
+
+            function failAddJob() {
+                return false;
+            }
+        }
+
         function removeJobFromPhase(phaseId, data) {
             return cilogAPI.one('process-phases', phaseId).one('jobs', data.id).remove()
                 .then(successAddJob)
@@ -216,6 +231,13 @@
                         phasesCilogList.forEach(function (y) {
                             if (y.id === x.id) {
                                 x.jobs = y.jobs;
+                                x.jobs.forEach(function (job) {
+                                    if (job.regular_expression !== undefined && job.regular_expression !== null && job.regular_expression !== '') {
+                                        job.regularExpressions = job.regular_expression.split(";");
+                                    } else {
+                                        job.regularExpressions = [];
+                                    }
+                                });
                             }
                         });
                     });

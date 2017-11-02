@@ -65,5 +65,9 @@
   "DELETE_WARNING_TEXT": "Eliminar un sistema causará que todas las aplicaciones asociadas a éste sean eliminadas. ¿Está seguro que desea continuar?",
   "SOFTWARE_MATURITY_TITLE": "Madurez del software",
   "PROCESS_MATURITY_TITLE": "Madurez del proceso",
-  "AUTOMATION_PERCENTAGE_TITLE": "Porcentaje de automatización"
+  "AUTOMATION_PERCENTAGE_TITLE": "Porcentaje de automatización",
+  "CLASSIFIER_EXP_NAME": "Regex",
+  "JOBS_PATH_NAME": "Directorio",
+  "CLASSIFIER_EXP_DESC": "Expresión regular agrupadora",
+  "JOBS_PATH_DESC": "Directorio de Jobs"
 }
