@@ -35,6 +35,7 @@
                 var result = response.data;
                 storageService.set('token', result.access_token);
                 storageService.set('refresh_token', result.refresh_token);
+                storageService.set('lastTimeCheck', new Date());
                 return getAuthUser();
             }
 

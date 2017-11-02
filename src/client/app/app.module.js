@@ -12,7 +12,7 @@
     ])
         .run(runApp);
 
-    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions) {
+    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions, $rootScope) {
         $translatePartialLoader.addPart('general');
 
         //$transitions.onStart({ to: 'dashboard.**' }, function(trans, state) {
@@ -88,7 +88,7 @@
 
                 function hasLeaves() {
                     var user = userService.getUser();
-                    if (user != undefined) {
+                    if (user !== undefined) {
                         return componentService.getRoot(user.id)
                             .then(successRoot);
                     } else {
