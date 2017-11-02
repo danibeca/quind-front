@@ -11,7 +11,7 @@
         .controller('PageTopCtrl', PageTopCtrl);
 
     /* @ngInject */
-    function PageTopCtrl(userService, componentService, $rootScope) {
+    function PageTopCtrl(userService) {
         var vm = this;
         vm.showAddUser = false;
         vm.showAddComponent = false;
@@ -21,7 +21,6 @@
         function activate() {
             showAddUserOption();
             showAddComponentOption();
-            showMenu();
         }
 
         function hasAdminPermission() {
@@ -44,20 +43,6 @@
         function showAddComponentOption() {
             if (hasAdminPermission()) {
                 vm.showAddComponent = true;
-            }
-        }
-
-        function showMenu() {
-            componentService.getRoot(userService.getUser().id)
-                .then(successRoot);
-
-            function successRoot(croot) {
-                componentService.hasLeaves(croot.id)
-                    .then(successHasLeaves);
-
-                function successHasLeaves(hasLeaves) {
-                    $rootScope.hasLeaves = hasLeaves;
-                }
             }
         }
     }

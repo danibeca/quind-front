@@ -12,7 +12,7 @@
     ])
         .run(runApp);
 
-    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions) {
+    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions, $rootScope) {
         $translatePartialLoader.addPart('general');
 
         //$transitions.onStart({ to: 'dashboard.**' }, function(trans, state) {
@@ -20,9 +20,12 @@
                 var loginState = 'login';
                 var stateName = trans.$to().name;
 
+
                 if (isSecureRoute(stateName)) {
                     return auth.isTokenValid()
                         .then(successToken);
+
+
                 }
                 else if (stateName === loginState) {
                     if (isUserLogged()) {
@@ -85,7 +88,7 @@
 
                 function hasLeaves() {
                     var user = userService.getUser();
-                    if (user != undefined) {
+                    if (user !== undefined) {
                         return componentService.getRoot(user.id)
                             .then(successRoot);
                     } else {
