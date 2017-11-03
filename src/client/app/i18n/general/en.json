@@ -69,7 +69,7 @@
   "CLASSIFIER_EXP_NAME": "Regex",
   "JOBS_PATH_NAME": "Path",
   "CLASSIFIER_EXP_DESC": "Classifier Regex",
-  "REGISTER_FAILED": "This email is already in use"
+  "REGISTER_FAILED": "This email is already in use",
   "JOBS_PATH_DESC": "Jobs path",
   "ONE_REGEX_WARNING_TEXT": "Jobs must have at least one Regex",
   "CLOSE_TEXT": "Close"

@@ -36,7 +36,7 @@
                     if (isUserLogged()) {
                         if (!isAdminRoute(stateName)) {
                             return hasLeaves().then(successEvalLeaves);
-                        }else if(!isAdmin()){
+                        } else if (!isAdmin()) {
                             return redirect('dashboard');
                         }
 
@@ -52,11 +52,11 @@
 
                 function successEvalLeaves(hasLeaves) {
                     if (!hasLeaves) {
-                        if(isAdmin()){
+                        if (isAdmin()) {
                             return redirect('servers');
-                        }else if(stateName !== 'nothing'){
+                        } else if (stateName !== 'nothing') {
                             return redirect('nothing');
-                       }
+                        }
                     }
                 }
 
@@ -71,15 +71,15 @@
 
                 }
 
-            function isAdminRoute(stateName) {
-                var routesNoAuth = ['servers', 'users', 'components'];
+                function isAdminRoute(stateName) {
+                    var routesNoAuth = ['servers', 'users', 'components'];
 
-                if (routesNoAuth.indexOf(stateName) < 0) {
-                    return true;
+                    if (routesNoAuth.indexOf(stateName) < 0) {
+                        return true;
+                    }
+                    return false;
+
                 }
-                return false;
-
-            }
 
                 function isAdminRoute(stateName) {
                     var routesNoAuth = ['servers', 'users', 'components'];
@@ -96,8 +96,7 @@
                     if (!userService.isLoggedIn()) {
                         return false;
                     }
-                    ;
-                    return true
+                    return true;
                 }
 
 
