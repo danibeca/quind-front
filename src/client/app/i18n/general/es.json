@@ -69,5 +69,7 @@
   "CLASSIFIER_EXP_NAME": "Regex",
   "JOBS_PATH_NAME": "Directorio",
   "CLASSIFIER_EXP_DESC": "Expresión regular agrupadora",
-  "JOBS_PATH_DESC": "Directorio de Jobs"
+  "JOBS_PATH_DESC": "Directorio de Jobs",
+  "ONE_REGEX_WARNING_TEXT": "Los Jobs deben tener al menos una Expresión regular",
+  "CLOSE_TEXT": "Cerrar"
 }

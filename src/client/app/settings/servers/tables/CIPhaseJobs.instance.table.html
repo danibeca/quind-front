@@ -28,12 +28,12 @@
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="regExp in item.regularExpressions">
-                                <td>{{regExp}}</td>
+                                <td>/{{regExp}}/</td>
                                 <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.removeRegexFromJob(item, regExp)"><i
                                         class="ion-minus-round"></i></a></td>
                             </tr>
                             <tr>
-                                <td><input type="text" ng-model="vm.newRegExp"></td>
+                                <td>/<input type="text" ng-model="vm.newRegExp">/</td>
                                 <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.addRegexToJob(item)"><i
                                         class="ion-plus-round"></i></a></td>
                             </tr>
@@ -52,7 +52,7 @@
                     <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.addJobToPhase()"><i
                             class="ion-plus-round"></i></a></td>
                 </tr>
-                <tr>
+                <tr ng-show="!vm.editingJob">
                     <td>&nbsp;</td>
                     <td>
                         <table class="table">
@@ -64,12 +64,12 @@
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="regExp in vm.job.regularExpressions">
-                                <td>{{regExp}}</td>
+                                <td>/{{regExp}}/</td>
                                 <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.removeRegexFromJob(vm.job, regExp)"><i
                                         class="ion-minus-round"></i></a></td>
                             </tr>
                             <tr>
-                                <td><input type="text" ng-model="vm.newRegExp"></td>
+                                <td>/<input type="text" ng-model="vm.newRegExp">/</td>
                                 <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.addRegexToJob(vm.job)"><i
                                         class="ion-plus-round"></i></a></td>
                             </tr>
