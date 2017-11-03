@@ -8,7 +8,7 @@
             </a>
             <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
                 <li><i class="dropdown-arr"></i></li>
-                <li><a href="/servers" class="signout"><i class="fa fa-database"></i>{{ 'SERVERS_TITLE' | translate }}</a></li>
+                <li><a href="/servers" class="signout" ng-show="vm.showAddServer"><i class="fa fa-database"></i>{{ 'SERVERS_TITLE' | translate }}</a></li>
                 <li><a href="/users" class="signout" ng-show="vm.showAddUser"><i class="fa fa-group"></i>{{ 'USERS_TITLE' | translate }}</a></li>
                 <li><a href="/components" class="signout" ng-show="vm.showAddComponent"><i class="fa fa-desktop"></i>{{ 'COMPONENTS_TITLE' | translate }}</a></li>
                 <li><a class="item" ng-click="changeLanguage('es')">{{ 'BUTTON_LANG_ES' | translate }}</a></li>

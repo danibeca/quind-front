@@ -69,5 +69,6 @@
   "CLASSIFIER_EXP_NAME": "Regex",
   "JOBS_PATH_NAME": "Directorio",
   "CLASSIFIER_EXP_DESC": "Expresión regular agrupadora",
-  "JOBS_PATH_DESC": "Directorio de Jobs"
+  "JOBS_PATH_DESC": "Directorio de Jobs",
+  "REGISTER_FAILED": "Este email ya está siendo usado"
 }

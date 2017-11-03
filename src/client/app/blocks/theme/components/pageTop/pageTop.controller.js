@@ -15,12 +15,14 @@
         var vm = this;
         vm.showAddUser = false;
         vm.showAddComponent = false;
+        vm.showAddServer = false;
 
         activate();
 
         function activate() {
             showAddUserOption();
             showAddComponentOption();
+            showAddServerOption();
         }
 
         function hasAdminPermission() {
@@ -43,6 +45,12 @@
         function showAddComponentOption() {
             if (hasAdminPermission()) {
                 vm.showAddComponent = true;
+            }
+        }
+
+        function showAddServerOption() {
+            if (hasAdminPermission()) {
+                vm.showAddServer = true;
             }
         }
     }

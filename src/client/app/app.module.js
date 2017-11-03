@@ -12,10 +12,9 @@
     ])
         .run(runApp);
 
-    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions, $rootScope) {
+    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions) {
         $translatePartialLoader.addPart('general');
 
-        //$transitions.onStart({ to: 'dashboard.**' }, function(trans, state) {
         $transitions.onStart({}, function (trans) {
                 var loginState = 'login';
                 var stateName = trans.$to().name;
@@ -37,6 +36,8 @@
                     if (isUserLogged()) {
                         if (!isAdminRoute(stateName)) {
                             return hasLeaves().then(successEvalLeaves);
+                        }else if(!isAdmin()){
+                            return redirect('dashboard');
                         }
 
                     } else {
@@ -51,7 +52,11 @@
 
                 function successEvalLeaves(hasLeaves) {
                     if (!hasLeaves) {
-                        return redirect('servers');
+                        if(isAdmin()){
+                            return redirect('servers');
+                        }else if(stateName !== 'nothing'){
+                            return redirect('nothing');
+                       }
                     }
                 }
 
@@ -65,6 +70,16 @@
                     return false;
 
                 }
+
+            function isAdminRoute(stateName) {
+                var routesNoAuth = ['servers', 'users', 'components'];
+
+                if (routesNoAuth.indexOf(stateName) < 0) {
+                    return true;
+                }
+                return false;
+
+            }
 
                 function isAdminRoute(stateName) {
                     var routesNoAuth = ['servers', 'users', 'components'];
@@ -105,6 +120,17 @@
                             return hasLeaves;
                         }
                     }
+                }
+
+                function isAdmin() {
+                    var result = false;
+                    userService.getUser().roles.forEach(function (role) {
+                        if (role.id <= 3) {
+                            result = true;
+                        }
+                    });
+
+                    return result;
                 }
 
             }

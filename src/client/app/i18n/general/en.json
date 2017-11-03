@@ -69,5 +69,6 @@
   "CLASSIFIER_EXP_NAME": "Regex",
   "JOBS_PATH_NAME": "Path",
   "CLASSIFIER_EXP_DESC": "Classifier Regex",
-  "JOBS_PATH_DESC": "Jobs path"
+  "JOBS_PATH_DESC": "Jobs path",
+  "REGISTER_FAILED": "This email is already in use"
 }

@@ -36,7 +36,7 @@
                 storageService.set('token', result.access_token);
                 storageService.set('refresh_token', result.refresh_token);
                 storageService.set('lastTimeCheck', new Date());
-                return getAuthUser();
+                userService.setUser(result.user);
             }
 
             function failToken(error) {
@@ -48,7 +48,8 @@
         function isTokenValid() {
             var last = new Date(storageService.get('lastTimeCheck'));
             var now = new Date();
-            if (Math.abs(now.getMinutes() - last.getMinutes()) > 5) {
+
+            if (Math.abs(now.getMinutes() - last.getMinutes()) >= 5) {
                 return getAuthUser()
                     .then(success)
                     .catch(fail);

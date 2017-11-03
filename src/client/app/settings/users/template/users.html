@@ -16,17 +16,19 @@
                     </div>
                     <br>
                     <div class="row" ng-if="vm.renderServerForm">
-                        <form class="form-horizontal" name="registration" method="POST" angular-validator-submit="vm.userRegistration()"
+                        <form class="form-horizontal" name="registration" method="POST"
+                              angular-validator-submit="vm.userRegistration()"
                               novalidate angular-validator ng-if="!vm.hasUsers || vm.showCreateForm || vm.showEditForm">
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'NAME_TITLE' | translate }}</label>
                                     <div class="col-xs-3">
-                                        <input type="text" name="name" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'NAME_TITLE' | translate }}"
+                                        <input type="text" name="name" autocorrect="off" autocapitalize="none"
+                                               class="form-control" placeholder="{{ 'NAME_TITLE' | translate }}"
                                                ng-model="vm.user.name"
                                                required
                                                validate-on="dirty"
-                                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                               required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
                                         />
                                     </div>
                                 </div>
@@ -35,19 +37,21 @@
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'EMAIL_TITLE' | translate }}</label>
                                     <div class="col-sm-3">
-                                        <input type="email" name="email" autocorrect="off" autocapitalize="none" class="form-control" placeholder="{{ 'EMAIL_TITLE' | translate }}"
+                                        <input type="email" name="email" autocorrect="off" autocapitalize="none"
+                                               class="form-control" placeholder="{{ 'EMAIL_TITLE' | translate }}"
                                                ng-model="vm.user.email"
                                                required
                                                validate-on="dirty"
-                                               invalid-message = "'{{ 'EMAIL_FORMAT' | translate }}'"
-                                               required-message = "'{{ 'REQUIRED_FIELD' | translate }}'"
+                                               invalid-message="'{{ 'EMAIL_FORMAT' | translate }}'"
+                                               required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
                                         />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12" ng-if="vm.showEditForm">
                                 <div class="form-group row clearfix">
-                                    <label for="changePassword" class="col-sm-2">{{ 'CHANGE_PASSWORD_TITLE' | translate }}</label>
+                                    <label for="changePassword" class="col-sm-2">{{ 'CHANGE_PASSWORD_TITLE' | translate
+                                        }}</label>
                                     <div class="col-sm-3">
                                         <input type="checkbox"
                                                positivetext="{{ 'YES_TEXT' | translate }}"
@@ -56,7 +60,7 @@
                                                id="changePassword"
                                                name="changePassword"
                                                ng-model="vm.changePassword"
-                                               bootstrap-switch />
+                                               bootstrap-switch/>
                                     </div>
                                 </div>
                             </div>
@@ -64,10 +68,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'PASS_TITLE' | translate }}</label>
                                     <div class="col-sm-3">
-                                        <input type="password" name="password" class="form-control" placeholder="{{ 'PASS_TITLE' | translate }}"
+                                        <input type="password" name="password" class="form-control"
+                                               placeholder="{{ 'PASS_TITLE' | translate }}"
                                                ng-model="vm.user.password"
-                                               validator = "vm.passwordValidator(vm.user.password) === true"
-                                               invalid-message = "vm.passwordValidator(vm.user.password)"
+                                               validator="vm.passwordValidator(vm.user.password) === true"
+                                               invalid-message="vm.passwordValidator(vm.user.password)"
                                                validate-on="dirty"
                                         />
                                     </div>
@@ -76,28 +81,45 @@
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <label class="col-sm-1">{{ 'ROL_TITLE' | translate }}</label>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <select class="form-control" name="publicprivate" ng-model="vm.user.role_id"
                                                 selectpicker
                                                 required
                                                 validate-on="dirty"
-                                                validator = "vm.role.id != 0"
-                                                required-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
-                                                invalid-message = "'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                validator="vm.role.id != 0"
+                                                required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
+                                                invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
                                                 ng-options="i.id as (i.name) for i in vm.roles">
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row clearfix" >
+                            <div class="form-group row clearfix">
                                 <br>
-                                <div class="col-sm-2">
-                                    <button name="create" type="submit" class="btn btn-sm btn-default" ng-show="!vm.showEdit">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}</button>
-                                    <button name="edit" type="submit" class="btn btn-sm btn-default" ng-show="vm.showEdit">{{ 'SUBMIT_EDIT_ACCOUNT' | translate }}</button>
-                                    <button name="cancel" type="button" class="btn btn-sm btn-default" ng-click="vm.cancelEdit()">{{ 'CANCEL' | translate }}</button>
+                                <div class="col-sm-3">
+                                    <ul class="btn-list ">
+                                        <li>
+                                            <button name="create" type="submit" class="btn btn-sm btn-default"
+                                                    ng-show="!vm.showEdit">{{ 'SUBMIT_NEW_ACCOUNT' | translate }}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button name="edit" type="submit" class="btn btn-sm btn-default"
+                                                    ng-show="vm.showEdit">{{ 'SUBMIT_EDIT_ACCOUNT' | translate }}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button name="cancel" type="button" class="btn btn-sm btn-default"
+                                                    ng-click="vm.cancelEdit()">{{ 'CANCEL' | translate }}
+                                            </button>
+                                        </li>
+
+                                    </ul>
                                 </div>
-                                <div class="col-sm-2">
-                                    <div class="loader" ng-show="vm.showLoader"></div>
+                            </div>
+                            <div class="form-group row clearfix">
+                                <div class="col-sm-1">
+
                                 </div>
                             </div>
                         </form>

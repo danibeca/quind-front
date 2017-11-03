@@ -42,7 +42,23 @@
                     title: 'home'
 
                 }
-            }]
+            },
+            {
+                state: 'nothing',
+                config: {
+                    templateUrl: 'app/dashboard/template/nothing.html',
+                    url: '/nothing',
+                    title: 'Nothing to see yet!',
+                    resolve: {
+                        translations: function (translateHelper) {
+                            return translateHelper.addParts('dashboard');
+                        }
+                    }
+
+                }
+            }
+
+        ]
     }
 })
 ();

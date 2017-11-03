@@ -16,7 +16,6 @@
   "LOGIN_FAILED": "Contraseña o usuario incorrecto",
   "LOGIN_SUCCESS": "Login exitoso",
   "LOGIN_INTERNAL_ERROR": "Ha ocurrido un error inesperado, intente mas tarde",
-  "REGISTER_FAILED": "Este email ya está siendo usado",
   "RESET_TITLE": "Reinicia tu contraseña",
   "SUBMIT_RESET_EMAIL": "Enviar correo",
   "WRONG_EMAIL": "El email no existe, por favor intenta de nuevo",

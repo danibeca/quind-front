@@ -137,6 +137,10 @@
                     vm.codes = vm.codes.concat(instance.resources);
                     vm.resourcesLoaded = true;
                 });
+                if (instances.length < 1) {
+                    vm.typesArray = [{id: 2, name: $filter('translate')('SYSTEM')}];
+                }
+
             }
 
             function failGetResources() {

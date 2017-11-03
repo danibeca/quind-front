@@ -6,7 +6,7 @@
             <th class="align-center">URL</th>
             <th class="align-center">{{ 'VERIFIED_TITLE' | translate }}</th>
             <th class="align-center">{{ 'EDIT_TITLE' | translate }}</th>
-            <th class="align-center">{{ 'DOCKER_FILES_TITLE' | translate }}</th>
+            <th class="align-center" ng-show="vm.qaServerInstances[0].type === 2" >{{ 'DOCKER_FILES_TITLE' | translate }}</th>
         </tr>
         </thead>
         <tbody>
@@ -27,7 +27,6 @@
                     href="{{vm.qalogAPI}}/components/{{item.component_owner_id}}/docker"><i
                     class="ion-android-download"></i></a></span>
             </td>
-            <td class="align-right" ng-show="item.type != 2"></td>
         </tr>
         </tbody>
     </table>

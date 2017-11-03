@@ -164,12 +164,21 @@
                                 </div>
                             </div>
                             <div class="form-group row clearfix" >
-                                <div class="col-sm-2">
-                                    <button name="login" type="submit" class="btn btn-sm btn-default" ng-show="!vm.showEdit">{{'SUBMIT_NEW_COMPONENT' | translate }}</button>
-                                    <button name="edit" type="submit" class="btn btn-sm btn-default" ng-show="vm.showEdit">{{ 'SUBMIT_EDIT_COMPONENT' | translate }}</button>
-                                    <button name="cancel" type="button" class="btn btn-sm btn-default" ng-click="vm.cancelEdit()">{{ 'CANCEL' | translate }}</button>
+                                <div class="col-sm-3">
+                                    <ul class="btn-list ">
+                                        <li>
+                                            <button name="create" type="submit" class="btn btn-sm btn-default" ng-show="!vm.showEdit">{{'SUBMIT_NEW_COMPONENT' | translate }}</button>
+                                        </li>
+                                        <li>
+                                            <button name="edit" type="submit" class="btn btn-sm btn-default" ng-show="vm.showEdit">{{ 'SUBMIT_EDIT_COMPONENT' | translate }}</button>
+                                        </li>
+                                        <li>
+                                            <button name="cancel" type="button" class="btn btn-sm btn-default" ng-click="vm.cancelEdit()">{{ 'CANCEL' | translate }}</button>
+                                        </li>
+                                    </ul>
+
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-1">
                                     <div class="loader" ng-show="vm.showLoader"></div>
                                 </div>
                             </div>
