@@ -2,7 +2,7 @@
     <div class="panel-content">
         <h3 class="with-line">{{ 'CI_PHASES_CONFIG_TITLE' | translate }}</h3>
         <div class="row">
-            <form class="form-horizontal" method="POST" name="savePhase" angular-validator-submit="vm.savePhase()"
+            <form class="form-horizontal" method="POST" name="vm.savePhaseForm" angular-validator-submit="vm.savePhase()"
                 novalidate angular-validator>
                 <div class="col-md-12">
                     <div class="form-group row clearfix">
@@ -12,7 +12,7 @@
                                    id="phaseName" placeholder="" value=""
                                    validate-on="dirty"
                                    validator="vm.phaseNameValidator(vm.ciPhase.name) === true"
-                                   invalid-message="vm.phaseNameValidator(vm.ciPhase.name)">
+                                   invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'">
                         </div>
                         <div class="col-sm-2">
                             <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowCIEditPhase">
