@@ -89,7 +89,7 @@
 
         function loadCIIndicators() {
             if (vm.hasCIS) {
-                componentService.getCIIndicators(croot.id, '1')
+                componentService.getCIIndicators(vm.component.id, '1')
                     .then(successCIIndicators)
                     .catch(failCIIndicators);
             }
@@ -112,7 +112,7 @@
             var labels = [];
             var dSeries = [];
 
-            componentService.getCIIndicatorSeries(croot.id, '1')
+            componentService.getCIIndicatorSeries(vm.component.id, '1')
                 .then(successCISeries)
                 .catch(failCISeries);
 
