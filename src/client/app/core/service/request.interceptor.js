@@ -31,7 +31,9 @@
             //alert(JSON.stringify(rejection));
             var msg = getErrorMessage(rejection);
             if (msg === null) {
-                rejection.msgCode = 'HOUSTON_WE_GOT_A_PROBLEM';
+                if (environmentConfig.env === 'dev') {
+                    rejection.msgCode = 'HOUSTON_WE_GOT_A_PROBLEM';
+                }
             } else {
                 if (rejection.data !== undefined && rejection.data.error !== undefined) {
                     rejection.msgCode = rejection.data.error.msgCode;
@@ -82,8 +84,10 @@
 
         function getErrorMessage(rejection) {
             var result = null;
-            if(rejection.data === null){
-                securityRedirect();
+            if (rejection.data === null) {
+                if (environmentConfig.env === 'dev') {
+                    console.log(rejection);
+                }
             }
             if (rejection.data !== undefined && rejection.data.error !== undefined) {
                 result = JSON.stringify(rejection.data.error.message);
