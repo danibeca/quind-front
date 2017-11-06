@@ -75,16 +75,6 @@
                     var routesNoAuth = ['servers', 'users', 'components'];
 
                     if (routesNoAuth.indexOf(stateName) < 0) {
-                        return true;
-                    }
-                    return false;
-
-                }
-
-                function isAdminRoute(stateName) {
-                    var routesNoAuth = ['servers', 'users', 'components'];
-
-                    if (routesNoAuth.indexOf(stateName) < 0) {
                         return false;
                     }
                     return true;
