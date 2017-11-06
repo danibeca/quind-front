@@ -24,9 +24,8 @@
         vm.qaServer = {};
         vm.ciPhase = {};
         vm.ciPhases = [];
-        vm.job = {};
+        vm.job = {regularExpressions: []};
         vm.editingJob = false;
-        vm.job.regularExpressions = [];
         vm.hasCIPhases = false;
         vm.ciServer = {type: 1}; //TODO: Je!
         vm.activeJobPosition = null;
@@ -41,6 +40,7 @@
         vm.saveQAS = saveQAS;
         vm.saveCIS = saveCIS;
         vm.savePhase = savePhase;
+        vm.saveJob = saveJob;
         vm.addJobToPhase = addJobToPhase;
         vm.removeJobFromPhase = removeJobFromPhase;
         vm.loadEditJob = loadEditJob;
@@ -60,7 +60,7 @@
         vm.passwordValidator = passwordValidator;
         vm.urlValidator = urlValidator;
         vm.phaseNameValidator = phaseNameValidator;
-        vm.selectTableRow = selectTableRow;
+        vm.jobRegexValidator = jobRegexValidator;
         vm.goBackFunction = goBackFunction;
 
         var croot = storageService.getJsonObject('croot');
@@ -133,15 +133,15 @@
             }
         }
 
-        function checkServer(url, username, password, sendRequestFunction, checkService, sendRequest) {
-            var lastChar = url[url.length - 1];
+        function checkServer(sendRequestFunction, checkService, sendRequest) {
+            var lastChar = vm.qaServer.url[vm.qaServer.url.length - 1];
             if (lastChar === '/') {
-                url = url.substring(0, url - 1);
+                vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
             }
             checkService.isInstanceValid({
-                'url': url,
-                'username': username,
-                'password': password
+                'url': vm.qaServer.url,
+                'username': vm.qaServer.username,
+                'password': vm.qaServer.password
             }).then(successIsValid)
                 .catch(failIsValid);
 
@@ -172,9 +172,13 @@
         }
 
         function saveQAS() {
+            if (!vm.qaServer.boRequiresAuthentication) {
+                vm.qaServer.username = '';
+                vm.qaServer.password = '';
+            }
             vm.showLoader = true;
             if (parseInt(vm.qaServer.type) === 1) {
-                checkServer(vm.qaServer.url, vm.qaServer.username, vm.qaServer.password, sendRequestQAS, qualityServerService, true);
+                checkServer(sendRequestQAS, qualityServerService, true);
             } else {
                 sendRequestQAS(false);
             }
@@ -257,10 +261,6 @@
         }
 
         function putEditQAS(verified) {
-            if (!vm.qaServer.boRequiresAuthentication) {
-                vm.qaServer.username = '';
-                vm.qaServer.password = '';
-            }
             var qaData = {
                 id: vm.qaServer.id,
                 quality_system_id: vm.qaServer.systemIid,
@@ -330,6 +330,7 @@
         }
 
         function savePhase() {
+            vm.showLoader = true;
             if(vm.mustShowCIEditPhase) {
                 updatePhase();
             } else {
@@ -352,7 +353,7 @@
                 vm.showLoader = false;
                 vm.mustShowCIEditPhase = false;
                 vm.ciPhase = {};
-                vm.job = {};
+                vm.job = {regularExpressions: []};
                 vm.savePhaseForm.reset();
                 loadCIPhases();
             }
@@ -376,7 +377,7 @@
             function successAddPhase() {
                 vm.showLoader = false;
                 vm.ciPhase = {};
-                vm.job = {};
+                vm.job = {regularExpressions: []};
                 vm.savePhaseForm.reset();
                 loadCIPhases();
             }
@@ -384,6 +385,15 @@
             function failAddPhase() {
                 vm.showLoader = false;
                 logger.error($filter('translate')('CREATE_PHASE_ERROR'));
+            }
+        }
+
+        function saveJob() {
+            vm.showJobLoader = true;
+            if(vm.job.id !== null && vm.job.id !== undefined && vm.job.id !== '') {
+                updateJob();
+            } else {
+                addJobToPhase();
             }
         }
 
@@ -397,7 +407,9 @@
                         ciServerService.addJobToPhase(vm.ciPhase.id, newJobData)
                             .then(successAddJobToPhase)
                             .catch(failAddJobToPhase);
-                        vm.job = {};
+                        vm.job = {regularExpressions: []};
+                        vm.saveJobForm.reset();
+                        vm.showJobLoader = false;
                     }
                 }
             }
@@ -414,6 +426,7 @@
             }
 
             function failAddJobToPhase(error) {
+                vm.showJobLoader = false;
                 logger.error($filter('translate')('CREATE_PHASE_ERROR'));
             }
         }
@@ -440,8 +453,7 @@
         }
 
         function cancelJobEdit() {
-            vm.job = {};
-            vm.job.regularExpressions = [];
+            vm.job = {regularExpressions: []};
             vm.jobEditing = false;
             vm.jobEditionTitle = $filter('translate')('ADD_JOB');
         }
@@ -486,12 +498,14 @@
                 .catch(failUpdateJobToPhase);
 
             function successUpdateJobToPhase(updatedJob) {
-                vm.job = {};
-                vm.job.regularExpressions = [];
+                vm.job = {regularExpressions: []};
+                vm.saveJobForm.reset();
                 vm.jobEditing = false;
+                vm.showJobLoader = false;
             }
 
             function failUpdateJobToPhase(error) {
+                vm.showJobLoader = false;
                 logger.error($filter('translate')('UPDATE_PHASE_ERROR'));
             }
         }
@@ -503,6 +517,7 @@
 
             function successDeletePhase() {
                 vm.showLoader = false;
+                vm.mustShowCIEditPhase = false;
                 vm.ciPhase = {};
                 loadCIPhases();
             }
@@ -548,7 +563,8 @@
 
         function showEditCIPhase(phase) {
             vm.ciPhase = phase;
-            vm.job.regularExps = [];
+            vm.job = {regularExpressions: []};
+            vm.saveJobForm.reset()
             vm.mustShowCIEditPhase = true;
             if(vm.ciPhase.jobs === undefined || vm.ciPhase.jobs === null) {
                 vm.ciPhase.jobs = [];
@@ -609,13 +625,19 @@
             return false;
         }
 
-        function selectTableRow(index) {
-            vm.activeJobPosition = vm.activeJobPosition === index ? -1 : index;
-            if(vm.activeJobPosition === -1) {
-                vm.editingJob = false;
+        function jobRegexValidator() {
+            if (vm.job.regularExpressions.length < 1) {
+                if (vm.newRegExp !== undefined && vm.newRegExp !== null && vm.newRegExp !== '') {
+                    return $filter('translate')('ADD_REGEX_TEXT');
+                } else {
+                    return $filter('translate')('REQUIRED_REGEX_FIELD');
+                }
             } else {
-                vm.editingJob = true;
+                if (vm.newRegExp !== undefined && vm.newRegExp !== null && vm.newRegExp !== '') {
+                    return $filter('translate')('ADD_REGEX_TEXT');
+                }
             }
+            return true;
         }
 
         function goBackFunction() {

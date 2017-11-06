@@ -3,52 +3,66 @@
      ba-panel-title="{{ vm.jobEditionTitle }}"
      ba-panel-class="profile-page">
     <div class="col-lg-12 col-md-12">
-        <div class="col-lg-12 col-md-12">
-            <div class="form-group row">
-                <label class="col-lg-3">{{ 'JOB_NAME_TITLE' | translate }}</label>
-                <div class="col-lg-6">
-                    <input type="text" name="name" autocorrect="off" autocapitalize="none"
-                           class="form-control" placeholder="{{ 'JOB_NAME_TITLE' | translate }}"
-                           ng-model="vm.job.name"
-                    />
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12 col-md-12">
-            <div class="form-group row">
-                <div class="col-lg-9">
-                    <h5>{{ 'JOB_REGULAR_EXPRESIONS_TITLE' | translate }}</h5>
-                    <table class="table">
-                        <tbody>
-                        <tr data-ng-repeat="regExp in vm.job.regularExpressions">
-                            <td>/{{regExp}}/</td>
-                            <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.removeRegexFromJob(vm.job, regExp)"><i
-                                    class="ion-minus-round"></i></a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-lg-9">
-                    <div class="input-group mb-2 mb-sm-0">
-                        <div class="input-group-addon">/</div>
-                        <input type="text" name="newRegExp" autocorrect="off" autocapitalize="none"
-                               class="form-control" placeholder="{{ 'JOB_REGULAR_EXPRESION_TITLE' | translate }}"
-                               ng-model="vm.newRegExp"
+        <form class="form-horizontal" method="POST" name="vm.saveJobForm" angular-validator-submit="vm.saveJob()"
+              novalidate angular-validator>
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group row">
+                    <label class="col-lg-3">{{ 'JOB_NAME_TITLE' | translate }}</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="name" autocorrect="off" autocapitalize="none"
+                               class="form-control" placeholder="{{ 'JOB_NAME_TITLE' | translate }}"
+                               ng-model="vm.job.name" required
+                               validate-on="dirty"
+                               required-message="'{{ 'REQUIRED_FIELD' | translate }}'"
                         />
-                        <div class="input-group-addon">/</div>
-                        <div class="input-group-addon"><a class="profile-toggle-link" ng-click="vm.addRegexToJob(vm.job)"><i
-                                class="ion-plus-round"></i></a></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <button type="button" class="btn btn-primary btn-with-icon" ng-click="vm.addJobToPhase()" ng-show="!vm.jobEditing">
-            <i class="ion-android-checkmark-circle"></i>{{ 'ADD_JOB' | translate }}
-        </button>
-        <button type="button" class="btn btn-primary btn-with-icon" ng-click="vm.updateJob()" ng-show="vm.jobEditing">
-            <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_JOB' | translate }}
-        </button>
-        <button name="cancel" type="button" class="btn btn-default" ng-click="vm.cancelJobEdit()" ng-show="vm.jobEditing">{{ 'CANCEL' | translate }}</button>
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group row">
+                        <div class="col-lg-9">
+                            <h5>{{ 'JOB_REGULAR_EXPRESIONS_TITLE' | translate }}</h5>
+                            <table class="table">
+                                <tbody>
+                                <tr data-ng-repeat="regExp in vm.job.regularExpressions">
+                                    <td>/{{regExp}}/</td>
+                                    <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.removeRegexFromJob(vm.job, regExp)"><i
+                                            class="ion-minus-round"></i></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-group mb-2 mb-sm-0">
+                                <div class="input-group-addon">/</div>
+                                <input type="text" name="newRegExp" autocorrect="off" autocapitalize="none"
+                                       class="form-control" placeholder="{{ 'JOB_REGULAR_EXPRESION_TITLE' | translate }}"
+                                       ng-model="vm.newRegExp" validate-on="dirty"
+                                       validator="vm.jobRegexValidator() === true"
+                                       invalid-message="vm.jobRegexValidator()"
+                                />
+                                <div class="input-group-addon">/</div>
+                                <div class="input-group-addon"><a class="profile-toggle-link" ng-click="vm.addRegexToJob(vm.job)"><i
+                                        class="ion-plus-round"></i></a></div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.jobEditing" ng-disabled="vm.showJobLoader">
+                    <i class="ion-android-checkmark-circle"></i>{{ 'ADD_JOB' | translate }}
+                </button>
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.jobEditing" ng-disabled="vm.showJobLoader">
+                    <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_JOB' | translate }}
+                </button>
+            </div>
+            <div class="col-lg-1">
+                <div class="loader" ng-show="vm.showJobLoader"></div>
+            </div>
+            <div class="col-lg-1">
+                <button name="cancel" type="button" class="btn btn-default" ng-click="vm.cancelJobEdit()" ng-show="vm.jobEditing">{{ 'CANCEL' | translate }}</button>
+            </div>
+        </form>
     </div>
 </div>
 <div class="col-lg-6 col-md-6 col-sm-6"

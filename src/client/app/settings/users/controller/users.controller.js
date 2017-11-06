@@ -13,7 +13,7 @@
 
         var croot = storageService.getJsonObject('croot');
 
-        vm.user = {};
+        vm.newUser = {};
         vm.hasUsers = false;
         vm.usersList = [];
         vm.roles = [];
@@ -114,7 +114,7 @@
         }
 
         function userRegistration() {
-            vm.showLoader = true;
+            vm.showUsersLoader = true;
             if(vm.showEditForm) {
                 putChildren();
             } else {
@@ -123,18 +123,18 @@
         }
 
         function putChildren() {
-            userRemoteService.updateChild(vm.user)
+            userRemoteService.updateChild(vm.newUser)
                 .then(successUpdateChild)
                 .catch(failUpdateChild);
 
             function successUpdateChild(data) {
-                vm.showLoader = false;
+                vm.showUsersLoader = false;
                 vm.showEditForm = false;
                 $state.reload();
             }
 
             function failUpdateChild(response) {
-                vm.showLoader = false;
+                vm.showUsersLoader = false;
                 console.log(response);
                 if (response.status === 409) {
                     logger.error($filter('translate')('REGISTER_FAILED'));
@@ -143,7 +143,7 @@
         }
 
         function postChildren() {
-            userRemoteService.createChild(vm.user)
+            userRemoteService.createChild(vm.newUser)
                 .then(successCreateChild)
                 .catch(failCreateChild);
 
@@ -152,7 +152,7 @@
             }
 
             function failCreateChild(response) {
-                vm.showLoader = false;
+                vm.showUsersLoader = false;
                 console.log(response);
                 if (response.status === 409) {
                     logger.error($filter('translate')('REGISTER_FAILED'));
@@ -180,18 +180,18 @@
         }
 
         function showAddUser() {
-            vm.user = {};
+            vm.newUser = {};
             vm.showCreateForm = true;
         }
 
         function showEdit(userId) {
-            vm.user = $.grep(vm.usersList, function(e){ return e.id === userId; })[0];
+            vm.newUser = $.grep(vm.usersList, function(e){ return e.id === userId; })[0];
             vm.showEditForm = true;
         }
 
         function deleteUser(userId) {
-            vm.user = $.grep(vm.usersList, function(e){ return e.id === userId; })[0];
-            userRemoteService.deleteChild(vm.user)
+            vm.newUser = $.grep(vm.usersList, function(e){ return e.id === userId; })[0];
+            userRemoteService.deleteChild(vm.newUser)
                 .then(successDeleteChild)
                 .catch(failDeleteChild);
 

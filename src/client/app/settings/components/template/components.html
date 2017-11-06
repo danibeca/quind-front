@@ -98,7 +98,7 @@
                                                class="form-control" placeholder="{{ 'JOBS_PATH_DESC' | translate }}"
                                                ng-model="vm.component.jobs_path"
                                                validate-on="dirty"
-                                               validator="vm.jobDataValidator(vm.component.classifier_expression) === true"
+                                               validator="vm.jobDataValidator(vm.component.jobs_path) === true"
                                                invalid-message="'{{ 'REQUIRED_FIELD' | translate }}'"
                                         />
                                     </div>
@@ -171,19 +171,18 @@
                                 <div class="col-sm-3">
                                     <ul class="btn-list ">
                                         <li>
-                                            <button name="create" type="submit" class="btn btn-sm btn-default" ng-show="!vm.showEdit">{{'SUBMIT_NEW_COMPONENT' | translate }}</button>
+                                            <button name="create" type="submit" class="btn btn-sm btn-default" ng-show="!vm.showEdit" ng-disabled="vm.showLoader">{{'SUBMIT_NEW_COMPONENT' | translate }}</button>
                                         </li>
                                         <li>
-                                            <button name="edit" type="submit" class="btn btn-sm btn-default" ng-show="vm.showEdit">{{ 'SUBMIT_EDIT_COMPONENT' | translate }}</button>
+                                            <button name="edit" type="submit" class="btn btn-sm btn-default" ng-show="vm.showEdit" ng-disabled="vm.showLoader">{{ 'SUBMIT_EDIT_COMPONENT' | translate }}</button>
+                                        </li>
+                                        <li>
+                                            <div class="loader" ng-show="vm.showLoader"></div>
                                         </li>
                                         <li>
                                             <button name="cancel" type="button" class="btn btn-sm btn-default" ng-click="vm.cancelEdit()">{{ 'CANCEL' | translate }}</button>
                                         </li>
                                     </ul>
-
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="loader" ng-show="vm.showLoader"></div>
                                 </div>
                             </div>
                         </form>

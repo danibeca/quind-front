@@ -16,21 +16,6 @@
                 </select>
             </div>
         </div>
-        <!--div class="form-group row clearfix">
-            <label class="col-sm-2">{{ 'PUBLIC_PRIVATE' | translate }}</label>
-            <div class="col-sm-2">
-                <select class="form-control" name="publicprivate" ng-model="vm.ciServer.type"
-                        selectpicker
-                        required
-                        validate-on="dirty"
-                        validator="vm.ciServer.type != 0"
-                        required-message="'{{ 'REQUIRED_SELECT' | translate }}'"
-                        invalid-message="'{{ 'REQUIRED_SELECT' | translate }}'"
-                        ng-options="i.id as (i.name) for i in vm.typeOptions">
-                    <option></option>
-                </select>
-            </div>
-        </div-->
         <div class="form-group row clearfix">
             <label for="url_build_server" class="col-sm-2">{{ 'BUILD_URL_TITLE' | translate }}</label>
             <div class="col-sm-4">
@@ -124,11 +109,11 @@
         <div class="form-group row clearfix" >
             <br>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowCIEdit">
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowCIEdit" ng-disabled="vm.showLoader">
                     <i class="ion-android-checkmark-circle"></i>{{ 'ADD_SERVER' | translate }}
                 </button>
 
-                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.mustShowCIEdit">
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.mustShowCIEdit" ng-disabled="vm.showLoader">
                     <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_SERVER' | translate }}
                 </button>
             </div>

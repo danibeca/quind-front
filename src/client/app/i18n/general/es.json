@@ -77,5 +77,7 @@
   "COMPONENT_TITLE": "Componente",
   "SYSTEM_TITLE": "Sistema",
   "APPLICATION_TITLE": "Aplicación",
-  "AUTOMATION_STATE_TITLE": "Estado de automatización"
+  "AUTOMATION_STATE_TITLE": "Estado de automatización",
+  "REQUIRED_REGEX_FIELD": "Por favor agregue al menos una expresión",
+  "ADD_REGEX_TEXT": "Por favor use el botón '+' para agregar la expresión al Job"
 }

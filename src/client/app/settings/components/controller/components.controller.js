@@ -269,9 +269,9 @@
         }
 
         function showEdit(component) {
-            vm.component = $.grep(vm.allComponents, function (e) {
+            vm.component = JSON.parse(JSON.stringify($.grep(vm.allComponents, function (e) {
                 return e.id === component.id;
-            })[0];
+            })[0]));
             vm.component.code = component.code
             vm.components = vm.components.filter(function (obj) {
                 return vm.component.id !== obj.id;

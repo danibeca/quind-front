@@ -79,10 +79,10 @@
         <div class="form-group row clearfix" >
             <br>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowQAEdit">
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="!vm.mustShowQAEdit" ng-disabled="vm.showLoader">
                     <i class="ion-android-checkmark-circle"></i>{{ 'ADD_SERVER' | translate }}
                 </button>
-                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.mustShowQAEdit">
+                <button type="submit" class="btn btn-primary btn-with-icon" ng-show="vm.mustShowQAEdit" ng-disabled="vm.showLoader">
                     <i class="ion-android-checkmark-circle"></i>{{ 'UPDATE_SERVER' | translate }}
                 </button>
             </div>
