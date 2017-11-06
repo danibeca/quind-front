@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th class="align-center">{{ 'PHASE_NAME_TITLE' | translate }}</th>
-            <!--th class="align-center">{{ 'JOBS_NUMBER_TITLE' | translate }}</th-->
+            <th class="align-center">{{ 'JOBS_NUMBER_TITLE' | translate }}</th>
             <th class="align-center">{{ 'EDIT_TITLE' | translate }}</th>
             <th class="align-center">{{ 'DELETE_TITLE' | translate }}</th>
         </tr>
@@ -11,6 +11,7 @@
         <tbody>
         <tr ng-repeat="item in vm.ciPhases">
             <td>{{item.name}}</td>
+            <td class="align-center">{{item.jobs.length}}</td>
             <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.showEditCIPhase(item)"><i
                     class="ion-edit"></i></a></td>
             <td class="align-center" style="color:green;font-size: 20px"><a class="profile-toggle-link" ng-click="vm.deletePhase(item)"><i

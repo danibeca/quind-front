@@ -13,6 +13,10 @@
         return {
             restrict: 'E',
             templateUrl: 'app/blocks/theme/components/contentTop/contentTop.html',
+            scope: {
+                alternativeTile: '@',
+                showAlternativeTitle: '@'
+            },
             link: function ($scope) {
                 $scope.$watch(function () {
                     $scope.activePageTitle = $filter('translate')($state.current.title);

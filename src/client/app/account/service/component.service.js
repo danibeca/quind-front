@@ -27,7 +27,8 @@
             add: add,
             getList: getList,
             getQalogList: getQalogList,
-            associateToUser: associateToUser
+            associateToUser: associateToUser,
+            getOne: getOne
         };
         return service;
 
@@ -228,8 +229,8 @@
                     return accountComponentsList;
                 }
 
-                function failGetListCilog() {
-
+                function failGetListCilog(error) {
+                    return $q.reject(error);
                 }
             }
 
@@ -263,6 +264,33 @@
             }
 
             function fail13(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function getOne(componentId) {
+            return accountAPI.one('components', componentId).get()
+                .then(successGetOne)
+                .catch(failGetOne);
+
+            function successGetOne(accountComponent) {
+                return cilogAPI.one('components', componentId).get()
+                    .then(successGetOneCilog)
+                    .catch(failGetOneCilog);
+
+                function successGetOneCilog(cilogComponent) {
+                    var accountComponentData = accountComponent.plain().data;
+                    accountComponentData.classifier_expression = cilogComponent.plain().data.classifier_expression;
+                    accountComponentData.jobs_path = cilogComponent.plain().data.jobs_path;
+                    return accountComponentData;
+                }
+
+                function failGetOneCilog(error) {
+                    return $q.reject(error);
+                }
+            }
+
+            function failGetOne(error) {
                 return $q.reject(error);
             }
         }

@@ -33,8 +33,11 @@
   "PHASES_TITLE": "Etapas",
   "CI_PHASES_CONFIG_TITLE": "Configuración de las etapas de CI",
   "PHASE_NAME_TITLE": "Nombre de la etapa",
+  "JOBS_NUMBER_TITLE": "Jobs",
   "ADD_PHASE": "Agregar etapa",
-  "UPDATE_PHASE": "Actualizar etapa",
+  "ADD_JOB": "Agregar job",
+  "UPDATE_JOB": "Actualizar job",
+  "UPDATE_PHASE": "Actualizar nombre",
   "CREATE_PHASE_ERROR": "Error creando Etapa",
   "UPDATE_PHASE_ERROR": "Error actualizando Etapa",
   "DELETE_PHASE_ERROR": "Error eliminando Etapa",
@@ -42,5 +45,6 @@
   "JOB_NAME_TITLE": "Nombre del Job",
   "JOB_ACTION_TITLE": "Acciones",
   "JOB_REGULAR_EXPRESIONS_TITLE": "Expresiones regulares",
-  "JOB_REGULAR_EXPRESION_TITLE": "Expresión regular"
+  "JOB_REGULAR_EXPRESION_TITLE": "Expresión regular",
+  "PHASE_JOBS_TITLE": "Jobs de la etapa"
 }

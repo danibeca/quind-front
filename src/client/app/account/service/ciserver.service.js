@@ -20,7 +20,8 @@
             addJobToPhase: addJobToPhase,
             updateJobToPhase: updateJobToPhase,
             removeJobFromPhase: removeJobFromPhase,
-            getPhases: getPhases
+            getPhases: getPhases,
+            getComponentJobs: getComponentJobs
         };
         return service;
 
@@ -221,7 +222,7 @@
 
             function successPhases(phasesQasta) {
                 var phasesQastaList = phasesQasta.plain();
-                return cilogAPI.one('components', data.component_owner_id).all('process-phases').getList()
+                return cilogAPI.all('process-phases').getList({component_owner_id: data.component_owner_id})
                     .then(successPhasesCilog)
                     .catch(failPhasesCilog);
 
@@ -250,6 +251,20 @@
             }
 
             function failPhases(error) {
+                return $q.reject(error);
+            }
+        }
+
+        function getComponentJobs(data) {
+            return cilogAPI.one('components', data.id).all('process-phases').getList()
+                .then(successJobsCilog)
+                .catch(failJobsCilog);
+
+            function successJobsCilog(jobsCilog) {
+                return jobsCilog.plain();
+            }
+
+            function failJobsCilog(error) {
                 return $q.reject(error);
             }
         }

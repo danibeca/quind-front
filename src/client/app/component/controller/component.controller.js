@@ -7,16 +7,25 @@
 (function () {
     'use strict';
 
-    angular.module('blocks.theme.components')
-        .controller('ComponentDashboardCtrl', ComponentDashboardCtrl);
+    angular.module('app.component')
+        .controller('ComponentController', ComponentController);
 
     /* @ngInject */
-    function ComponentDashboardCtrl(componentService, ciServerService, storageService, $timeout, $filter) {
+    function ComponentController(componentService, ciServerService, storageService, $timeout, $filter, $stateParams, spinnerService, $state) {
         var vm = this;
-
         var croot = storageService.getJsonObject('croot');
 
+        vm.componentId = $stateParams.componentId;
+        vm.previousRoute = $stateParams.newPreviousRoute;
+        vm.previousIsComponent = $stateParams.isComponent;
+        vm.previousComponentId = $stateParams.previousComponentId;
+        vm.oldPreviousRoute = $stateParams.oldPreviousRoute;
+
+        vm.pageTitle = '';
+
         vm.component = {};
+        vm.componentApplications = [];
+
         vm.indIds = '44,52,57';
         vm.vars = {
             0: 'value',
@@ -27,26 +36,121 @@
         var ids = [];
         var labels = [];
         var dSeries = [];
-
         vm.cylinderChartData = [];
+        vm.hasCIPhases = false;
+        vm.ciPhases = [];
+        vm.applicationJobs = [];
 
-        vm.setComponent = setComponent;
+        vm.viewMore = viewMore;
+        vm.goBackFunction = goBackFunction;
+        vm.appHasJob = appHasJob;
 
-        /*************************************
-            Methods to set data from directive
-         *************************************/
-        function setComponent(component) {
-            vm.component = component;
-            activate();
+        activate();
+
+        function activate() {
+            loadComponent();
         }
 
-        /*********************************************
-         Methods to load data from remote services
-         ********************************************/
-        function activate() {
-            loadCIServerInstances();
-            loadQAAttributes();
-            loadQAIndicators();
+        function loadComponent() {
+            componentService.getOne(vm.componentId)
+                .then(success)
+                .catch(fail);
+
+            function success(componentData) {
+                vm.component = componentData;
+                spinnerService.hide('componentSpinner');
+                loadQAAttributes();
+                loadQAIndicators();
+                loadCIServerInstances();
+                if (vm.component.tag_id === 2) {
+                    vm.pageTitle = $filter('translate')('SYSTEM_TITLE') + ' ' + vm.component.name
+                    loadApplications();
+                } else {
+                    vm.pageTitle = $filter('translate')('APPLICATION_TITLE') + ' ' + vm.component.name
+                }
+            }
+
+            function fail(error) {
+                vm.msgError = error.msgCode;
+            }
+        }
+
+        function loadApplications() {
+            var requestData = {
+                parent_id: vm.component.id,
+                only_leaves: true
+            };
+
+            componentService.getList(requestData)
+                .then(success)
+                .catch(fail);
+
+            function success(apps) {
+                apps.forEach(function(app) {
+                    vm.componentApplications.push(buildApplicationForTable(app));
+                });
+                loadQAIndicatorsForApps(apps);
+                loadCIIndicatorsForApps(apps);
+            }
+
+            function fail(error) {
+                vm.msgError = error.msgCode;
+            }
+        }
+
+        function loadQAIndicatorsForApps(apps) {
+            apps.forEach(function (application) {
+                componentService.getQAIndicators(application.id, vm.indIds)
+                    .then(successQAIndicators)
+                    .catch(failQAIndicators);
+
+                function successQAIndicators(indicators) {
+                    updateApplicationsTable(application, indicators, 'qa');
+                }
+
+                function failQAIndicators(error) {
+                    vm.msgError = error.msgCode;
+                }
+            });
+        }
+
+        function loadCIIndicatorsForApps(apps) {
+            if (vm.hasCIS) {
+                apps.forEach(function (application) {
+                    componentService.getCIIndicators(application.id, '1')
+                        .then(successCIIndicators)
+                        .catch(failCIIndicators);
+
+                    function successCIIndicators(indicators) {
+                        if (indicators !== null && indicators !== undefined && indicators.length > 0) {
+                            updateApplicationsTable(application, indicators, 'ci');
+                        }
+                    }
+
+                    function failCIIndicators(error) {
+                        vm.msgError = error.msgCode;
+                    }
+                });
+            }
+        }
+
+        function buildApplicationForTable(application) {
+            var appForTable = JSON.parse(JSON.stringify(application));
+            return appForTable;
+        }
+
+        function updateApplicationsTable(application, indicators, indicatorsType) {
+            vm.componentApplications.forEach(function (x) {
+                if (x.id === application.id) {
+                    if (indicatorsType === 'qa') {
+                        x.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
+                        x.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
+                        x.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
+                    } else {
+                        x.automation = $.grep(indicators, function(e) { return e.id === 1; })[0];
+                    }
+                }
+            });
         }
 
         function loadCIServerInstances() {
@@ -60,6 +164,9 @@
                     vm.hasCIS = true;
                     loadCIAutomationPhases();
                     loadCIIndicators();
+                    if(vm.component.tag_id === 3) {
+                        loadCIPhases();
+                    }
                 }
             }
 
@@ -165,6 +272,41 @@
             }
         }
 
+        function loadCIPhases() {
+            ciServerService.getPhases({component_owner_id: croot.id})
+                .then(successCIPhases);
+
+            function successCIPhases(data) {
+                vm.ciPhases = data;
+                if (vm.ciPhases.length > 0) {
+                    loadApplicationJobs();
+                    vm.hasCIPhases = true;
+                }
+            }
+        }
+
+        function loadApplicationJobs() {
+            ciServerService.getComponentJobs(vm.component)
+                .then(successApplicationJobs)
+                .catch(failApplicationJobs);
+
+            function successApplicationJobs(data) {
+                vm.applicationJobs = data;
+            }
+
+            function failApplicationJobs(error) {
+                console.log(error);
+            }
+        }
+
+        function appHasJob(job) {
+            var jobFound = $.grep(vm.applicationJobs, function(e) { return e.id === job.id; })[0];
+            if (jobFound !== undefined && jobFound !== null) {
+                return true;
+            }
+            return false;
+        }
+
         function buildAxe(title) {
             var labelsArray = [[0, ''],
                 [1, $filter('translate')('TOO_LOW_TEXT')],
@@ -248,6 +390,25 @@
                 vm.ids = ids;
                 vm.labels = labels;
                 vm.series = dSeries;
+            }
+        }
+
+        function viewMore(component) {
+            $state.go('component', {componentId: component.id,
+                                    newPreviousRoute: 'component',
+                                    isComponent: true,
+                                    previousComponentId: vm.component.id,
+                                    oldPreviousRoute: vm.previousRoute});
+        }
+        
+        function goBackFunction() {
+            if (vm.previousIsComponent) {
+                $state.go('component', {componentId: vm.previousComponentId,
+                                        newPreviousRoute: vm.oldPreviousRoute,
+                                        isComponent: false,
+                                        previousComponentId: vm.component.id});
+            } else {
+                $state.go(vm.previousRoute);
             }
         }
     }

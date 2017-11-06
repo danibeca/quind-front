@@ -7,7 +7,7 @@
   "HOME_TITLE": "Inicio",
   "DASHBOARD_TITLE": "Dashboard",
   "SYSTEMS_TITLE": "Sistemas",
-  "APPLICATION_TITLE": "Aplicaciones",
+  "APPLICATIONS_TITLE": "Aplicaciones",
   "INSPECTION_SERVER_ERROR": "Información no disponible. Por favor revise su servidor de inspección de código",
   "INTERNAL_SERVER_ERROR": "Información no disponible. Por favor contáctenos.",
   "LOADING": "...Cargando",
@@ -72,5 +72,10 @@
   "REGISTER_FAILED": "Este email ya está siendo usado",
   "JOBS_PATH_DESC": "Directorio de Jobs",
   "ONE_REGEX_WARNING_TEXT": "Los Jobs deben tener al menos una Expresión regular",
-  "CLOSE_TEXT": "Cerrar"
+  "CLOSE_TEXT": "Cerrar",
+  "AUTOMATION_TITLE": "Automatización",
+  "COMPONENT_TITLE": "Componente",
+  "SYSTEM_TITLE": "Sistema",
+  "APPLICATION_TITLE": "Aplicación",
+  "AUTOMATION_STATE_TITLE": "Estado de automatización"
 }

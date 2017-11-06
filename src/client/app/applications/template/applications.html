@@ -13,7 +13,7 @@
 
     </spinner>
     <div class="al-main">
-        <div class="al-content" ng-if="!vm.viewComponentDashboard">
+        <div class="al-content">
             <content-top></content-top>
             <top-components components="{{ vm.applications }}"
                             title="{{ 'SOFTWARE_MATURITY_TITLE' | translate }}"
@@ -25,20 +25,17 @@
                             ng-if="vm.hasCIS"></top-components>
             <div class="col-lg-12 col-md-12 col-sm-12"
                  ba-panel
+                 ba-panel-title="{{ 'APPLICATIONS_TITLE' | translate }}"
                  ba-panel-class="profile-page">
-                <h3 class="with-line">{{ 'APPLICATION_TITLE' | translate }}</h3>
                 <components-table components="{{ vm.allApplications }}"
                                   croot-id="{{ vm.croot.id }}"
                                   show-code-health="true"
                                   show-reliability="true"
                                   show-efficiency-potential="true"
+                                  show-automation="{{ vm.hasCIS }}"
                                   allow-view-more="true"
                                   view-more-function="vm.viewMore(component)"></components-table>
             </div>
-        </div>
-        <div class="al-content" ng-if="vm.viewComponentDashboard">
-            <component-dashboard go-back-function="vm.backToList()"
-                                 component="{{ vm.componentForDashboard }}"></component-dashboard>
         </div>
     </div>
 

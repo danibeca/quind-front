@@ -25,6 +25,7 @@
                 showCodeHealth: '@',
                 showReliability: '@',
                 showEfficiencyPotential: '@',
+                showAutomation: '@',
                 allowAdd: '@',
                 allowEdit: '@',
                 allowDelete: '@',
@@ -64,14 +65,22 @@
                         controller.setShowCodeHealth(scope.showCodeHealth);
                     }
                 });
+
                 scope.$watch('showReliability', function () {
                     if (scope.showReliability !== undefined && scope.showReliability !== '') {
                         controller.setShowReliability(scope.showReliability);
                     }
                 });
+
                 scope.$watch('showEfficiencyPotential', function () {
                     if (scope.showEfficiencyPotential !== undefined && scope.showEfficiencyPotential !== '') {
                         controller.setShowEfficiencyPotential(scope.showEfficiencyPotential);
+                    }
+                });
+
+                scope.$watch('showAutomation', function () {
+                    if (scope.showAutomation !== undefined && scope.showAutomation !== '') {
+                        controller.setShowAutomation(scope.showAutomation);
                     }
                 });
 

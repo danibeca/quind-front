@@ -1,0 +1,157 @@
+<div class="body-bg"></div>
+<main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+
+    <ba-sidebar></ba-sidebar>
+    <page-top></page-top>
+    <spinner name="componentSpinner" show="true">
+        <div class="container-overlay"></div>
+        <div class="container-spinner">
+            <div class="container-bounce1"></div>
+            <div class="container-bounce2"></div>
+            <div class="container-please-wait">Cargando...</div>
+        </div>
+
+    </spinner>
+    <div class="al-main">
+        <div class="al-content" ng-if="!vm.viewComponentDashboard">
+            <content-top alternative-tile="{{ vm.pageTitle }}" show-alternative-title="true"></content-top>
+            <div class="col-sm-12">
+                <br>
+                <div>
+                    <go-back go-back-function="vm.goBackFunction()"></go-back>
+                </div>
+                <br>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'SOFTWARE_MATURITY_TITLE' | translate }}"
+                 ba-panel-title-ext="{{vm.component.name}}"
+                 ba-panel-class="medium-panel"
+                 ng-if="vm.data.length > 0">
+
+                <gauge-chart data="{{vm.data}}"
+                             chartid="{{vm.dashChartId}}"
+                             loading="{{ 'LOADING' | translate }}"
+                             error="{{vm.error}}">
+                </gauge-chart>
+                <span class="error-dashboard" ng-show="vm.error">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'ACCOUNT_RUN CHART' | translate }} {{ 'SOFTWARE_MATURITY_TITLE' | translate }}"
+                 ba-panel-title-ext="{{vm.component.name}}"
+                 ba-panel-class="medium-panel"
+                 ng-if="vm.data.length > 0">
+                <stock-multiple-chart ids="{{ vm.ids}}"
+                                      series="{{ vm.series}}"
+                                      labels="{{ vm.labels}}"
+                                      vars="{{ vm.vars}}"
+                                      lang="{{ vm.lang}}"
+                                      error="{{vm.seriesError}}"
+                                      loading="{{ 'LOADING' | translate }}"
+                >
+                </stock-multiple-chart>
+                <span class="error-dashboard" ng-show="vm.seriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}</span>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'PROCESS_MATURITY_TITLE' | translate }}"
+                 ba-panel-title-ext="{{vm.component.name}}"
+                 ba-panel-class="medium-panel"
+                 ng-if="vm.ciData.length > 0">
+
+                <gauge-chart data="{{vm.ciData}}"
+                             chartid="ci{{vm.chartId}}"
+                             loading="{{ 'LOADING' | translate }}"
+                             error="{{vm.ciIndicatorsError}}">
+                </gauge-chart>
+                <span class="error-dashboard" ng-show="vm.ciIndicatorsError">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'ACCOUNT_RUN CHART' | translate }} {{ 'PROCESS_MATURITY_TITLE' | translate }}"
+                 ba-panel-title-ext="{{vm.component.name}}"
+                 ba-panel-class="medium-panel"
+                 ng-if="vm.ciData.length > 0">
+                <stock-multiple-chart ids="{{ vm.ciIds}}"
+                                      series="{{ vm.ciSeries}}"
+                                      labels="{{ vm.ciLabels}}"
+                                      vars="{{ vm.vars}}"
+                                      lang="{{ vm.lang}}"
+                                      error="{{vm.ciSeriesError}}"
+                                      loading="{{ 'LOADING' | translate }}"
+                >
+                </stock-multiple-chart>
+                <span class="error-dashboard" ng-show="vm.ciSeriesError">{{ 'INTERNAL_SERVER_ERROR' | translate }}</span>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'AUTOMATION_PERCENTAGE_TITLE' | translate }}"
+                 ba-panel-title-ext="{{vm.component.name}}"
+                 ba-panel-class="medium-panel"
+                 ng-if="vm.hasAutPhasesData">
+
+                <cylinder-chart chart-id="esemalditoid" data="{{ vm.cylinderChartData }}"></cylinder-chart>
+                <span class="error-dashboard" ng-show="vm.errorAutPhases">{{ 'INSPECTION_SERVER_ERROR' | translate }}</span>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'QUALITY_ATTRIBUTES_ISSUES' | translate }}"
+                 ba-panel-title-ext="{{vm.component.name}}"
+                 ba-panel-class="medium-panel"
+                 ng-if="vm.qaData.length > 0">
+                <bubble-chart chartid="qabubblegraph"
+                              data="{{ vm.qaData }}"
+                              config="{{ vm.qaConfig }}"
+                              error="{{vm.errorQAAttributes}}"
+                              loading="{{ 'LOADING' | translate }}"
+                >
+                </bubble-chart>
+                <span class="error-dashboard" ng-show="vm.errorQAAttributes">{{ 'INTERNAL_SERVER_ERROR' | translate }}</span>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12"
+                 ba-panel
+                 ba-panel-title="{{ 'APPLICATIONS_TITLE' | translate }}"
+                 ba-panel-class="profile-page" ng-if="vm.component.tag_id === 2">
+                <components-table components="{{ vm.componentApplications }}"
+                                  croot-id="{{ vm.croot.id }}"
+                                  show-code-health="true"
+                                  show-reliability="true"
+                                  show-efficiency-potential="true"
+                                  show-automation="{{ vm.hasCIS }}"
+                                  allow-view-more="true"
+                                  view-more-function="vm.viewMore(component)"></components-table>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6"
+                 ba-panel
+                 ba-panel-title="{{ 'AUTOMATION_STATE_TITLE' | translate }}"
+                 ba-panel-class="profile-page" ng-if="vm.component.tag_id === 3 && vm.hasCIPhases">
+                <div class="horizontal-scroll">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <table class="col-lg-12">
+                                <tbody ng-repeat="phase in vm.ciPhases">
+                                <tr>
+                                    <td class="align-left"><h5 style="text-transform: uppercase">{{phase.name}}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-left">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-2 align-center" ng-repeat="job in phase.jobs">
+                                                <span style="color:green"><i class="fa fa-check-square fa-3x" ng-if="vm.appHasJob(job)"></i></span>
+                                                <span style="color:red"><i class="fa fa-window-close fa-3x" ng-if="!vm.appHasJob(job)"></i></span>
+                                                <p>{{job.name}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>

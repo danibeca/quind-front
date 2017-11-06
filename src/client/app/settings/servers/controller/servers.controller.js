@@ -35,12 +35,17 @@
         vm.mustShowCIEdit = false;
         vm.mustShowCIPhasesPage = false;
         vm.mustShowCIEditPhase = false;
+        vm.jobEditing = false;
+        vm.jobEditionTitle = $filter('translate')('ADD_JOB');
 
         vm.saveQAS = saveQAS;
         vm.saveCIS = saveCIS;
         vm.savePhase = savePhase;
         vm.addJobToPhase = addJobToPhase;
         vm.removeJobFromPhase = removeJobFromPhase;
+        vm.loadEditJob = loadEditJob;
+        vm.cancelJobEdit = cancelJobEdit;
+        vm.updateJob = updateJob;
         vm.addRegexToJob = addRegexToJob;
         vm.removeRegexFromJob = removeRegexFromJob;
         vm.deletePhase = deletePhase;
@@ -56,6 +61,7 @@
         vm.urlValidator = urlValidator;
         vm.phaseNameValidator = phaseNameValidator;
         vm.selectTableRow = selectTableRow;
+        vm.goBackFunction = goBackFunction;
 
         var croot = storageService.getJsonObject('croot');
 
@@ -346,6 +352,7 @@
                 vm.showLoader = false;
                 vm.mustShowCIEditPhase = false;
                 vm.ciPhase = {};
+                vm.job = {};
                 vm.savePhaseForm.reset();
                 loadCIPhases();
             }
@@ -369,6 +376,7 @@
             function successAddPhase() {
                 vm.showLoader = false;
                 vm.ciPhase = {};
+                vm.job = {};
                 vm.savePhaseForm.reset();
                 loadCIPhases();
             }
@@ -381,14 +389,16 @@
 
         function addJobToPhase() {
             if(vm.job.name !== null && vm.job.name !== undefined && vm.job.name !== '') {
-                var newJobData = {};
-                newJobData.name = vm.job.name;
-                newJobData.regular_expression = vm.job.regularExpressions.join(";");
-                if (newJobData.regular_expression !== undefined && newJobData.regular_expression !== null && newJobData.regular_expression !== '') {
-                    ciServerService.addJobToPhase(vm.ciPhase.id, newJobData)
-                        .then(successAddJobToPhase)
-                        .catch(failAddJobToPhase);
-                    vm.job = {};
+                if(vm.job.regularExpressions.length > 0) {
+                    var newJobData = {};
+                    newJobData.name = vm.job.name;
+                    newJobData.regular_expression = vm.job.regularExpressions.join(";");
+                    if (newJobData.regular_expression !== undefined && newJobData.regular_expression !== null && newJobData.regular_expression !== '') {
+                        ciServerService.addJobToPhase(vm.ciPhase.id, newJobData)
+                            .then(successAddJobToPhase)
+                            .catch(failAddJobToPhase);
+                        vm.job = {};
+                    }
                 }
             }
             function successAddJobToPhase(job) {
@@ -423,45 +433,34 @@
             }
         }
 
+        function loadEditJob(job) {
+            vm.job = job;
+            vm.jobEditing = true;
+            vm.jobEditionTitle = $filter('translate')('UPDATE_JOB');
+        }
+
+        function cancelJobEdit() {
+            vm.job = {};
+            vm.job.regularExpressions = [];
+            vm.jobEditing = false;
+            vm.jobEditionTitle = $filter('translate')('ADD_JOB');
+        }
+
         function addRegexToJob(job) {
-            if(job.regularExpressions === undefined || job.regularExpressions === null) {
-                job.regularExpressions = [];
-            }
-            if(job.regularExpressions.indexOf(vm.newRegExp) === -1) {
-                job.regularExpressions.push(vm.newRegExp);
-                vm.newRegExp = '';
-                if(job.id !== undefined && job.id !== null && job.id !== '') {
-                    var newJobData = {};
-                    newJobData.id = job.id;
-                    newJobData.name = job.name;
-                    newJobData.regular_expression = job.regularExpressions.join(";");
-                    ciServerService.updateJobToPhase(vm.ciPhase.id, newJobData)
-                        .then(successUpdateJobToPhase)
-                        .catch(failUpdateJobToPhase);
+            if(vm.newRegExp !== undefined && vm.newRegExp !== null && vm.newRegExp !== '') {
+                if(job.regularExpressions === undefined || job.regularExpressions === null) {
+                    job.regularExpressions = [];
                 }
-            }
-
-            function successUpdateJobToPhase(updatedJob) {
-                console.log('job updated');
-            }
-
-            function failUpdateJobToPhase(error) {
-                logger.error($filter('translate')('UPDATE_PHASE_ERROR'));
+                if(job.regularExpressions.indexOf(vm.newRegExp) === -1) {
+                    job.regularExpressions.push(vm.newRegExp);
+                    vm.newRegExp = '';
+                }
             }
         }
 
         function removeRegexFromJob(job, regExp) {
             if(job.regularExpressions.length > 1) {
                 job.regularExpressions.splice(job.regularExpressions.indexOf(regExp), 1);
-                if (job.id !== undefined && job.id !== null && job.id !== '') {
-                    var newJobData = {};
-                    newJobData.id = job.id;
-                    newJobData.name = job.name;
-                    newJobData.regular_expression = job.regularExpressions.join(";");
-                    ciServerService.updateJobToPhase(vm.ciPhase.id, newJobData)
-                        .then(successUpdateJobToPhase)
-                        .catch(failUpdateJobToPhase);
-                }
             } else {
                 var modalInstance = $uibModal.open({
                     scope: $scope,
@@ -475,9 +474,21 @@
                     modalInstance.close();
                 };
             }
+        }
+
+        function updateJob() {
+            var newJobData = {};
+            newJobData.id = vm.job.id;
+            newJobData.name = vm.job.name;
+            newJobData.regular_expression = vm.job.regularExpressions.join(";");
+            ciServerService.updateJobToPhase(vm.ciPhase.id, newJobData)
+                .then(successUpdateJobToPhase)
+                .catch(failUpdateJobToPhase);
 
             function successUpdateJobToPhase(updatedJob) {
-                console.log('job updated');
+                vm.job = {};
+                vm.job.regularExpressions = [];
+                vm.jobEditing = false;
             }
 
             function failUpdateJobToPhase(error) {
@@ -605,6 +616,10 @@
             } else {
                 vm.editingJob = true;
             }
+        }
+
+        function goBackFunction() {
+            vm.mustShowCIPhasesPage = false;
         }
     }
 })();

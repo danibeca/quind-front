@@ -6,7 +6,7 @@
         .controller('ApplicationsController', ApplicationsController);
 
     /* @ngInject */
-    function ApplicationsController(componentService, ciServerService, spinnerService, storageService, $filter) {
+    function ApplicationsController(componentService, ciServerService, spinnerService, storageService, $state) {
         var vm = this;
 
         vm.croot = storageService.getJsonObject('croot');
@@ -15,11 +15,9 @@
         vm.applications = [];
         vm.applicationsForCI = [];
         vm.allApplications = [];
-        vm.componentForDashboard = {};
-        vm.viewComponentDashboard = false;
         vm.indIds = '44,52,57';
+
         vm.viewMore = viewMore;
-        vm.backToList = backToList;
 
         activate();
 
@@ -38,6 +36,10 @@
                 .catch(fail);
 
             function success(apps) {
+                vm.allApplications = [];
+                apps.forEach(function(app) {
+                    vm.allApplications.push(buildApplicationForTable(app));
+                });
                 loadQAIndicators(apps);
                 loadCIIndicators(apps);
             }
@@ -75,7 +77,7 @@
 
                 function successQAIndicators(indicators) {
                     spinnerService.hide('appSpinner');
-                    vm.allApplications.push(buildApplicationForTable(application, indicators));
+                    updateApplicationsTable(application, indicators, 'qa');
                     vm.applications.push(buildApplicationForChart(application, indicators,
                         remainingApplications, false));
                     remainingApplications--;
@@ -98,6 +100,7 @@
 
                     function successCIIndicators(indicators) {
                         if (indicators !== null && indicators !== undefined && indicators.length > 0) {
+                            updateApplicationsTable(application, indicators, 'ci');
                             vm.applicationsForCI.push(buildApplicationForChart(application, indicators,
                                 remainingApplications, false));
                         }
@@ -112,11 +115,8 @@
             }
         }
 
-        function buildApplicationForTable(application, indicators) {
+        function buildApplicationForTable(application) {
             var appForTable = JSON.parse(JSON.stringify(application));
-            appForTable.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
-            appForTable.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
-            appForTable.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
             return appForTable;
         }
 
@@ -133,13 +133,22 @@
             return auxApp;
         }
 
-        function viewMore(component) {
-            vm.componentForDashboard = component;
-            vm.viewComponentDashboard = true;
+        function updateApplicationsTable(application, indicators, indicatorsType) {
+            vm.allApplications.forEach(function (x) {
+                if (x.id === application.id) {
+                    if (indicatorsType === 'qa') {
+                        x.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
+                        x.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
+                        x.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
+                    } else {
+                        x.automation = $.grep(indicators, function(e) { return e.id === 1; })[0];
+                    }
+                }
+            });
         }
 
-        function backToList() {
-            vm.viewComponentDashboard = false;
+        function viewMore(component) {
+            $state.go('component', {componentId: component.id, newPreviousRoute: 'applications'});
         }
     }
 }());

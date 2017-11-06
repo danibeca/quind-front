@@ -17,6 +17,8 @@
             'ui.router',
             'ngplus',
             'ng-fastclick',
-            'app.user'
+            'app.user',
+            'angularValidator',
+            'smart-table'
         ]);
 })();

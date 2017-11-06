@@ -6,7 +6,7 @@
         .controller('SystemsController', SystemsController);
 
     /* @ngInject */
-    function SystemsController(userService, storageService, componentService, ciServerService, spinnerService, $filter) {
+    function SystemsController(userService, storageService, componentService, ciServerService, spinnerService, $state) {
         var vm = this;
 
         vm.croot = storageService.getJsonObject('croot');
@@ -17,11 +17,8 @@
         vm.systems = [];
         vm.systemsForCI = [];
         vm.allSystems = [];
-        vm.componentForDashboard = {};
-        vm.viewComponentDashboard = false;
 
         vm.viewMore = viewMore;
-        vm.backToList = backToList;
 
         activate();
 
@@ -39,6 +36,9 @@
                 .catch(failLoadComponents);
 
             function successLoadComponents(systems) {
+                systems.forEach(function (system) {
+                    vm.allSystems.push(buildSystemForTable(system));
+                })
                 loadQAIndicators(systems);
                 loadCIIndicators(systems);
             }
@@ -77,7 +77,7 @@
 
                 function successQAIndicators(indicators) {
                     spinnerService.hide('systemsSpinner');
-                    vm.allSystems.push(buildSystemForTable(system, indicators));
+                    updateSystemsTable(system, indicators, 'qa');
                     vm.systems.push(buildSystemForChart(system, indicators, remainingSystems, false));
                     remainingSystems--;
                 }
@@ -99,6 +99,7 @@
 
                     function successCIIndicators(indicators) {
                         if (indicators !== null && indicators !== undefined && indicators.length > 0) {
+                            updateSystemsTable(system, indicators, 'ci');
                             vm.systemsForCI.push(buildSystemForChart(system, indicators,
                                 remainingSystems, false));
                         }
@@ -113,11 +114,8 @@
             }
         }
 
-        function buildSystemForTable(system, indicators) {
+        function buildSystemForTable(system) {
             var systemForTable = JSON.parse(JSON.stringify(system));
-            systemForTable.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
-            systemForTable.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
-            systemForTable.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
             return systemForTable;
         }
 
@@ -134,13 +132,22 @@
             return auxSystem;
         }
 
-        function viewMore(component) {
-            vm.componentForDashboard = component;
-            vm.viewComponentDashboard = true;
+        function updateSystemsTable(system, indicators, indicatorsType) {
+            vm.allSystems.forEach(function (x) {
+                if (x.id === system.id) {
+                    if (indicatorsType === 'qa') {
+                        x.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
+                        x.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
+                        x.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
+                    } else {
+                        x.automation = $.grep(indicators, function(e) { return e.id === 1; })[0];
+                    }
+                }
+            });
         }
 
-        function backToList() {
-            vm.viewComponentDashboard = false;
+        function viewMore(component) {
+            $state.go('component', {componentId: component.id, newPreviousRoute: 'systems'});
         }
     }
 })();

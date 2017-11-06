@@ -32,8 +32,11 @@
   "RELEASE_URL_TITLE": "Release manager server URL",
   "CI_PHASES_CONFIG_TITLE": "CI Phases configuration",
   "PHASE_NAME_TITLE": "Phase name",
+  "JOBS_NUMBER_TITLE": "Jobs",
   "ADD_PHASE": "Add phase",
-  "UPDATE_PHASE": "Update phase",
+  "ADD_JOB": "Add job",
+  "UPDATE_JOB": "Update job",
+  "UPDATE_PHASE": "Update name",
   "CREATE_PHASE_ERROR": "An error occurred creating phase",
   "UPDATE_PHASE_ERROR": "An error occurred updating phase",
   "DELETE_PHASE_ERROR": "An error occurred deleting phase",
@@ -41,5 +44,6 @@
   "JOB_NAME_TITLE": "Job name",
   "JOB_ACTION_TITLE": "Actions",
   "JOB_REGULAR_EXPRESIONS_TITLE": "Regular expressions",
-  "JOB_REGULAR_EXPRESION_TITLE": "Regular expression"
+  "JOB_REGULAR_EXPRESION_TITLE": "Regular expression",
+  "PHASE_JOBS_TITLE": "Jobs of the phase"
 }

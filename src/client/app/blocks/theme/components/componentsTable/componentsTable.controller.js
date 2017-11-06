@@ -20,6 +20,7 @@
         vm.showCodeHealth = false;
         vm.showReliability = false;
         vm.showEfficiencyPotential = false;
+        vm.showAutomation = false;
         vm.allowAdd = false;
         vm.allowEdit = false;
         vm.allowDelete = false;
@@ -43,6 +44,7 @@
         vm.setShowCodeHealth = setShowCodeHealth;
         vm.setShowReliability = setShowReliability;
         vm.setShowEfficiencyPotential = setShowEfficiencyPotential;
+        vm.setShowAutomation = setShowAutomation;
         vm.setAllowAdd = setAllowAdd;
         vm.setAllowEdit = setAllowEdit;
         vm.setAllowDelete = setAllowDelete;
@@ -88,6 +90,9 @@
 
         function setShowEfficiencyPotential(showEfficiencyPotential) {
             vm.showEfficiencyPotential = showEfficiencyPotential;
+        }
+        function setShowAutomation(showAutomation) {
+            vm.showAutomation = showAutomation;
         }
 
         function setCrootId(crootId) {

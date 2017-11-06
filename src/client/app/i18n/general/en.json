@@ -7,7 +7,7 @@
   "DASHBOARD_TITLE": "Dashboard",
   "SYSTEMS_TITLE": "Systems",
   "SETTINGS_TITLE": "Settings",
-  "APPLICATION_TITLE": "Applications",
+  "APPLICATIONS_TITLE": "Applications",
   "INSPECTION_SERVER_ERROR": "Information no available. Please check your platform for continuous inspection of code quality",
   "INTERNAL_SERVER_ERROR": "Information no available. Please contact us.",
   "LOADING": "...Loading",
@@ -72,5 +72,10 @@
   "REGISTER_FAILED": "This email is already in use",
   "JOBS_PATH_DESC": "Jobs path",
   "ONE_REGEX_WARNING_TEXT": "Jobs must have at least one Regex",
-  "CLOSE_TEXT": "Close"
+  "CLOSE_TEXT": "Close",
+  "AUTOMATION_TITLE": "Automation",
+  "COMPONENT_TITLE": "Component",
+  "SYSTEM_TITLE": "System",
+  "APPLICATION_TITLE": "Aplication",
+  "AUTOMATION_STATE_TITLE": "Automation state"
 }

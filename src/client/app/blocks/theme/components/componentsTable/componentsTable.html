@@ -10,6 +10,7 @@
                     <th class="align-left" st-sort="codeHealth.value" ng-if="vm.showCodeHealth">{{ 'CODE_HEALTH_TITLE' | translate }} (%)</th>
                     <th class="align-left" st-sort="reliability.value" ng-if="vm.showReliability">{{ 'RELIABILITY_TITLE' | translate }} (%)</i></th>
                     <th class="align-left" st-sort="efficiencyPotential.value" ng-if="vm.showEfficiencyPotential">{{ 'EFFICIENCY_POTENTIAL_TITLE' | translate }} (%)</th>
+                    <th class="align-left" st-sort="automation.value" ng-if="vm.showAutomation">{{ 'AUTOMATION_TITLE' | translate }} (%)</th>
                     <th class="align-left" ng-if="vm.allowEdit">{{ 'EDIT_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.allowDelete">{{ 'DELETE_TITLE' | translate }}</th>
                     <th class="align-left" ng-if="vm.allowViewMore">{{ 'VIEW_MORE_TITLE' | translate }}</th>
@@ -26,6 +27,7 @@
                     <th ng-if="vm.showCodeHealth"></th>
                     <th ng-if="vm.showReliability"></th>
                     <th ng-if="vm.showEfficiencyPotential"></th>
+                    <th ng-if="vm.showAutomation"></th>
                     <th ng-if="vm.allowEdit"></th>
                     <th ng-if="vm.allowDelete"></th>
                     <th ng-if="vm.allowViewMore">
@@ -39,6 +41,7 @@
                     <td class="align-center" ng-if="vm.showCodeHealth">{{item.codeHealth.value}}</td>
                     <td class="align-center" ng-if="vm.showReliability">{{item.reliability.value}}</td>
                     <td class="align-center" ng-if="vm.showEfficiencyPotential">{{item.efficiencyPotential.value}}</td>
+                    <td class="align-center" ng-if="vm.showAutomation">{{item.automation.value}}</td>
                     <td class="align-center" style="color:green;font-size: 20px" ng-if="vm.allowEdit"><a class="profile-toggle-link"
                         ng-click="editComponentFunction({component : item})"><i class="ion-edit"></i></a></td>
                     <td class="align-center" style="color:green;font-size: 20px" ng-if="vm.allowDelete"><a class="profile-toggle-link"

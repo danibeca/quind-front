@@ -20,7 +20,7 @@
                     templateUrl: 'app/applications/template/applications.html',
                     controller: 'ApplicationsController',
                     controllerAs: 'vm',
-                    title: 'APPLICATION_TITLE',
+                    title: 'APPLICATIONS_TITLE',
                     sidebarMeta: {
                         icon: 'ion-paper-airplane',
                         order: 1,

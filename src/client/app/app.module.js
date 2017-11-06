@@ -6,16 +6,16 @@
         'app.dashboard',
         'app.systems',
         'app.applications',
-        'app.account',
-        'angularValidator',
-        'smart-table'
+        'app.component',
+        'app.account'
     ])
         .run(runApp);
 
-    function runApp($q, $state, userService, auth, componentService, $translatePartialLoader, $transitions) {
+    function runApp($q, userService, auth, componentService, $translatePartialLoader, $transitions) {
         $translatePartialLoader.addPart('general');
 
         $transitions.onStart({}, function (trans) {
+                var $state = trans.router.stateService;
                 var loginState = 'login';
                 var stateName = trans.$to().name;
 
