@@ -23,7 +23,7 @@
                     title: 'DASHBOARD_TITLE',
                     sidebarMeta: {
                         icon: 'ion-android-home',
-                        order: 0,
+                        order: 0
                     },
                     resolve: {
                         translations: function (translateHelper) {
@@ -36,7 +36,7 @@
                 state: 'home',
                 config: {
                     url: '/',
-                    controller: function ($state, componentService, userService) {
+                    controller: function ($state) {
                         return $state.go('dashboard');
                     },
                     title: 'home'
@@ -58,7 +58,7 @@
                 }
             }
 
-        ]
+        ];
     }
 })
 ();

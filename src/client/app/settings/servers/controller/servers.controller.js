@@ -133,16 +133,46 @@
             }
         }
 
-        function checkServer(sendRequestFunction, checkService, sendRequest) {
-            var lastChar = vm.qaServer.url[vm.qaServer.url.length - 1];
-            if (lastChar === '/') {
-                vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
+        function checkServer(sendRequestFunction, checkService, sendRequest, serverType) {
+            var requestData = {};
+            var lastChar = '';
+            if(serverType === 'qaServer') {
+                lastChar = vm.qaServer.url[vm.qaServer.url.length - 1];
+                if (lastChar === '/') {
+                    vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
+                }
+                requestData = {
+                    'url': vm.qaServer.url,
+                    'username': vm.qaServer.username,
+                    'password': vm.qaServer.password
+                };
             }
-            checkService.isInstanceValid({
-                'url': vm.qaServer.url,
-                'username': vm.qaServer.username,
-                'password': vm.qaServer.password
-            }).then(successIsValid)
+
+            if(serverType === 'buildServer') {
+                    lastChar = vm.ciServer.url_build_server[vm.ciServer.url_build_server.length - 1];
+                if (lastChar === '/') {
+                    vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
+                }
+                requestData = {
+                    'url': vm.ciServer.url_build_server,
+                    'username': vm.ciServer.username_build_server,
+                    'password': vm.ciServer.password_build_server
+                };
+            }
+
+            if(serverType === 'releaseServer') {
+                    lastChar = vm.ciServer.url_release_manager[vm.ciServer.url_release_manager.length - 1];
+                if (lastChar === '/') {
+                    vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
+                }
+                requestData = {
+                    'url': vm.ciServer.url_release_manager,
+                    'username': vm.ciServer.username_release_manager,
+                    'password': vm.ciServer.password_release_manager
+                };
+            }
+
+            checkService.isInstanceValid(requestData).then(successIsValid)
                 .catch(failIsValid);
 
             function successIsValid(data) {
@@ -195,10 +225,8 @@
         function saveCIS() {
             vm.showLoader = true;
             if (parseInt(vm.ciServer.type) === 1) {
-                checkServer(vm.ciServer.url_build_server, vm.ciServer.username_build_server,
-                    vm.ciServer.password_build_server, sendRequestCIS, ciServerService, false);
-                checkServer(vm.ciServer.url_release_manager, vm.ciServer.username_release_manager,
-                    vm.ciServer.password_release_manager, sendRequestCIS, ciServerService, true);
+                checkServer(sendRequestCIS, ciServerService, false, 'buildServer');
+                checkServer(sendRequestCIS, ciServerService, true, 'releaseServer');
             } else {
                 sendRequestCIS(false);
             }

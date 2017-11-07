@@ -38,7 +38,7 @@
             function successLoadComponents(systems) {
                 systems.forEach(function (system) {
                     vm.allSystems.push(buildSystemForTable(system));
-                })
+                });
                 loadQAIndicators(systems);
                 loadCIIndicators(systems);
             }
@@ -115,8 +115,7 @@
         }
 
         function buildSystemForTable(system) {
-            var systemForTable = JSON.parse(JSON.stringify(system));
-            return systemForTable;
+            return JSON.parse(JSON.stringify(system));
         }
 
         function buildSystemForChart(system, indicators, remainingSystems, error) {

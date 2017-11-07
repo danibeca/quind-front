@@ -34,7 +34,7 @@
 
                             }, delay);
                         }
-                    } else if (controller.pie !== undefined) {
+                    } else {
                         controller.updatePieChart(scope.percent);
                     }
 

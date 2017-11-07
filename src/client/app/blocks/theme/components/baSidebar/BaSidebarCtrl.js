@@ -9,7 +9,7 @@
         .controller('BaSidebarCtrl', BaSidebarCtrl);
 
     /* @ngInject */
-    function BaSidebarCtrl($scope, baSidebarService, storageService, componentService) {
+    function BaSidebarCtrl($scope, baSidebarService, storageService, componentService, $window) {
 
         var croot = storageService.getJsonObject('croot');
         $scope.menuItems = baSidebarService.getMenuItems();
@@ -32,14 +32,24 @@
         activate();
 
         function activate() {
-            showMenu();
+            projectHasLeaves();
         }
 
-        function showMenu() {
+        function projectHasLeaves() {
+            var hasLeaves = $window.sessionStorage.getItem('hasLeaves');
+            if (hasLeaves !== null && hasLeaves !== undefined) {
+                $scope.hasLeaves = (hasLeaves === 'true');
+            } else {
+                checkHasLeaves();
+            }
+        }
+
+        function checkHasLeaves() {
             componentService.hasLeaves(croot.id)
                 .then(successHasLeaves);
             function successHasLeaves(hasLeaves) {
                 $scope.hasLeaves = hasLeaves;
+                $window.sessionStorage.setItem('hasLeaves', hasLeaves);
             }
         }
     }

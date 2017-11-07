@@ -5,11 +5,10 @@
 
     angular
         .module('app.settings')
-        .controller('ComponentsController', ComponentsController)
-        .controller('ModalInstanceCtrl', ModalInstanceCtrl);
+        .controller('ComponentsController', ComponentsController);
 
     /* @ngInject */
-    function ComponentsController(userService, storageService, componentService, qualityServerService, ciServerService, logger, $filter, $state, $uibModal, $scope) {
+    function ComponentsController(userService, storageService, componentService, qualityServerService, ciServerService, logger, $filter, $state, $uibModal, $scope, $window) {
         var vm = this;
         vm.croot = storageService.getJsonObject('croot');
 
@@ -216,6 +215,7 @@
                 vm.showLoader = false;
                 vm.userComponentData.component_id = component.id;
                 vm.userComponentData.user_id = userService.getUser().id;
+                $window.sessionStorage.removeItem('hasLeaves');
                 associateComponentToUser();
             }
 
@@ -254,7 +254,7 @@
             componentService.associateToUser(vm.userComponentData)
                 .then(successAssociate());
 
-            function successAssociate() {
+            function successAssociate(data) {
                 $state.reload();
                 logger.success($filter('translate')('CREATE_COMPONENT_SUCCESS'));
             }
@@ -272,7 +272,7 @@
             vm.component = JSON.parse(JSON.stringify($.grep(vm.allComponents, function (e) {
                 return e.id === component.id;
             })[0]));
-            vm.component.code = component.code
+            vm.component.code = component.code;
             vm.components = vm.components.filter(function (obj) {
                 return vm.component.id !== obj.id;
             });
@@ -289,31 +289,38 @@
             vm.component = $.grep(vm.allComponents, function (e) {
                 return e.id === component.id;
             })[0];
-            if (vm.component.tag_id === 2) {
-                var modalInstance = $uibModal.open({
-                    scope: $scope,
-                    animation: true,
-                    templateUrl: 'app/settings/components/modalTemplates/deleteWarningModal.html',
-                    size: '',
-                    resolve: {}
-                });
-
-                $scope.ok = function () {
-                    modalInstance.close();
-                };
-
-                $scope.cancel = function () {
-                    modalInstance.dismiss('cancel');
-                };
-
-                modalInstance.result.then(function (accepted) {
-                    callDelete();
-                }, function () {
-                    console.log('Modal dismissed at: ' + new Date());
-                });
+            var deleteMessage = '';
+            if (component.tag_id === 2) {
+                deleteMessage = $filter('translate')('DELETE_SYSTEM_WARNING_TEXT');
             } else {
-                callDelete();
+                deleteMessage = $filter('translate')('DELETE_APP_WARNING_TEXT');
             }
+            var modalInstance = $uibModal.open({
+                scope: $scope,
+                animation: true,
+                templateUrl: 'app/settings/components/modalTemplates/deleteWarningModal.html',
+                size: '',
+                resolve: {
+                }
+            });
+
+            $scope.deleteMessage = function() {
+                return deleteMessage;
+            }
+
+            $scope.ok = function () {
+                modalInstance.close();
+            };
+
+            $scope.cancel = function () {
+                modalInstance.dismiss('cancel');
+            };
+
+            modalInstance.result.then(function (accepted) {
+                callDelete();
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
         }
 
         function callDelete() {
@@ -322,6 +329,7 @@
                 .catch(failDeleteComponent);
 
             function successDeleteComponent(data) {
+                $window.sessionStorage.removeItem('hasLeaves');
                 $state.reload();
             }
 
@@ -359,18 +367,5 @@
             }
             return true;
         }
-    }
-
-
-
-    /* @ngInject */
-    function ModalInstanceCtrl($scope, $modalInstance) {
-        $scope.ok = function () {
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
     }
 })();

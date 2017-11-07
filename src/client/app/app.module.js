@@ -11,7 +11,7 @@
     ])
         .run(runApp);
 
-    function runApp($q, userService, auth, componentService, $translatePartialLoader, $transitions) {
+    function runApp($q, userService, auth, componentService, $translatePartialLoader, $transitions, $window) {
         $translatePartialLoader.addPart('general');
 
         $transitions.onStart({}, function (trans) {
@@ -23,8 +23,6 @@
                 if (isSecureRoute(stateName)) {
                     return auth.isTokenValid()
                         .then(successToken);
-
-
                 }
                 else if (stateName === loginState) {
                     if (isUserLogged()) {
@@ -89,16 +87,22 @@
                     return true;
                 }
 
-
                 function hasLeaves() {
-                    var user = userService.getUser();
-                    if (user !== undefined) {
-                        return componentService.getRoot(user.id)
-                            .then(successRoot);
-                    } else {
+                    var hasLeavesStored = $window.sessionStorage.getItem('hasLeaves');
+                    if (hasLeavesStored !== null && hasLeavesStored !== undefined) {
                         return $q(function (resolve) {
-                            resolve(false);
+                            resolve((hasLeavesStored === 'true'));
                         });
+                    } else {
+                        var user = userService.getUser();
+                        if (user !== undefined) {
+                            return componentService.getRoot(user.id)
+                                .then(successRoot);
+                        } else {
+                            return $q(function (resolve) {
+                                resolve(false);
+                            });
+                        }
                     }
 
                     function successRoot(croot) {
@@ -106,6 +110,7 @@
                             .then(successHasLeaves);
 
                         function successHasLeaves(hasLeaves) {
+                            $window.sessionStorage.setItem('hasLeaves', hasLeaves);
                             return hasLeaves;
                         }
                     }

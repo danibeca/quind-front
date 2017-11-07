@@ -5,8 +5,7 @@
 (function () {
     'use strict';
 
-    angular
-        .module('app.dashboard')
+    angular.module('blocks.theme.components')
         .directive('popularApp', popularApp);
 
     /* @ngInject */
@@ -18,7 +17,7 @@
             scope: {
                 vars: '@'
             },
-            templateUrl: 'app/dashboard/directive/popularApp.html',
+            templateUrl: 'app/blocks/theme/components/popularApp/popularApp.html',
             link: function (scope, element, attrs, controller) {
                 scope.$watch('vars', function () {
                     if (scope.vars !== undefined && scope.vars !== '') {
