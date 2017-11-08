@@ -5,22 +5,28 @@
         <div>
             <label class="col-sm-1">Ordenar por:</label>
             <div class="col-sm-2">
-                <select class="form-control" name="component_tag" ng-model="vm.orderOne"
+                <select class="form-control" name="criticals" ng-model="vm.orderOne"
                         ng-change="vm.orderComponents(false)"
                         ng-options="i.id as (i.name) for i in vm.orderOptionsCriticals">
                 </select>
             </div>
             <div class="col-sm-2">
-                <select class="form-control" name="component_tag" ng-model="vm.orderTwo"
+                <select class="form-control" name="outstanging" ng-model="vm.orderTwo"
                         ng-change="vm.orderComponents(true)"
                         ng-options="i.id as (i.name) for i in vm.orderOptionsOutstanding">
+                </select>
+            </div>
+            <label class="col-sm-1">Ver:</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="number" ng-model="vm.numberSelected"
+                        ng-options="i.id as (i.name) for i in vm.numberOfItemsOptions">
                 </select>
             </div>
         </div>
     </div>
     <br>
 </div>
-<div ng-repeat="component in vm.components|limitTo:vm.numberOfItems track by component.name" ng-if="vm.hasComponents">
+<div ng-repeat="component in vm.components|limitTo:vm.numberSelected track by component.name" ng-if="vm.hasComponents">
     <div class="col-lg-4 col-md-12 col-sm-12"
          ba-panel
          ba-panel-title="{{vm.title}}"

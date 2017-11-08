@@ -43,6 +43,7 @@
                 systems.forEach(function (system) {
                     vm.allSystems.push(buildSystemForTable(system));
                     vm.systems.push(buildSystemForTable(system));
+                    vm.systemsForCI.push(buildSystemForTable(system));
                 });
                 loadQAIndicators(systems);
                 loadCIIndicators(systems);

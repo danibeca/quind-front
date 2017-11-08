@@ -44,6 +44,7 @@
                 apps.forEach(function(app) {
                     vm.allApplications.push(buildApplicationForTable(app));
                     vm.applications.push(buildApplicationForTable(app));
+                    vm.applicationsForCI.push(buildApplicationForTable(app));
                 });
                 loadQAIndicators(apps);
                 loadCIIndicators(apps);

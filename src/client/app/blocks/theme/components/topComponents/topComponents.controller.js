@@ -15,12 +15,13 @@
         var vm = this;
 
         vm.hasComponents = false;
-        vm.numberOfItems = 3;
+        vm.numberSelected = 3;
         vm.components = [];
         vm.orderOne = 0;
         vm.orderTwo = 0;
         vm.orderOptionsCriticals = [];
         vm.orderOptionsOutstanding = [];
+        vm.numberOfItemsOptions = [];
         vm.chartName = '';
         vm.title = '';
 
@@ -38,6 +39,7 @@
             if(vm.components.length > 0) {
                 vm.hasComponents = true;
                 createOptionsLists();
+                createNumberOfItemsOptionsList();
             }
         }
 
@@ -56,8 +58,25 @@
             }
         }
 
+        function createNumberOfItemsOptionsList() {
+            var numberOfItemsOptions = [];
+            if(vm.components.length > 3) {
+                var i = 0;
+                for(i = 3; i<=vm.components.length; i=i+3) {
+                    numberOfItemsOptions.push({id: i, name: i});
+                }
+                if ((i - 3) !== vm.components.length) {
+                    numberOfItemsOptions.push({id: vm.components.length, name: vm.components.length});
+                }
+            } else
+            {
+                numberOfItemsOptions.push({id: vm.numberSelected, name: vm.numberSelected});
+            }
+            vm.numberOfItemsOptions = numberOfItemsOptions;
+        }
+
         function setNumberOfItems(numberOfItems) {
-            vm.numberOfItems = numberOfItems;
+            vm.numberSelected = parseInt(numberOfItems);
         }
 
         function setChartName(chartName) {
