@@ -1,3 +1,5 @@
+/* jshint -W106, -W117 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -38,7 +40,7 @@
             function successLoadComponents(systems) {
                 systems.forEach(function (system) {
                     vm.allSystems.push(buildSystemForTable(system));
-                })
+                });
                 loadQAIndicators(systems);
                 loadCIIndicators(systems);
             }
@@ -62,7 +64,7 @@
                 }
             }
 
-            function failCIServerInstances(data) {
+            function failCIServerInstances() {
                 loadSystems();
                 vm.hasCIS = false;
             }

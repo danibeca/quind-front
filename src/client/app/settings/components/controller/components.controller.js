@@ -1,4 +1,4 @@
-/* jshint -W117, -W101, -W106  */
+/* jshint -W117, -W101, -W106, -W071   */
 // jscs:disable
 (function () {
     'use strict';
@@ -237,7 +237,7 @@
                 .then(successUpdateComponent)
                 .catch(failUpdateComponent);
 
-            function successUpdateComponent(component) {
+            function successUpdateComponent() {
                 vm.showLoader = false;
                 vm.showEditForm = false;
                 $state.reload();
@@ -272,7 +272,7 @@
             vm.component = JSON.parse(JSON.stringify($.grep(vm.allComponents, function (e) {
                 return e.id === component.id;
             })[0]));
-            vm.component.code = component.code
+            vm.component.code = component.code;
             vm.components = vm.components.filter(function (obj) {
                 return vm.component.id !== obj.id;
             });
@@ -306,7 +306,7 @@
                     modalInstance.dismiss('cancel');
                 };
 
-                modalInstance.result.then(function (accepted) {
+                modalInstance.result.then(function () {
                     callDelete();
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
@@ -321,7 +321,7 @@
                 .then(successDeleteComponent)
                 .catch(failDeleteComponent);
 
-            function successDeleteComponent(data) {
+            function successDeleteComponent() {
                 $state.reload();
             }
 

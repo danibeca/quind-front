@@ -24,9 +24,8 @@
             var result = {};
             result.graphs = [];
             result.data = [];
-            data.forEach(function (item, index) {
+            data.forEach(function (item) {
                 result.data.push(buildDataProvider(item));
-                var graphs = [];
             });
             data[0].values.forEach(function (valueItem, valueIndex) {
                 result.graphs.push(buildGraphProvider(valueIndex, false));
@@ -43,12 +42,12 @@
             graphProvider.showOnAxis = true;
             graphProvider.lineThickness = 2;
             graphProvider.lineAlpha = 0.5;
-            graphProvider.lineColor = "lineColor" + attributeIndex;
-            graphProvider.fillColorsField = "fillColor" + attributeIndex;
+            graphProvider.lineColor = 'lineColor' + attributeIndex;
+            graphProvider.fillColorsField = 'fillColor' + attributeIndex;
             graphProvider.fillAlphas = 0.8;
             graphProvider.valueField = 'value' + attributeIndex;
             if(hideBalloon) {
-                graphProvider.balloonText = "";
+                graphProvider.balloonText = '';
             }
             return graphProvider;
         }
@@ -84,28 +83,28 @@
 
         function createChart(id, chartProviders) {
             return AmCharts.makeChart(id, {
-                "theme": "light",
-                "type": "serial",
-                "depth3D": 100,
-                "angle": 30,
-                "autoMargins": false,
-                "marginBottom": 100,
-                "marginLeft": 30,
-                "marginRight": 10,
-                "dataProvider": chartProviders.data,
-                "valueAxes": [ {
-                    "stackType": "100%",
-                    "gridAlpha": 0
+                'theme': 'light',
+                'type': 'serial',
+                'depth3D': 100,
+                'angle': 30,
+                'autoMargins': false,
+                'marginBottom': 100,
+                'marginLeft': 30,
+                'marginRight': 10,
+                'dataProvider': chartProviders.data,
+                'valueAxes': [ {
+                    'stackType': '100%',
+                    'gridAlpha': 0
                 }],
-                "graphs": chartProviders.graphs,
-                "categoryField": "category",
-                "categoryAxis": {
-                    "axisAlpha": 0,
-                    "labelOffset": 40,
-                    "gridAlpha": 0
+                'graphs': chartProviders.graphs,
+                'categoryField': 'category',
+                'categoryAxis': {
+                    'axisAlpha': 0,
+                    'labelOffset': 40,
+                    'gridAlpha': 0
                 },
-                "export": {
-                    "enabled": true
+                'export': {
+                    'enabled': true
                 }
             });
         }

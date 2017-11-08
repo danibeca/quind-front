@@ -1,3 +1,5 @@
+/* jshint -W106 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -233,8 +235,10 @@
                             if (y.id === x.id) {
                                 x.jobs = y.jobs;
                                 x.jobs.forEach(function (job) {
-                                    if (job.regular_expression !== undefined && job.regular_expression !== null && job.regular_expression !== '') {
-                                        job.regularExpressions = job.regular_expression.split(";");
+                                    if (job.regular_expression !== undefined
+                                        && job.regular_expression !== null
+                                        && job.regular_expression !== '') {
+                                        job.regularExpressions = job.regular_expression.split(';');
                                     } else {
                                         job.regularExpressions = [];
                                     }

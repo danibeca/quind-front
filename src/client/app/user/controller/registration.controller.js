@@ -69,7 +69,7 @@
             };
 
             return componentService.createAccount(accountData)
-                .then(successCreateAccount)
+                .then(successCreateAccount);
 
             function successCreateAccount(resp) {
                 storageService.setJsonObject('croot', resp);

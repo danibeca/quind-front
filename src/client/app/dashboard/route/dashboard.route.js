@@ -36,7 +36,7 @@
                 state: 'home',
                 config: {
                     url: '/',
-                    controller: function ($state, componentService, userService) {
+                    controller: function ($state) {
                         return $state.go('dashboard');
                     },
                     title: 'home'
@@ -58,7 +58,7 @@
                 }
             }
 
-        ]
+        ];
     }
 })
 ();

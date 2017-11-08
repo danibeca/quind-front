@@ -2,7 +2,7 @@
  * @author jmruiz6
  * created on 10.28.2017
  */
-/* jshint -W101,-W106, -W117 */
+/* jshint -W101,-W106, -W117, -W071 */
 // jscs:disable
 (function () {
     'use strict';

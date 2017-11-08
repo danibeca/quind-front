@@ -32,7 +32,7 @@
                     }
                 }
 
-                function successToken(response) {
+                function successToken() {
                     if (isUserLogged()) {
                         if (!isAdminRoute(stateName)) {
                             return hasLeaves().then(successEvalLeaves);

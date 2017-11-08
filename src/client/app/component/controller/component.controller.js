@@ -2,7 +2,7 @@
  * @author jmruiz6
  * created on 10.28.2017
  */
-/* jshint -W101,-W106, -W117 */
+/* jshint -W101,-W106, -W117, -W071 */
 // jscs:disable
 (function () {
     'use strict';
@@ -63,10 +63,10 @@
                 loadQAIndicators();
                 loadCIServerInstances();
                 if (vm.component.tag_id === 2) {
-                    vm.pageTitle = $filter('translate')('SYSTEM_TITLE') + ' ' + vm.component.name
+                    vm.pageTitle = $filter('translate')('SYSTEM_TITLE') + ' ' + vm.component.name;
                     loadApplications();
                 } else {
-                    vm.pageTitle = $filter('translate')('APPLICATION_TITLE') + ' ' + vm.component.name
+                    vm.pageTitle = $filter('translate')('APPLICATION_TITLE') + ' ' + vm.component.name;
                 }
             }
 
@@ -170,7 +170,7 @@
                 }
             }
 
-            function failCIServerInstances(data) {
+            function failCIServerInstances() {
                 vm.hasCIS = false;
             }
         }
@@ -189,7 +189,6 @@
             }
 
             function failQAAttributes(error) {
-                console.log(error)
                 vm.errorQAAttributes = error;
             }
         }
@@ -267,7 +266,6 @@
             }
 
             function failCIAutomationPhases(error) {
-                console.log(error)
                 vm.errorAutPhases = error;
             }
         }
