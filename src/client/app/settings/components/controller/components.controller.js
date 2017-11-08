@@ -48,9 +48,34 @@
 
         function activate() {
             loadInstanceResources();
+            loadCIServerInstances();
             loadAllComponents();
             loadComponents();
-            loadCIServerInstances();
+            loadComponentsCodes();
+            loadAllCodes();
+        }
+
+        function loadInstanceResources() {
+            qualityServerService.getInstances({component_id: vm.croot.id, with_no_used_resources: true})
+                .then(successGetResources)
+                .catch(failGetResources);
+
+            function successGetResources(instances) {
+                instances.forEach(function (instance) {
+                    //TODO Change for multiple instances
+                    vm.component.quality_system_instance_id = instance.id;
+                    vm.codes = vm.codes.concat(instance.resources);
+                    vm.resourcesLoaded = true;
+                });
+                if (instances.length < 1) {
+                    vm.typesArray = [{id: 2, name: $filter('translate')('SYSTEM')}];
+                }
+
+            }
+
+            function failGetResources() {
+                logger.error($filter('translate')('QUALITY_SYSTEM_ERROR'));
+            }
         }
 
         function loadCIServerInstances() {
@@ -92,10 +117,14 @@
             componentService.getList(requestData)
                 .then(successGetAllComponents);
 
+            $scope.$watch('vm.allComponents', function () {
+                if (isInfoReady()) {
+                    updateComponentsCodes();
+                }
+            });
+
             function successGetAllComponents(info) {
                 vm.allComponents = info;
-                loadComponentsCodes();
-                loadallCodes();
                 if (vm.allComponents.length > 0) {
                     vm.hasComponents = true;
                     vm.renderServerForm = true;
@@ -124,30 +153,7 @@
             }
         }
 
-        function loadInstanceResources() {
-            qualityServerService.getInstances({component_id: vm.croot.id, with_no_used_resources: true})
-                .then(successGetResources)
-                .catch(failGetResources);
-
-            function successGetResources(instances) {
-                instances.forEach(function (instance) {
-                    //TODO Change for multiple instances
-                    vm.component.quality_system_instance_id = instance.id;
-                    vm.codes = vm.codes.concat(instance.resources);
-                    vm.resourcesLoaded = true;
-                });
-                if (instances.length < 1) {
-                    vm.typesArray = [{id: 2, name: $filter('translate')('SYSTEM')}];
-                }
-
-            }
-
-            function failGetResources() {
-                logger.error($filter('translate')('QUALITY_SYSTEM_ERROR'));
-            }
-        }
-
-        function loadallCodes() {
+        function loadAllCodes() {
             qualityServerService.getInstances({component_id: vm.croot.id, with_resources: true})
                 .then(successGetResources)
                 .catch(failGetResources);
@@ -253,9 +259,9 @@
         function associateComponentToUser() {
             componentService.associateToUser(vm.userComponentData)
                 .then(successAssociate());
+            $state.reload();
 
             function successAssociate() {
-                $state.reload();
                 logger.success($filter('translate')('CREATE_COMPONENT_SUCCESS'));
             }
         }
