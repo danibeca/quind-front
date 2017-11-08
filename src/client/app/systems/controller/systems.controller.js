@@ -101,6 +101,8 @@
                     if (indicators !== null && indicators !== undefined && indicators.length > 0) {
                         updateSystemsTable(system, indicators, 'ci');
                         updateSystemForChart(vm.systemsForCI, system, indicators, false);
+                    } else {
+                        buildSystemForChart(vm.systemsForCI, system, [], true);
                     }
                 }
 

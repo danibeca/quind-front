@@ -102,6 +102,8 @@
                     if (indicators !== null && indicators !== undefined && indicators.length > 0) {
                         updateApplicationsTable(application, indicators, 'ci');
                         updateApplicationForChart(vm.applicationsForCI, application, indicators, false);
+                    } else {
+                        updateApplicationForChart(vm.applicationsForCI, application, [], true);
                     }
                 }
 
