@@ -1,4 +1,4 @@
-/* jshint -W117, -W101, -W106  */
+/* jshint -W117, -W101, -W106, -W072, -W071 */
 // jscs:disable
 (function () {
     'use strict';
@@ -237,7 +237,7 @@
                 .then(successUpdateComponent)
                 .catch(failUpdateComponent);
 
-            function successUpdateComponent(component) {
+            function successUpdateComponent() {
                 vm.showLoader = false;
                 vm.showEditForm = false;
                 $state.reload();
@@ -254,7 +254,7 @@
             componentService.associateToUser(vm.userComponentData)
                 .then(successAssociate());
 
-            function successAssociate(data) {
+            function successAssociate() {
                 $state.reload();
                 logger.success($filter('translate')('CREATE_COMPONENT_SUCCESS'));
             }
@@ -306,7 +306,7 @@
 
             $scope.deleteMessage = function() {
                 return deleteMessage;
-            }
+            };
 
             $scope.ok = function () {
                 modalInstance.close();
@@ -316,7 +316,7 @@
                 modalInstance.dismiss('cancel');
             };
 
-            modalInstance.result.then(function (accepted) {
+            modalInstance.result.then(function () {
                 callDelete();
             }, function () {
                 console.log('Modal dismissed at: ' + new Date());
@@ -328,7 +328,7 @@
                 .then(successDeleteComponent)
                 .catch(failDeleteComponent);
 
-            function successDeleteComponent(data) {
+            function successDeleteComponent() {
                 $window.sessionStorage.removeItem('hasLeaves');
                 $state.reload();
             }
