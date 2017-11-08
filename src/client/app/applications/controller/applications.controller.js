@@ -25,6 +25,7 @@
 
         function activate() {
             loadCIServerInstances();
+            loadApplications();
         }
 
         function loadApplications() {
@@ -38,9 +39,11 @@
                 .catch(fail);
 
             function success(apps) {
+                spinnerService.hide('appSpinner');
                 vm.allApplications = [];
                 apps.forEach(function(app) {
                     vm.allApplications.push(buildApplicationForTable(app));
+                    vm.applications.push(buildApplicationForTable(app));
                 });
                 loadQAIndicators(apps);
                 loadCIIndicators(apps);
@@ -57,7 +60,6 @@
                 .catch(failCIServerInstances);
 
             function successCIServerInstances(data) {
-                loadApplications();
                 vm.ciServerInstances = data;
                 if (data.length > 0) {
                     vm.hasCIS = true;
@@ -78,43 +80,35 @@
                     .catch(failQAIndicators);
 
                 function successQAIndicators(indicators) {
-                    spinnerService.hide('appSpinner');
                     updateApplicationsTable(application, indicators, 'qa');
-                    vm.applications.push(buildApplicationForChart(application, indicators,
-                        remainingApplications, false));
-                    remainingApplications--;
+                    updateApplicationForChart(vm.applications, application, indicators, false);
                 }
 
                 function failQAIndicators(error) {
-                    buildApplicationForChart(application, [], remainingApplications, true);
+                    updateApplicationForChart(vm.applications, application, [], true);
                     vm.msgError = error.msgCode;
                 }
             });
         }
 
         function loadCIIndicators(apps) {
-            if (vm.hasCIS) {
-                var remainingApplications = apps.length;
-                apps.forEach(function (application) {
-                    componentService.getCIIndicators(application.id, '1')
-                        .then(successCIIndicators)
-                        .catch(failCIIndicators);
+            apps.forEach(function (application) {
+                componentService.getCIIndicators(application.id, '1')
+                    .then(successCIIndicators)
+                    .catch(failCIIndicators);
 
-                    function successCIIndicators(indicators) {
-                        if (indicators !== null && indicators !== undefined && indicators.length > 0) {
-                            updateApplicationsTable(application, indicators, 'ci');
-                            vm.applicationsForCI.push(buildApplicationForChart(application, indicators,
-                                remainingApplications, false));
-                        }
-                        remainingApplications--;
+                function successCIIndicators(indicators) {
+                    if (indicators !== null && indicators !== undefined && indicators.length > 0) {
+                        updateApplicationsTable(application, indicators, 'ci');
+                        updateApplicationForChart(vm.applicationsForCI, application, indicators, false);
                     }
+                }
 
-                    function failCIIndicators(error) {
-                        buildApplicationForChart(application, [], remainingApplications, true);
-                        vm.msgError = error.msgCode;
-                    }
-                });
-            }
+                function failCIIndicators(error) {
+                    buildApplicationForChart(vm.applicationsForCI, application, [], true);
+                    vm.msgError = error.msgCode;
+                }
+            });
         }
 
         function buildApplicationForTable(application) {
@@ -122,17 +116,18 @@
             return appForTable;
         }
 
-        function buildApplicationForChart(application, indicators, remainingApplications, error) {
-            var auxApp = {};
-            auxApp.name = application.name;
-            if (!error) {
-                auxApp.chartId = 'gaugeChart' + remainingApplications;
-                auxApp.data = indicators;
-            } else {
-                auxApp.chartId = 'gCError' + remainingApplications;
-                auxApp.error = true;
-            }
-            return auxApp;
+        function updateApplicationForChart(applicationsList, application, indicators, error) {
+            applicationsList.forEach(function (x) {
+                if (x.id === application.id) {
+                    if (!error) {
+                        x.chartId = 'gaugeChart' + x.id;
+                        x.data = indicators;
+                    } else {
+                        x.chartId = 'gCError' + x.id;
+                        x.error = true;
+                    }
+                }
+            });
         }
 
         function updateApplicationsTable(application, indicators, indicatorsType) {

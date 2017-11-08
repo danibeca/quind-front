@@ -37,6 +37,12 @@
             vm.components = components;
             if(vm.components.length > 0) {
                 vm.hasComponents = true;
+                createOptionsLists();
+            }
+        }
+
+        function createOptionsLists() {
+            if(vm.components[0].data !== undefined && vm.components[0].data !== null) {
                 var orderOptionsCriticals = [];
                 var orderOptionsOutstanding = [];
                 vm.components[0].data.forEach(function(x) {

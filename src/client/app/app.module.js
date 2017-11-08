@@ -88,26 +88,26 @@
                 }
 
                 function hasLeaves() {
-                    var hasLeavesStored = $window.sessionStorage.getItem('hasLeaves');
-                    if (hasLeavesStored !== null && hasLeavesStored !== undefined) {
-                        return $q(function (resolve) {
-                            resolve((hasLeavesStored === 'true'));
-                        });
+                    var user = userService.getUser();
+                    if (user !== undefined) {
+                        return componentService.getRoot(user.id)
+                            .then(successRoot);
                     } else {
-                        var user = userService.getUser();
-                        if (user !== undefined) {
-                            return componentService.getRoot(user.id)
-                                .then(successRoot);
-                        } else {
-                            return $q(function (resolve) {
-                                resolve(false);
-                            });
-                        }
+                        return $q(function (resolve) {
+                            resolve(false);
+                        });
                     }
 
                     function successRoot(croot) {
-                        return componentService.hasLeaves(croot.id)
-                            .then(successHasLeaves);
+                        var hasLeavesStored = $window.sessionStorage.getItem('hasLeaves');
+                        if (hasLeavesStored !== null && hasLeavesStored !== undefined) {
+                            return $q(function (resolve) {
+                                resolve((hasLeavesStored === 'true'));
+                            });
+                        } else {
+                            return componentService.hasLeaves(croot.id)
+                                .then(successHasLeaves);
+                        }
 
                         function successHasLeaves(hasLeaves) {
                             $window.sessionStorage.setItem('hasLeaves', hasLeaves);

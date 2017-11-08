@@ -25,6 +25,7 @@
         activate();
 
         function activate() {
+            loadSystems();
             loadCIServerInstances();
         }
 
@@ -38,8 +39,10 @@
                 .catch(failLoadComponents);
 
             function successLoadComponents(systems) {
+                spinnerService.hide('systemsSpinner');
                 systems.forEach(function (system) {
                     vm.allSystems.push(buildSystemForTable(system));
+                    vm.systems.push(buildSystemForTable(system));
                 });
                 loadQAIndicators(systems);
                 loadCIIndicators(systems);
@@ -56,7 +59,6 @@
                 .catch(failCIServerInstances);
 
             function successCIServerInstances(data) {
-                loadSystems();
                 vm.renderCIServerForm = true;
                 vm.ciServerInstances = data;
                 if (data.length > 0) {
@@ -71,66 +73,59 @@
         }
 
         function loadQAIndicators(systems) {
-            var remainingSystems = systems.length;
             systems.forEach(function (system) {
                 componentService.getQAIndicators(system.id, vm.indIds)
                     .then(successQAIndicators)
                     .catch(failQAIndicators);
 
                 function successQAIndicators(indicators) {
-                    spinnerService.hide('systemsSpinner');
                     updateSystemsTable(system, indicators, 'qa');
-                    vm.systems.push(buildSystemForChart(system, indicators, remainingSystems, false));
-                    remainingSystems--;
+                    updateSystemForChart(vm.systems, system, indicators, false);
                 }
 
                 function failQAIndicators(error) {
-                    buildSystemForChart(system, [], remainingSystems, true);
+                    updateSystemForChart(vm.systems, system, [], true);
                     vm.msgError = error.msgCode;
                 }
             });
         }
 
         function loadCIIndicators(systems) {
-            if (vm.hasCIS) {
-                var remainingSystems = systems.length;
-                systems.forEach(function (system) {
-                    componentService.getCIIndicators(system.id, '1')
-                        .then(successCIIndicators)
-                        .catch(failCIIndicators);
+            systems.forEach(function (system) {
+                componentService.getCIIndicators(system.id, '1')
+                    .then(successCIIndicators)
+                    .catch(failCIIndicators);
 
-                    function successCIIndicators(indicators) {
-                        if (indicators !== null && indicators !== undefined && indicators.length > 0) {
-                            updateSystemsTable(system, indicators, 'ci');
-                            vm.systemsForCI.push(buildSystemForChart(system, indicators,
-                                remainingSystems, false));
-                        }
-                        remainingSystems--;
+                function successCIIndicators(indicators) {
+                    if (indicators !== null && indicators !== undefined && indicators.length > 0) {
+                        updateSystemsTable(system, indicators, 'ci');
+                        updateSystemForChart(vm.systemsForCI, system, indicators, false);
                     }
+                }
 
-                    function failCIIndicators(error) {
-                        buildSystemForChart(system, [], remainingSystems, true);
-                        vm.msgError = error.msgCode;
-                    }
-                });
-            }
+                function failCIIndicators(error) {
+                    buildSystemForChart(vm.systemsForCI, system, [], true);
+                    vm.msgError = error.msgCode;
+                }
+            });
         }
 
         function buildSystemForTable(system) {
             return JSON.parse(JSON.stringify(system));
         }
 
-        function buildSystemForChart(system, indicators, remainingSystems, error) {
-            var auxSystem = {};
-            auxSystem.name = system.name;
-            if (!error) {
-                auxSystem.chartId = 'gaugeChart' + remainingSystems;
-                auxSystem.data = indicators;
-            } else {
-                auxSystem.chartId = 'gCError' + remainingSystems;
-                auxSystem.error = true;
-            }
-            return auxSystem;
+        function updateSystemForChart(systemsList, system, indicators, error) {
+            systemsList.forEach(function (x) {
+                if (x.id === system.id) {
+                    if (!error) {
+                        x.chartId = 'gaugeChart' + x.id;
+                        x.data = indicators;
+                    } else {
+                        x.chartId = 'gCError' + x.id;
+                        x.error = true;
+                    }
+                }
+            });
         }
 
         function updateSystemsTable(system, indicators, indicatorsType) {
