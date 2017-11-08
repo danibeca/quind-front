@@ -208,7 +208,7 @@
             }
             vm.showLoader = true;
             if (parseInt(vm.qaServer.type) === 1) {
-                checkServer(sendRequestQAS, qualityServerService, true);
+                checkServer(sendRequestQAS, qualityServerService, true, 'qaServer');
             } else {
                 sendRequestQAS(false);
             }
