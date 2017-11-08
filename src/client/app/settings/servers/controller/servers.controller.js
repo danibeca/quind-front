@@ -1,4 +1,4 @@
-/* jshint -W117, -W101, -W106  */
+/* jshint -W117, -W101, -W106, -W071 */
 // jscs:disable
 (function () {
     'use strict';
@@ -307,7 +307,7 @@
             function successUpdateQAInstance() {
                 vm.showLoader = false;
                 vm.mustShowQAEdit = false;
-                vm.qaServer = {}
+                vm.qaServer = {};
                 loadQAServerInstances();
             }
 
@@ -348,7 +348,7 @@
             function successUpdateCIInstance() {
                 vm.showLoader = false;
                 vm.mustShowCIEdit = false;
-                vm.ciServer = {}
+                vm.ciServer = {};
                 loadCIServerInstances();
             }
 
@@ -430,7 +430,7 @@
                 if(vm.job.regularExpressions.length > 0) {
                     var newJobData = {};
                     newJobData.name = vm.job.name;
-                    newJobData.regular_expression = vm.job.regularExpressions.join(";");
+                    newJobData.regular_expression = vm.job.regularExpressions.join(';');
                     if (newJobData.regular_expression !== undefined && newJobData.regular_expression !== null && newJobData.regular_expression !== '') {
                         ciServerService.addJobToPhase(vm.ciPhase.id, newJobData)
                             .then(successAddJobToPhase)
@@ -446,14 +446,14 @@
                     vm.ciPhase.jobs = [];
                 }
                 if (job.regular_expression !== undefined && job.regular_expression !== null && job.regular_expression !== '') {
-                    job.regularExpressions = job.regular_expression.split(";");
+                    job.regularExpressions = job.regular_expression.split(';');
                 } else {
                     job.regularExpressions = [];
                 }
                 vm.ciPhase.jobs.push(job);
             }
 
-            function failAddJobToPhase(error) {
+            function failAddJobToPhase() {
                 vm.showJobLoader = false;
                 logger.error($filter('translate')('CREATE_PHASE_ERROR'));
             }
@@ -464,12 +464,12 @@
                 .then(successRemoveJobFromPhase)
                 .catch(failRemoveJobFromPhase);
 
-            function successRemoveJobFromPhase(removedJob) {
+            function successRemoveJobFromPhase() {
                 vm.ciPhase.jobs.splice(vm.ciPhase.jobs.indexOf(job), 1);
                 vm.editingJob = false;
             }
 
-            function failRemoveJobFromPhase(error) {
+            function failRemoveJobFromPhase() {
                 logger.error($filter('translate')('CREATE_PHASE_ERROR'));
             }
         }
@@ -520,19 +520,19 @@
             var newJobData = {};
             newJobData.id = vm.job.id;
             newJobData.name = vm.job.name;
-            newJobData.regular_expression = vm.job.regularExpressions.join(";");
+            newJobData.regular_expression = vm.job.regularExpressions.join(';');
             ciServerService.updateJobToPhase(vm.ciPhase.id, newJobData)
                 .then(successUpdateJobToPhase)
                 .catch(failUpdateJobToPhase);
 
-            function successUpdateJobToPhase(updatedJob) {
+            function successUpdateJobToPhase() {
                 vm.job = {regularExpressions: []};
                 vm.saveJobForm.reset();
                 vm.jobEditing = false;
                 vm.showJobLoader = false;
             }
 
-            function failUpdateJobToPhase(error) {
+            function failUpdateJobToPhase() {
                 vm.showJobLoader = false;
                 logger.error($filter('translate')('UPDATE_PHASE_ERROR'));
             }
@@ -592,7 +592,7 @@
         function showEditCIPhase(phase) {
             vm.ciPhase = phase;
             vm.job = {regularExpressions: []};
-            vm.saveJobForm.reset()
+            vm.saveJobForm.reset();
             vm.mustShowCIEditPhase = true;
             if(vm.ciPhase.jobs === undefined || vm.ciPhase.jobs === null) {
                 vm.ciPhase.jobs = [];

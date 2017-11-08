@@ -1,3 +1,4 @@
+/* jshint -W074 */
 (function () {
     'use strict';
 
@@ -28,7 +29,6 @@
         }
 
         function responseError(rejection) {
-            //alert(JSON.stringify(rejection));
             var msg = getErrorMessage(rejection);
             if (msg === null) {
                 if (environmentConfig.env === 'dev') {

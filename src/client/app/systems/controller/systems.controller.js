@@ -1,3 +1,5 @@
+/* jshint -W106, -W117 */
+// jscs:disable
 (function () {
     'use strict';
 
@@ -62,7 +64,7 @@
                 }
             }
 
-            function failCIServerInstances(data) {
+            function failCIServerInstances() {
                 loadSystems();
                 vm.hasCIS = false;
             }

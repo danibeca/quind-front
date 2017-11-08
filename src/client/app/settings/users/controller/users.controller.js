@@ -127,7 +127,7 @@
                 .then(successUpdateChild)
                 .catch(failUpdateChild);
 
-            function successUpdateChild(data) {
+            function successUpdateChild() {
                 vm.showUsersLoader = false;
                 vm.showEditForm = false;
                 $state.reload();
@@ -167,7 +167,7 @@
                 .then(successAssociateToUser)
                 .catch(failAssociateToUser);
 
-            function successAssociateToUser(data) {
+            function successAssociateToUser() {
                 $state.reload();
                 logger.success($filter('translate')('CREATE_USER_SUCCESS'));
             }
@@ -195,7 +195,7 @@
                 .then(successDeleteChild)
                 .catch(failDeleteChild);
 
-            function successDeleteChild(data) {
+            function successDeleteChild() {
                 $state.reload();
             }
 

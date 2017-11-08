@@ -16,7 +16,7 @@
                 .then(successLogin)
                 .catch(failLogin);
 
-            function successLogin(data) {
+            function successLogin() {
                 vm.showLoader = false;
                 $state.go('dashboard');
                 logger.success($filter('translate')('LOGIN_SUCCESS'));

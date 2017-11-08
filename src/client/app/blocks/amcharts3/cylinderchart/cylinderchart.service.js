@@ -24,9 +24,8 @@
             var result = {};
             result.graphs = [];
             result.data = [];
-            data.forEach(function (item, index) {
+            data.forEach(function (item) {
                 result.data.push(buildDataProvider(item));
-                var graphs = [];
             });
             data[0].values.forEach(function (valueItem, valueIndex) {
                 result.graphs.push(buildGraphProvider(valueIndex, false));
