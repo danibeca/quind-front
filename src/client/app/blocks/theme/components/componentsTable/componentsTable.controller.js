@@ -11,7 +11,7 @@
         .controller('ComponentsTableCtrl', ComponentsTableCtrl);
 
     /* @ngInject */
-    function ComponentsTableCtrl(componentService, qualityServerService, $scope, $timeout) {
+    function ComponentsTableCtrl(componentService, qualityServerService, $scope, $timeout, $filter) {
         var vm = this;
 
         vm.listHasComponents = false;
@@ -174,10 +174,10 @@
         function updateComponentsCodes() {
             vm.componentsList.forEach(function(x) {
                 if (x.tag_id === 3) {
-                    var code = $.grep(vm.componentsCodes, function(e){ return e.id === x.id; })[0];
+                    var code = $filter('filter')(vm.componentsCodes, {'id': x.id})[0];
                     if (code !== null && code!== undefined) {
                         x.code = code.app_code;
-                        x.code_name = $.grep(vm.codes, function(e){ return e.key === x.code; })[0].name;
+                        x.code_name = $filter('filter')(vm.codes, {'key': x.code})[0].name;
                     }
                 }
             });

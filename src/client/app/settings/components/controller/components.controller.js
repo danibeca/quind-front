@@ -178,7 +178,7 @@
         function updateComponentsCodes() {
             vm.allComponents.forEach(function(x) {
                 if (x.tag_id === 3) {
-                    var code = $.grep(vm.componentsCodes, function(e){ return e.id === x.id; })[0];
+                    var code = $filter('filter')(vm.componentsCodes, {'id': x.id})[0];
                     if (code !== null && code!== undefined) {
                         x.code = code.app_code;
                     }
@@ -275,9 +275,7 @@
         }
 
         function showEdit(component) {
-            vm.component = JSON.parse(JSON.stringify($.grep(vm.allComponents, function (e) {
-                return e.id === component.id;
-            })[0]));
+            vm.component = JSON.parse(JSON.stringify($filter('filter')(vm.allComponents, {'id': component.id})[0]));
             vm.component.code = component.code;
             vm.components = vm.components.filter(function (obj) {
                 return vm.component.id !== obj.id;
@@ -286,15 +284,11 @@
                 vm.component.parent_id = vm.components[0].id;
             }
             vm.showEditForm = true;
-            vm.codes.push($.grep(vm.allCodes, function (e) {
-                return e.key === component.code;
-            })[0]);
+            vm.codes.push($filter('filter')(vm.allCodes, {'key': component.code})[0]);
         }
 
         function deleteComponent(component) {
-            vm.component = $.grep(vm.allComponents, function (e) {
-                return e.id === component.id;
-            })[0];
+            vm.component = $filter('filter')(vm.allComponents, {'id': component.id})[0];
             var deleteMessage = '';
             if (component.tag_id === 2) {
                 deleteMessage = $filter('translate')('DELETE_SYSTEM_WARNING_TEXT');
@@ -350,17 +344,13 @@
         function cancelEdit() {
             vm.showEditForm = false;
             vm.showCreateForm = false;
-            var codeToDelete = $.grep(vm.allCodes, function (e) {
-                return e.key === vm.component.code;
-            })[0];
+            var codeToDelete = $filter('filter')(vm.allCodes, {'key': vm.component.code})[0];
             vm.codes.splice(vm.codes.indexOf(codeToDelete), 1);
         }
 
         function updateName() {
             if (!vm.showEditForm && vm.component.code !== null && vm.component.code !== undefined) {
-                vm.component.name = $.grep(vm.codes, function (e) {
-                    return e.key === vm.component.code;
-                })[0].name;
+                vm.component.name = $filter('filter')(vm.codes, {'key': vm.component.code})[0].name;
             }
         }
 

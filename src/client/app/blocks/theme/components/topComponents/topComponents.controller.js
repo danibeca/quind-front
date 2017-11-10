@@ -11,7 +11,7 @@
         .controller('TopComponentsCtrl', TopComponentsCtrl);
 
     /* @ngInject */
-    function TopComponentsCtrl() {
+    function TopComponentsCtrl($filter) {
         var vm = this;
 
         vm.hasComponents = false;
@@ -40,6 +40,8 @@
                 vm.hasComponents = true;
                 createOptionsLists();
                 createNumberOfItemsOptionsList();
+            } else {
+                vm.hasComponents = false;
             }
         }
 
@@ -103,8 +105,8 @@
         }
 
         function compare(inverse, id, a, b) {
-            var valueA = $.grep(a.data, function(e) { return e.id === id; })[0].value;
-            var valueB = $.grep(b.data, function(e) { return e.id === id; })[0].value;
+            var valueA = $filter('filter')(a.data, {'id': id})[0].value;
+            var valueB = $filter('filter')(b.data, {'id': id})[0].value;
             if (inverse) {
                 return parseFloat(valueB) - parseFloat(valueA);
             } else {

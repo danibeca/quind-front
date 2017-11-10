@@ -143,11 +143,11 @@
             vm.componentApplications.forEach(function (x) {
                 if (x.id === application.id) {
                     if (indicatorsType === 'qa') {
-                        x.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
-                        x.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
-                        x.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
+                        x.codeHealth = $filter('filter')(indicators, {'id':44})[0];
+                        x.reliability = $filter('filter')(indicators, {'id':52})[0];
+                        x.efficiencyPotential = $filter('filter')(indicators, {'id':57})[0];
                     } else {
-                        x.automation = $.grep(indicators, function(e) { return e.id === 1; })[0];
+                        x.automation = $filter('filter')(indicators, {'id':1})[0];
                     }
                 }
             });
@@ -298,7 +298,7 @@
         }
 
         function appHasJob(job) {
-            var jobFound = $.grep(vm.applicationJobs, function(e) { return e.id === job.id; })[0];
+            var jobFound = $filter('filter')(vm.applicationJobs, {'id':job.id})[0];
             if (jobFound !== undefined && jobFound !== null) {
                 return true;
             }

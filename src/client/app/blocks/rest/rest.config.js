@@ -10,6 +10,9 @@
         RestangularProvider.addResponseInterceptor(function (data, operation) {
             var extractedData;
             if (operation === 'getList') {
+                if (data.data[0] === null) {
+                    data.data = [];
+                }
                 extractedData = data.data;
             } else {
                 extractedData = data;

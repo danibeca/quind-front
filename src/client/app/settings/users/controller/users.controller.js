@@ -97,7 +97,7 @@
 
         function updateUsersRoles() {
             vm.usersList.forEach(function(x) {
-                x.role_name = $.grep(vm.roles, function(e){ return e.id === x.role_id; })[0].name;
+                x.role_name = $filter('filter')(vm.roles, {'id': x.role_id})[0].name;
             });
         }
 
@@ -185,12 +185,12 @@
         }
 
         function showEdit(userId) {
-            vm.newUser = $.grep(vm.usersList, function(e){ return e.id === userId; })[0];
+            vm.newUser = $filter('filter')(vm.usersList, {'id': userId})[0];
             vm.showEditForm = true;
         }
 
         function deleteUser(userId) {
-            vm.newUser = $.grep(vm.usersList, function(e){ return e.id === userId; })[0];
+            vm.newUser = $filter('filter')(vm.usersList, {'id': userId})[0];
             userRemoteService.deleteChild(vm.newUser)
                 .then(successDeleteChild)
                 .catch(failDeleteChild);

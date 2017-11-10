@@ -8,7 +8,7 @@
         .controller('SystemsController', SystemsController);
 
     /* @ngInject */
-    function SystemsController(userService, storageService, componentService, ciServerService, spinnerService, $state) {
+    function SystemsController(userService, storageService, componentService, ciServerService, spinnerService, $state, $filter) {
         var vm = this;
 
         vm.croot = storageService.getJsonObject('croot');
@@ -102,7 +102,7 @@
                         updateSystemsTable(system, indicators, 'ci');
                         updateSystemForChart(vm.systemsForCI, system, indicators, false);
                     } else {
-                        buildSystemForChart(vm.systemsForCI, system, [], true);
+                        removeSystemForChart(vm.systemsForCI, system);
                     }
                 }
 
@@ -135,14 +135,19 @@
             vm.allSystems.forEach(function (x) {
                 if (x.id === system.id) {
                     if (indicatorsType === 'qa') {
-                        x.codeHealth = $.grep(indicators, function(e) { return e.id === 44; })[0];
-                        x.reliability = $.grep(indicators, function(e) { return e.id === 52; })[0];
-                        x.efficiencyPotential = $.grep(indicators, function(e) { return e.id === 57; })[0];
+                        x.codeHealth = $filter('filter')(indicators, {'id':44})[0];
+                        x.reliability = $filter('filter')(indicators, {'id':52})[0];
+                        x.efficiencyPotential = $filter('filter')(indicators, {'id':57})[0];
                     } else {
-                        x.automation = $.grep(indicators, function(e) { return e.id === 1; })[0];
+                        x.automation = $filter('filter')(indicators, {'id':1})[0];
                     }
                 }
             });
+        }
+
+        function removeSystemForChart(systemsList, system) {
+            var systemToDelete = $filter('filter')(systemsList, {'id': system.id})[0];
+            systemsList.splice(systemsList.indexOf(systemToDelete), 1);
         }
 
         function viewMore(component) {

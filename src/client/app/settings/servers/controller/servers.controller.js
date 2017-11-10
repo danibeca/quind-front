@@ -142,10 +142,14 @@
                     vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
                 }
                 requestData = {
-                    'url': vm.qaServer.url,
-                    'username': vm.qaServer.username,
-                    'password': vm.qaServer.password
-                };
+                    'url': vm.qaServer.url
+                }
+                if(vm.qaServer.username !== null && vm.qaServer.username !== undefined && vm.qaServer.username !== '') {
+                    requestData.username = vm.qaServer.username;
+                }
+                if(vm.qaServer.password !== null && vm.qaServer.password !== undefined && vm.qaServer.password !== '') {
+                    requestData.password = vm.qaServer.password;
+                }
             }
 
             if(serverType === 'buildServer') {
@@ -483,6 +487,8 @@
         function cancelJobEdit() {
             vm.job = {regularExpressions: []};
             vm.jobEditing = false;
+            vm.newRegExp = '';
+            vm.saveJobForm.reset();
             vm.jobEditionTitle = $filter('translate')('ADD_JOB');
         }
 
@@ -493,8 +499,8 @@
                 }
                 if(job.regularExpressions.indexOf(vm.newRegExp) === -1) {
                     job.regularExpressions.push(vm.newRegExp);
-                    vm.newRegExp = '';
                 }
+                vm.newRegExp = '';
             }
         }
 
