@@ -1,4 +1,4 @@
-/* jshint -W106, -W117 */
+/* jshint -W106, -W117, -W101 */
 // jscs:disable
 (function () {
     'use strict';

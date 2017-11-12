@@ -133,47 +133,43 @@
             }
         }
 
+        function fixUrl(url) {
+            var lastChar = url[url - 1];
+            if (lastChar === '/') {
+                url = url.substring(0, url.length - 1);
+            }
+            return url;
+        }
+
+        function buildCheckRequest(url, username, password) {
+            var requestData = {'url': url};
+            if(username !== null && username !== undefined && username !== '') {
+                requestData.username = username;
+            }
+            if(password !== null && password !== undefined && password !== '') {
+                requestData.password = password;
+            }
+            return requestData;
+        }
+
         function checkServer(sendRequestFunction, checkService, sendRequest, serverType) {
             var requestData = {};
-            var lastChar = '';
             if(serverType === 'qaServer') {
-                lastChar = vm.qaServer.url[vm.qaServer.url.length - 1];
-                if (lastChar === '/') {
-                    vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
-                }
-                requestData = {
-                    'url': vm.qaServer.url
-                }
-                if(vm.qaServer.username !== null && vm.qaServer.username !== undefined && vm.qaServer.username !== '') {
-                    requestData.username = vm.qaServer.username;
-                }
-                if(vm.qaServer.password !== null && vm.qaServer.password !== undefined && vm.qaServer.password !== '') {
-                    requestData.password = vm.qaServer.password;
-                }
+                vm.qaServer.url = fixUrl(vm.qaServer.url);
+                requestData = buildCheckRequest(vm.qaServer.url,
+                    vm.qaServer.username, vm.qaServer.password);
             }
 
             if(serverType === 'buildServer') {
-                    lastChar = vm.ciServer.url_build_server[vm.ciServer.url_build_server.length - 1];
-                if (lastChar === '/') {
-                    vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
-                }
-                requestData = {
-                    'url': vm.ciServer.url_build_server,
-                    'username': vm.ciServer.username_build_server,
-                    'password': vm.ciServer.password_build_server
-                };
+                vm.ciServer.url_build_server = fixUrl(vm.ciServer.url_build_server);
+                requestData = buildCheckRequest(vm.ciServer.url_build_server,
+                    vm.ciServer.username_build_server, vm.ciServer.password_build_server);
             }
 
             if(serverType === 'releaseServer') {
-                    lastChar = vm.ciServer.url_release_manager[vm.ciServer.url_release_manager.length - 1];
-                if (lastChar === '/') {
-                    vm.qaServer.url = vm.qaServer.url.substring(0, vm.qaServer.url.length - 1);
-                }
-                requestData = {
-                    'url': vm.ciServer.url_release_manager,
-                    'username': vm.ciServer.username_release_manager,
-                    'password': vm.ciServer.password_release_manager
-                };
+                vm.ciServer.url_release_manager = fixUrl(vm.ciServer.url_release_manager);
+                requestData = buildCheckRequest(vm.ciServer.url_release_manager,
+                    vm.ciServer.username_release_manager, vm.ciServer.password_release_manager);
             }
 
             checkService.isInstanceValid(requestData).then(successIsValid)
