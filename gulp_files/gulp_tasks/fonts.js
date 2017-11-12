@@ -7,7 +7,7 @@ module.exports = function (gulp, plugins, args) {
             fonts: [gConstants.bower.directory + 'font-awesome/fonts/**/*.*',
                     gConstants.client + 'fonts/**/*.*',
                     gConstants.bower.directory + 'semantic-ui/dist/themes/default/assets/fonts/*.*',
-                    gConstants.bower.directory + 'ionicons/fonts/**/*.*',
+                    gConstants.bower.directory + 'Ionicons/fonts/**/*.*',
             ],
             build: gConstants.build
         };
